@@ -14,12 +14,12 @@
 	<script type="text/javascript" src="script.js"></script>
 	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 	<script> // script per la gestione dell'ombra nera della navbar
-		$(window).on('scroll', function(){
-  			if($(window).scrollTop()){
-  			  $('nav').addClass('black');
- 			 }else {
- 		   $('nav').removeClass('black');
- 		 }
+		$(window).on('scroll', function () {
+			if ($(window).scrollTop()) {
+				$('nav').addClass('black');
+			} else {
+				$('nav').removeClass('black');
+			}
 		})
 	</script>
 </head>
@@ -28,10 +28,10 @@
 
 	<!--HEADER che contiene navbar, nead-container e side-menu-->
 	<header id="header">
-		
+
 		<!-- Navigation Bar -->
 		<nav>
-			<div class="logo"><img src="images/icon/logo.png" alt="logo"></div>
+			<div class="logo"><img src="images/logo.png" alt="logo"></div>
 			<ul>
 				<li><a class="active" href="">Home</a></li>
 				<li><a href="#about_section">About</a></li>
@@ -39,28 +39,30 @@
 				<li><a href="#team_section">Team</a></li>
 				<li><a href="#contactus_section">Contact</a></li>
 			</ul>
-			<a class="get-started" href="login.html">Get Started</a> 
-			<img src="images/icon/menu.png" class="menu" onclick="sideMenu(0)" alt="menu"> <!--menu a scomparsa-->
+			<a class="get-started" href="login.html">Get Started</a>
+			<img src="images/icon_/menu.png" class="menu" onclick="sideMenu(0)" alt="menu">
+			<!--menu a scomparsa-->
 		</nav>
 
 		<!--head-container-->
 		<div class="head-container">
 			<!--logo + frasi-->
 			<div class="quote">
-				<img src="images/icon/logo.png" alt="logo">
+				<img src="images/logo.png" alt="logo">
 				<h1>A smart Software Engineering Education Platform</h1>
 				<h4>For students and teachers.</h4>
-				<h5>Study and train for your exams, or provide teaching materials and tests to prepare your students.</h5>
+				<h5>Study and train for your exams, or provide teaching materials and tests to prepare your students.
+				</h5>
 			</div>
 			<!--immagine-->
 			<div class="svg-image">
-				<img src="images/extra/svg1.jpg" alt="svg">
+				<img src="images/index_/svg1.jpg" alt="svg">
 			</div>
 		</div>
 
 		<!--side-menu (appare quando si rimpicciolisce la finestra)-->
 		<div class="side-menu" id="side-menu">
-			<div class="close" onclick="sideMenu(1)"><img src="images/icon/close.png" alt=""></div>
+			<div class="close" onclick="sideMenu(1)"><img src="images/icon_/close.png" alt=""></div>
 			<ul>
 				<li><a href="#about_section">About</a></li>
 				<li><a href="#services_section">Services</a></li>
@@ -70,21 +72,39 @@
 		</div>
 	</header>
 
-	
+
 	<!-- ABOUT -->
 	<div class="diffSection" id="about_section">
 		<!--titolo-->
-		<center><p style="font-size: 50px; padding: 100px">About</p></center>
+		<center>
+			<p style="font-size: 50px; padding: 100px">About</p>
+		</center>
 		<!--contenuto-->
 		<div class="about-content">
 			<!--immagine-->
 			<div class="side-image">
-				<img class="sideImage" src="images/extra/e3.jpg">
+				<img class="sideImage" src="images/index_/about.webp">
 			</div>
 			<!--testo-->
 			<div class="side-text">
-				<h2>What you think about us ?</h2>
-				<p>Education is the process of facilitating learning, or the acquisition of knowledge, skills, values, beliefs, and habits. Educational methods include teaching, training, storytelling, discussion and directed research.<br> Educational website can include websites that have games, videos or topic related resources that act as tools to enhance learning and supplement classroom teaching. These websites help make the process of learning entertaining and attractive to the student, especially in today's age. <br>Using HTML(HyperText Markup Language), CSS(Cascading Style Sheet), JavaScript, we can make learning more easier and in a interesting way.</p>
+				<h2>What do we do?</h2>
+				<p>
+					PoliSEEP is a platform designed for students and university professors.
+					It was mainly designed for STEM disciplines.<br>
+					There are two users who use our website:<br></p>
+				<ul>
+					<li><b>PROFESSORS</b>: they use PoliSEEP to quickly provide teaching material and to create quizzes
+						to be submitted to students.
+						All this is possible for every course the professor teaches.<br>
+					</li>
+					<li><b>STUDENTS</b>: they use PoliSEEP to access the teaching material of all the courses they are
+						enrolled in.
+						In addition, they can train with the quizzes made available by the teachers.<br>
+					</li>
+				</ul>
+				<p>Using HTML(HyperText Markup Language), CSS(Cascading Style Sheet), JavaScript, we
+					can make learning more easier and in a interesting way.</p>
+			</p>
 			</div>
 		</div>
 	</div>
@@ -93,48 +113,90 @@
 	<!-- SERVICES -->
 	<div class="service-swipe">
 		<div class="diffSection" id="services_section">
-		<center><p style="font-size: 50px; padding: 100px; padding-bottom: 40px; color: #fff;">Services</p></center>
+			<center>
+				<p style="font-size: 50px; padding: 100px; padding-bottom: 40px; color: #2e3d49;">Services</p>
+			</center>
 		</div>
-		<a href="subjects/computer_courses.html"><div class="s-card"><img src="images/icon/computer-courses.png"><p>Free Online Computer Courses</p></div></a>
-		<a href="subjects/jee.html"><div class="s-card"><img src="images/icon/brainbooster.png"><p>Building Concepts for Competitive Exams</p></div></a>
-		<a href="#"><div class="s-card"><img src="images/icon/online-tutorials.png"><p>Online Video Lectures</p></div></a>
-		<a href="subjects/jee.html#sample_papers"><div class="s-card"><img src="images/icon/papers.jpg"><p>Sample Papers of Various Competitive Exams</p></div></a>
-		<a href="#"><div class="s-card"><img src="images/icon/p3.png"><p>Performance and Ranking Report</p></div></a>
-		<a href="#contactus_section"><div class="s-card"><img src="images/icon/discussion.png"><p>Discussion with Our Tutors & Mentors</p></div></a>
-		<a href="subjects/quiz.html"><div class="s-card"><img src="images/icon/q1.png"><p>Daily Brain Teasing Questions to Improve IQ</p></div></a>
-		<a href="#contactus_section"><div class="s-card"><img src="images/icon/help.png"><p>24x7 Online Support</p></div></a>
+		<a href="subjects/computer_courses.html">
+			<div class="s-card"><img src="images/icon/computer-courses.png">
+				<p>Free Online Computer Courses</p>
+			</div>
+		</a>
+		<a href="subjects/jee.html">
+			<div class="s-card"><img src="images/icon/brainbooster.png">
+				<p>Building Concepts for Competitive Exams</p>
+			</div>
+		</a>
+		<a href="#">
+			<div class="s-card"><img src="images/icon/online-tutorials.png">
+				<p>Online Video Lectures</p>
+			</div>
+		</a>
+		<a href="subjects/jee.html#sample_papers">
+			<div class="s-card"><img src="images/icon/papers.jpg">
+				<p>Sample Papers of Various Competitive Exams</p>
+			</div>
+		</a>
+		<a href="#">
+			<div class="s-card"><img src="images/icon/p3.png">
+				<p>Performance and Ranking Report</p>
+			</div>
+		</a>
+		<a href="#contactus_section">
+			<div class="s-card"><img src="images/icon/discussion.png">
+				<p>Discussion with Our Tutors & Mentors</p>
+			</div>
+		</a>
+		<a href="subjects/quiz.html">
+			<div class="s-card"><img src="images/icon/q1.png">
+				<p>Daily Brain Teasing Questions to Improve IQ</p>
+			</div>
+		</a>
+		<a href="#contactus_section">
+			<div class="s-card"><img src="images/icon/help.png">
+				<p>24x7 Online Support</p>
+			</div>
+		</a>
 	</div>
 
 
 	<!-- TEAM -->
 	<div class="diffSection" id="team_section">
-		<center><p style="font-size: 50px; padding-top: 100px; padding-bottom: 60px;">We're the Creators</p></center>
+		<center>
+			<p style="font-size: 50px; padding-top: 100px; padding-bottom: 60px;">We're the Creators</p>
+		</center>
 		<div class="totalcard">
 			<div class="card">
 				<center><img src="images/creator/roshan1.jpeg"></center>
-				<center><div class="card-title">Roshan Kumar</div>
-				<div id="detail">
-					<p>“ You can teach a student a lesson for a day; but if you can teach him to learn by creating curiosity, he will continue the learning process as long as he lives “</p>
-					<div class="duty"></div>
-					<a href="https://www.linkedin.com/in/roshan-kumar-a18b76179/" target="_blank"><button class="btn-roshan">Follow +</button></a>
-				</div>
+				<center>
+					<div class="card-title">Roshan Kumar</div>
+					<div id="detail">
+						<p>“ You can teach a student a lesson for a day; but if you can teach him to learn by creating
+							curiosity, he will continue the learning process as long as he lives “</p>
+						<div class="duty"></div>
+						<a href="https://www.linkedin.com/in/roshan-kumar-a18b76179/" target="_blank"><button
+								class="btn-roshan">Follow +</button></a>
+					</div>
 				</center>
 			</div>
 			<div class="card">
 				<center><img src="images/creator/roshan2.jpeg"></center>
-				<center><div class="card-title">Roshan Kumar</div>
-				<div id="detail">
-					<p>“ Real education should consist of drawing the goodness and the best out of our own students. What better books can there be than the book of humanity “</p>
-					<div class="duty"></div>
-					<a href="https://www.linkedin.com/in/roshan-kumar-a18b76179/" target="_blank"><button class="btn-akhil">Follow +</button></a>
-				</div>
+				<center>
+					<div class="card-title">Roshan Kumar</div>
+					<div id="detail">
+						<p>“ Real education should consist of drawing the goodness and the best out of our own students.
+							What better books can there be than the book of humanity “</p>
+						<div class="duty"></div>
+						<a href="https://www.linkedin.com/in/roshan-kumar-a18b76179/" target="_blank"><button
+								class="btn-akhil">Follow +</button></a>
+					</div>
 				</center>
 			</div>
 		</div>
 	</div>
 
 
-<!-- Reviews by Students 
+	<!-- Reviews by Students 
 <div id="makeitfull">
 	<a href="#review_section"><img src="images/icon/makeitfull.png"></a>
 </div>
@@ -198,31 +260,35 @@
 	</div>
 </div>-->
 
-<!-- CONTACT US -->
+	<!-- CONTACT US -->
 	<div class="diffSection" id="contactus_section">
-		<center><p style="font-size: 50px; padding: 100px">Contact Us</p></center>
+		<center>
+			<p style="font-size: 50px; padding: 100px">Contact Us</p>
+		</center>
 		<div class="csec"></div>
 		<div class="back-contact">
 			<div class="cc">
-			<form action="mailto:roshank9419@gmail.com" method="post" enctype="text/plain">
-				<label>First Name <span class="imp">*</span></label><label style="margin-left: 185px">Last Name <span class="imp">*</span></label><br>
-				<center>
-				<input type="text" name="" style="margin-right: 10px; width: 175px" required="required"><input type="text" name="lname" style="width: 175px" required="required"><br>
-				</center>
-				<label>Email <span class="imp">*</span></label><br>
-				<input type="email" name="mail" style="width: 100%" required="required"><br>
-				<label>Message <span class="imp">*</span></label><br>
-				<input type="text" name="message" style="width: 100%" required="required"><br>
-				<label>Additional Details</label><br>
-				<textarea name="addtional"></textarea><br>
-				<button type="submit" id="csubmit">Send Message</button>
-			</form>
+				<form action="mailto:roshank9419@gmail.com" method="post" enctype="text/plain">
+					<label>First Name <span class="imp">*</span></label><label style="margin-left: 185px">Last Name
+						<span class="imp">*</span></label><br>
+					<center>
+						<input type="text" name="" style="margin-right: 10px; width: 175px" required="required"><input
+							type="text" name="lname" style="width: 175px" required="required"><br>
+					</center>
+					<label>Email <span class="imp">*</span></label><br>
+					<input type="email" name="mail" style="width: 100%" required="required"><br>
+					<label>Message <span class="imp">*</span></label><br>
+					<input type="text" name="message" style="width: 100%" required="required"><br>
+					<label>Additional Details</label><br>
+					<textarea name="addtional"></textarea><br>
+					<button type="submit" id="csubmit">Send Message</button>
+				</form>
 			</div>
 		</div>
 	</div>
 
 
-<!-- FEEDBACK 
+	<!-- FEEDBACK 
 	<div class="title2" id="feedBACK">
 		<span>Give Feedback</span>
 		<div class="shortdesc2">
@@ -245,12 +311,12 @@
 	</div>
 -->
 
-<!-- Sliding Information 
+	<!-- Sliding Information 
 	<marquee style="background: linear-gradient(to right, #FA4B37, #DF2771); margin-top: 50px;" direction="left" onmouseover="this.stop()" onmouseout="this.start()" scrollamount="20"><div class="marqu">“Education is the passport to the future, for tomorrow belongs to those who prepare for it today.” “Your attitude, not your aptitude, will determine your altitude.” “If you think education is expensive, try ignorance.” “The only person who is educated is the one who has learned how to learn …and change.”</div></marquee>
 -->
 
 
-<!-- FOOTER -->
+	<!-- FOOTER -->
 	<footer>
 		<div class="footer-container">
 			<div class="left-col">
@@ -264,8 +330,11 @@
 					<a href="#"><img src="images/icon\linkedin.png"></a>
 				</div><br><br>
 				<p class="rights-text">Copyright © 2021 Created By Roshan Kumar, Abhishek Dulat All Rights Reserved.</p>
-				<br><p><img src="images/icon/location.png"> Lovely Professional University<br>Phagwara, Punjab-144401</p><br>
-				<p><img src="images/icon/phone.png"> +91-1234-567-890<br><img src="images/icon/mail.png">&nbsp; learnedonline9419@gmail.com</p>
+				<br>
+				<p><img src="images/icon/location.png"> Lovely Professional University<br>Phagwara, Punjab-144401</p>
+				<br>
+				<p><img src="images/icon/phone.png"> +91-1234-567-890<br><img src="images/icon/mail.png">&nbsp;
+					learnedonline9419@gmail.com</p>
 			</div>
 			<div class="right-col">
 				<h1 style="color: #fff">Our Newsletter</h1>
@@ -280,4 +349,5 @@
 	</footer>
 
 </body>
+
 </html>

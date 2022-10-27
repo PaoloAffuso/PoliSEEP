@@ -8,7 +8,9 @@
 // 	document.getElementById("myBar").style.width = scrolled + "%"; 
 // }
 
-function scrollAppear() {
+
+//funzione per la parte di ABOUT
+function scrollAppear() { 
   var introText = document.querySelector('.side-text');
   var sideImage = document.querySelector('.sideImage');
   var introPosition = introText.getBoundingClientRect().top;
@@ -25,6 +27,7 @@ function scrollAppear() {
 }
 
 window.addEventListener('scroll', scrollAppear);
+
 
 // For switching between navigation menus in mobile mode
 var i = 2;
