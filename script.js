@@ -29,6 +29,22 @@ function scrollAppear() {
 window.addEventListener('scroll', scrollAppear);
 
 
+//menù laterale
+function sideMenu(side) {
+  var menu = document.getElementById('side-menu');
+  if(side==0) {
+    menu.style = 'transform: translateX(0vh); position:fixed;';
+  }
+  else {
+    menu.style = 'transform: translateX(-100%);';
+  }
+  side++;
+}
+
+
+
+
+
 // For switching between navigation menus in mobile mode
 var i = 2;
 function switchTAB() {
@@ -159,13 +175,3 @@ function display(n) {
 }
 
 
-function sideMenu(side) {
-  var menu = document.getElementById('side-menu');
-  if(side==0) {
-    menu.style = 'transform: translateX(0vh); position:fixed;';
-  }
-  else {
-    menu.style = 'transform: translateX(-100%);';
-  }
-  side++;
-}
