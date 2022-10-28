@@ -31,13 +31,14 @@
 
 			<!-- Navigation Bar -->
 			<nav>
-				<div class="logo"><img src="../images/logo.png" alt="logo"></div>
+				<div class="logo" href="#"><img src="../images/logo.png" alt="logo"></div>
 				<ul>
 					<li><a class="active" href="">Dashboard</a></li>
 					<li><a href="#sezione_corsi_disponibili">Courses</a></li>
 					<li><a href="">Quiz</a></li>
 				</ul>
-				<img src="../images/icon/menu.png" class="menu" onclick="sideMenu(0)" alt="menu"> <!--menu a scomparsa-->
+				<a class="logout" href="">Logout</a>
+				<img src="../images/icon_/menu.png" class="menu" onclick="sideMenu(0)" alt="menu"> <!--menu a scomparsa-->
 			</nav>
 
 			<!-- Title -->
@@ -50,13 +51,72 @@
 
 			<!-- side-menu (appare quando si rimpicciolisce la finestra) -->
 			<div class="side-menu" id="side-menu">
-				<div class="close" onclick="sideMenu(1)"><img src="../images/icon/close.png" alt=""></div>
+				<div class="close" onclick="sideMenu(1)"><img src="../images/icon_/close.png" alt=""></div>
 				<ul>
 					<li><a href="#sezione_corsi_disponibili">Courses</a></li>
 					<li><a href="">Quiz</a></li>
 				</ul>
 			</div>
 		</header>
+
+
+		<!-------------------------------------------------------------------DASHBOARD----------------------------------------------------->
+
+		<!-- Overview -->
+		<div class="inbt">
+			<span>Overview</span>
+		</div>
+		<main class="ccard">
+			<section class="overview">
+				<div class="overview_container">
+				<div class="overview_sub">
+					<p id="topper_overview">Enrolled Courses</p>
+					<p id="number">0</p>
+					<p id="bottom_overview">6 available courses</p>
+				</div>
+				<div class="overview_sub">
+					<p id="topper_overview">Completed Courses</p>
+					<p id="number">0</p>
+					<p id="bottom_overview">6 courses not completed yet</p>
+				</div>
+				<div class="overview_sub">
+					<p id="topper_overview">Completed quiz</p>
+					<p id="number">0</p>
+					<p id="bottom_overview">30 quizzes remaining</p>
+				</div>
+				</div>
+			</section>
+		</main>
+
+		<!-- Goals -->
+		<div class="inbt">
+			<span>Goals</span>
+			<button id="beside_title"><img style="width: 15px; height: 15px;" src="../images/student_/plus.png"></button>
+		</div>
+		<main class="ccard">
+			<section class="todo_container">
+				<div class="todo">
+					<div class="todo_elements">
+						<div id="check">
+							<input type="checkbox">
+							<p>Work more on the dashboard project</p>
+						</div>
+						<div id="check">
+							<input type="checkbox">
+							<p>Go to array exercises from Wes Bos</p>
+						</div>
+						<div id="check">
+							<input type="checkbox">
+							<p>Gather some free resources to learn React</p>
+						</div>
+						<div id="check">
+							<input type="checkbox">
+							<p>Enroll Responsive Web Design course from FCC</p>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
 
 
 		<!-----------------------------------------------------------SEZIONE CORSI----------------------------------------------------------->
@@ -73,29 +133,29 @@
 				<center>
 					<div class="ccardbox">
 						<div class="dcard">
-							<div class="fpart"><img src="../images/courses/organic.jpg"></div>
+							<div class="fpart"><img src="../images/student_/ADS.jpeg"></div>
 							<a href=""><div class="spart">Algorithms and Data Structures</div></a>
 						</div>
 						<div class="dcard">
-							<div class="fpart"><img src="../images/courses/inorganic.jpg"></div>
+							<div class="fpart"><img src="../images/student_/DB.png"></div>
 							<a href=""><div class="spart">Databases</div></a>
 						</div>
 						<div class="dcard">
-							<div class="fpart"><img src="../images/courses/physical.jpg"></div>
+							<div class="fpart"><img src="../images/student_/SWE.png"></div>
 							<a href=""><div class="spart">Software Engineering</div></a>
 						</div>
 					</div>
 					<div class="ccardbox">
 						<div class="dcard">
-							<div class="fpart"><img src="../images/courses/physics.jpg"></div>
+							<div class="fpart"><img src="../images/student_/OS.jpg"></div>
 							<a href=""><div class="spart">Operating Systems</div></a>
 						</div>
 						<div class="dcard">
-							<div class="fpart"><img src="../images/courses/math.jpg"></div>
+							<div class="fpart"><img src="../images/student_/IoT.jpg"></div>
 							<a href=""><div class="spart">Internet of Things</div></a>
 						</div>
 						<div class="dcard">
-							<div class="fpart"><img src="../images/courses/paper-download.png"></div>
+							<div class="fpart"><img src="../images/student_/AIML.jpeg"></div>
 							<a href=""><div class="spart">Artificial Intelligence and Machine Learning</div></a>
 						</div>
 					</div>
@@ -116,28 +176,11 @@
 		<!-----------------------------------------------------------FOOTER----------------------------------------------------------->
 		<footer>
 			<div class="footer-container">
-				<div class="left-col">
-					<img src="../images/logo.png" style="width: 200px;">
-					<div class="logo"></div>
-					<div class="social-media">
-						<a href="#"><img src="../images/icon\fb.png"></a>
-						<a href="#"><img src="../images/icon\insta.png"></a>
-						<a href="#"><img src="../images/icon\tt.png"></a>
-						<a href="#"><img src="../images/icon\ytube.png"></a>
-						<a href="#"><img src="../images/icon\linkedin.png"></a>
-					</div><br><br>
-					<p class="rights-text">Copyright © 2021 Created by PoliSEEP-Team. All rights reserved.</p>
-					<br><p><img src="../images/icon/location.png"> Politecnico di Bari<br>Italy, Bari-70121</p><br>
-					<p><img src="../images/icon/phone.png"> +39-0001122333<br><img src="../images/icon/mail.png">&nbsp; poliseepteam@gmail.com</p>
-				</div>
-				<div class="right-col">
-					<h1 style="color: #fff">Our Newsletter</h1>
-					<div class="border"></div><br>
-					<p>Enter Your Email to get our News and updates.</p>
-					<form class="newsletter-form">
-						<input class="txtb" type="email" placeholder="Enter Your Email">
-						<input class="btn" type="submit" value="Submit">
-					</form>
+				<div class="foot">
+					<p>Copyright © 2021<br>Created By Politecnico di Bari<br>All Rights Reserved.</p>
+					<p><img src="../images/icon_/location.png"> Politecnico di Bari, via Edoardo Orabona, 4, 70126 Bari BA</p>
+					<p><img src="../images/icon_/phone.png"> 080 596 2111<br><img src="../images/icon_/mail.png">&nbsp;
+						francy9937@gmail.com</p>
 				</div>
 			</div>
 		</footer>

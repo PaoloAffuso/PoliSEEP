@@ -92,6 +92,21 @@ nav ul li a:hover {
 	background: rgba(0, 74, 134, 0.993);
 }
 
+.logout { /*pulsante logout*/
+	margin-left: 50px;
+	padding: 5px 20px;
+	border: 2px solid rgba(255, 0, 0, 0.993);
+	border-radius: 20px;
+	text-decoration: none;
+	transition: .5s;
+	background-color: rgba(255, 0, 0, 0.993);
+	color: #fff;
+}
+.logout:hover {
+	color: #47506B;
+	background: #fff;
+}
+
 /* Testo degli elementi non attivi della navbar */
 a, button {
 	float: left;
@@ -184,6 +199,86 @@ a, button {
 
 /*--------------------------------------------------HEADER(navbar, title, side-menu) _END-----------------------------------------------*/
 
+/*-------------------------------------------------------------DASHBOARD _START---------------------------------------------------------*/
+
+/* Overview */
+
+.overview_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+}
+
+.overview_container div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #004A86;
+    border-radius: 20px;
+    box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.342);
+    color: white;
+	padding: 20px;
+}
+
+#topper_overview {
+    font-family: "Montserrat", sans-serif;
+}
+
+#number {
+    font-size: 30px;
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
+}
+
+/* To-Do */
+
+.todo_container {
+    grid-template-columns: 1fr 1fr;
+	margin-bottom: 15px;
+}
+
+.todo_elements {
+    background-color: #4BB377;
+    height: 200px;
+	width: 1000px;
+    overflow: scroll;
+    color: white;
+    border-radius: 20px;
+    box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.342);
+	padding: 20px;
+	display: flex;
+    justify-content: left;
+    flex-direction: column;
+}
+
+#check {
+    display: flex;
+    flex-direction: row;
+	padding-top: 10px;
+	padding-bottom: 10px;
+    border-bottom: 1px solid #47506B;
+}
+
+/* Plus Button */
+
+#beside_title {
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: #dde1e7;
+    border-radius: 50px;
+}
+
+button {
+    cursor: pointer;
+}
+
+/*-------------------------------------------------------------DASHBOARD _END-----------------------------------------------------------*/
+
 
 
 /*------------------------------------------------------------SEZIONE CORSI _START------------------------------------------------------*/
@@ -196,6 +291,7 @@ a, button {
 	color: #004A86;
 	margin: 100px;
 	margin-bottom: 50px;
+	scroll-margin-top: 80px;
 }
 
 /* Titolo principale sezione corsi */
@@ -275,93 +371,21 @@ a, button {
 
 /*-------------------------------------------------------------FOOTER _START----------------------------------------------------------*/
 
-/*Footer background con padding superiore*/
 footer {
 	color: #E5E8EF;
 	background: #000D;
 	padding: 50px 0;
 }
-
 footer .footer-container {
 	max-width: 1300px;
 	margin: auto;
 	padding: 0 20px;
+}
+footer .footer-container .foot{
 	display: flex;
+	align-items: center;
+	align-content: center;
 	justify-content: space-between;
-	align-items: center;
-	flex-wrap: wrap-reverse;
-}
-
-footer .social-media img{
-	width: 22px;
-}
-
-footer .logo {
-	width: 180px;
-	color: #fff;
-	font-family: 'Montserrat', cursive;
-}
-footer .social-media{
-	margin: 20px 0;
-}
-
-footer .social-media a{
-	color: #001a21;
-	margin-right: 10px;
-	font-size: 22px;
-	text-decoration: none;
-}
-
-footer .right-col h1{
-	font-size: 26px;
-}
-footer .border{
-	width: 100px;
-	height: 4px;
-	background: linear-gradient(to right, #4BB377, #004A86);
-	margin: 2px;
-}
-
-footer .newsletter-form {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-wrap: wrap;
-}
-footer input::placeholder {
-  color: white !important;
-}
-footer .txtb {
-	flex: 1;
-	padding: 18px 40px;
-	font-size: 16px;
-	background: #343A40;
-	border: none;
-	font-weight: 700;
-	outline: none;
-	border-radius: 5px;
-	min-width: 260px;
-	margin-top: 20px;
-	color: white;
-}
-
-footer .btn {
-	margin-top: 20px;
-	padding: 18px 40px;
-	font-size: 16px;
-	color: #f1f1f1;
-	background: linear-gradient(to right, #4BB377, #004A86);
-	border: none;
-	font-weight: 700;
-	outline: none;
-	border-radius: 5px;
-	margin-left: 20px;
-	cursor: pointer;
-	transition: opacity .3s linear;
-}
-
-footer .btn:hover {
-	opacity: .7;
 }
 
 /*-------------------------------------------------------------FOOTER _END----------------------------------------------------------*/
@@ -394,7 +418,7 @@ footer .btn:hover {
 		margin-left: 45%;
 		transform: scale(1.5);
 	}
-	nav ul {
+	nav ul, .logout{
 		display: none;
 	}
 }
@@ -432,3 +456,12 @@ footer .btn:hover {
 }
 
 /*-------------------------------------------------Sezione per Responsive Website _END--------------------------------------------*/
+
+
+
+
+
+
+
+
+
