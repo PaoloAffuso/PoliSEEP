@@ -10,9 +10,12 @@
 
 		<link rel="stylesheet" type="text/css" href="student.css">
 		<link rel="shortcut icon" type="png" href="../images/icon/favicon.png">
+		<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 
 		<script type="text/javascript" src="../script.js"></script>
 		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+
 		<script> // script per la gestione dell'ombra nera della navbar
 			$(window).on('scroll', function(){
 				if($(window).scrollTop()){
@@ -33,7 +36,7 @@
 			<nav>
 				<div class="logo" href="#"><img src="../images/logo.png" alt="logo"></div>
 				<ul>
-					<li><a class="active" href="">Dashboard</a></li>
+					<li><a class="active" href="#dashboard">Dashboard</a></li>
 					<li><a href="#sezione_corsi_disponibili">Courses</a></li>
 					<li><a href="">Quiz</a></li>
 				</ul>
@@ -43,11 +46,21 @@
 
 			<!-- Title -->
 			<div class="title" id="dash">
-				<span>Welcome back - Nome Utente</span>
+				<span>Welcome back Username</span>
 				<div class="shortdesc">
-					<p>Test</p>
+					<p>Here you find everything you need</p>
 				</div>
 			</div>
+
+			<!-- Immagine di profilo -->
+			<main class="ccard_usrimg">
+				<div class="profile-pic-div">
+					<img src="../images/student_/usrimg.png" id="photo">
+					<input type="file" id="file">
+					<label for="file" id="uploadBtn">Change Photo</label>
+				</div>
+				<script src="../script/user_img.js"></script>
+			</main>
 
 			<!-- side-menu (appare quando si rimpicciolisce la finestra) -->
 			<div class="side-menu" id="side-menu">
@@ -57,16 +70,25 @@
 					<li><a href="">Quiz</a></li>
 				</ul>
 			</div>
+
+			<!-- Freccia per tornare su -->
+			<a href="#" class="go-top"><i class="fas fa-arrow-up"></i></a>
+
 		</header>
 
 
 		<!-------------------------------------------------------------------DASHBOARD----------------------------------------------------->
 
-		<!-- Overview -->
-		<div class="inbt">
-			<span>Overview</span>
+		<!-- Dashboard -->
+		<div class="inbt", id="dashboard">
+			<span>Dashboard</span>
+			<div class="shortdesc2">
+				<p>Here is your Learning Activity</p>
+			</div>
 		</div>
-		<main class="ccard">
+		<main class="ccard_dash">
+
+			<!-- Overview -->
 			<section class="overview">
 				<div class="overview_container">
 				<div class="overview_sub">
@@ -86,36 +108,26 @@
 				</div>
 				</div>
 			</section>
-		</main>
 
-		<!-- Goals -->
-		<div class="inbt">
-			<span>Goals</span>
-			<button id="beside_title"><img style="width: 15px; height: 15px;" src="../images/student_/plus.png"></button>
-		</div>
-		<main class="ccard">
-			<section class="todo_container">
-				<div class="todo">
-					<div class="todo_elements">
-						<div id="check">
-							<input type="checkbox">
-							<p>Work more on the dashboard project</p>
-						</div>
-						<div id="check">
-							<input type="checkbox">
-							<p>Go to array exercises from Wes Bos</p>
-						</div>
-						<div id="check">
-							<input type="checkbox">
-							<p>Gather some free resources to learn React</p>
-						</div>
-						<div id="check">
-							<input type="checkbox">
-							<p>Enroll Responsive Web Design course from FCC</p>
-						</div>
-					</div>
+			<!-- To-Do List -->
+			<div class="container">
+				<div class="input-field">
+				  <textarea placeholder="Enter your new task"></textarea>
+				  <i class="uil uil-notes note-icon"></i>
 				</div>
-			</section>
+
+				<ul class="todoLists"></ul>
+
+				<div class="pending-tasks">
+				  <span
+					>You have <span class="pending-num"> no </span> tasks pending</span>
+				  <button class="clear-button">Clear All</button>
+				</div>
+			</div>
+			<script src="../script/script_Todo.js"></script> <!-- Script per la To-Do List -->
+
+
+
 		</main>
 
 
