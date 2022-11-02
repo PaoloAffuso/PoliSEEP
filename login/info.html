@@ -26,7 +26,7 @@
             <div class="text-wrapper">
                 <div class="text-inner">
 
-                    <h2><strong>Terms and Conditions</strong></h2>
+                    <h2 style="color:#004A86; margin-top: 50px;"><strong>Terms and Conditions</strong></h2>
 
                     <p> Welcome to PoliSƎEP Web App!</p>
 
@@ -51,7 +51,7 @@
                         and/or he/she or they, are
                         taken as interchangeable and therefore as referring to same.</p>
 
-                    <h3><strong>Cookies</strong></h3>
+                    <h3 style="color:#004A86;"><strong>Cookies</strong></h3>
 
                     <p> We employ the use of cookies. By accessing PoliSƎEP, you agreed to use cookies in agreement
                         with
@@ -67,9 +67,9 @@
                         our
                         website. Some of our affiliate/advertising partners may also use cookies.</p>
 
-                    <h3><strong>License</strong></h3>
+                    <h3 style="color:#004A86;"><strong>License</strong></h3>
 
-                    <p>Unless otherwise stated, EMO - Music and/or its licensors own the intellectual property rights
+                    <p> Unless otherwise stated, EMO - Music and/or its licensors own the intellectual property rights
                         for
                         all
                         material
@@ -139,7 +139,7 @@
                         use,
                         reproduce and edit any of your Comments in any and all forms, formats or media.</p>
 
-                    <h3><strong>Hyperlinking to our Content</strong></h3>
+                    <h3 style="color:#004A86;"><strong>Hyperlinking to our Content</strong></h3>
 
                     <p>The following organizations may link to our Website without prior written approval:</p>
 
@@ -180,7 +180,7 @@
                         <li>educational institutions and trade associations.</li>
                     </ul>
 
-                    <p>We will approve link requests from these organizations if we decide that: (a) the link would not
+                    <p> We will approve link requests from these organizations if we decide that: (a) the link would not
                         make
                         us
                         look
@@ -199,7 +199,7 @@
                         services;
                         and (c) fits within the context of the linking party’s site.</p>
 
-                    <p>If you are one of the organizations listed in paragraph 2 above and are interested in linking to
+                    <p> If you are one of the organizations listed in paragraph 2 above and are interested in linking to
                         our
                         website,
                         you must inform us by sending an e-mail to PoliSƎEP. Please include your name, your
@@ -224,21 +224,21 @@
                             format of content on the linking party’s site.</li>
                     </ul>
 
-                    <p>No use of PoliSƎEP's logo or other artwork will be allowed for linking absent a trademark
+                    <p> No use of PoliSƎEP's logo or other artwork will be allowed for linking absent a trademark
                         license
                         agreement.
                     </p>
 
-                    <h3><strong>iFrames</strong></h3>
+                    <h3 style="color:#004A86;"><strong>iFrames</strong></h3>
 
-                    <p>Without prior approval and written permission, you may not create frames around our Webpages that
+                    <p> Without prior approval and written permission, you may not create frames around our Webpages that
                         alter
                         in
                         any way the visual presentation or appearance of our Website.</p>
 
-                    <h3><strong>Content Liability</strong></h3>
+                    <h3 style="color:#004A86;"><strong>Content Liability</strong></h3>
 
-                    <p>We shall not be hold responsible for any content that appears on your Website. You agree to
+                    <p> We shall not be hold responsible for any content that appears on your Website. You agree to
                         protect
                         and
                         defend us against all claims that is rising on your Website. No link(s) should appear on any
@@ -248,13 +248,13 @@
                         advocates
                         the infringement or other violation of, any third party rights.</p>
 
-                    <h3><strong>Your Privacy</strong></h3>
+                    <h3 style="color:#004A86;"><strong>Your Privacy</strong></h3>
 
                     <p>Please read Privacy Policy</p>
 
-                    <h3><strong>Reservation of Rights</strong></h3>
+                    <h3 style="color:#004A86;"><strong>Reservation of Rights</strong></h3>
 
-                    <p>We reserve the right to request that you remove all links or any particular link to our Website.
+                    <p> We reserve the right to request that you remove all links or any particular link to our Website.
                         You
                         approve
                         to immediately remove all links to our Website upon request. We also reserve the right to amen
@@ -265,9 +265,9 @@
                         be
                         bound to and follow these linking terms and conditions.</p>
 
-                    <h3><strong>Removal of links from our website</strong></h3>
+                    <h3 style="color:#004A86;"><strong>Removal of links from our website</strong></h3>
 
-                    <p>If you find any link on our Website that is offensive for any reason, you are free to contact and
+                    <p> If you find any link on our Website that is offensive for any reason, you are free to contact and
                         inform
                         us
                         any moment. We will consider requests to remove links but we are not obligated to or so or to
@@ -275,7 +275,7 @@
                         you
                         directly.</p>
 
-                    <p>We do not ensure that the information on this website is correct, we do not warrant its
+                    <p> We do not ensure that the information on this website is correct, we do not warrant its
                         completeness
                         or
                         accuracy; nor do we promise to ensure that the website remains available or that the material on
@@ -283,9 +283,9 @@
                         website
                         is kept up to date.</p>
 
-                    <h3><strong>Disclaimer</strong></h3>
+                    <h3 style="color:#004A86;"><strong>Disclaimer</strong></h3>
 
-                    <p>To the maximum extent permitted by applicable law, we exclude all representations, warranties and
+                    <p> To the maximum extent permitted by applicable law, we exclude all representations, warranties and
                         conditions
                         relating to our website and the use of this website. Nothing in this disclaimer will:</p>
 
@@ -335,6 +335,15 @@
     <script src="./script/TweenMax.min.js"></script> <!--vedere-->
 
     <script src="../script/transition_info.js"></script>
+    <script> // script per la gestione dell'ombra nera della navbar
+        $(window).on('scroll', function () {
+            if ($(window).scrollTop()) {
+                $('nav').addClass('black');
+             } else {
+                $('nav').removeClass('black');
+             }
+         })
+    </script>
 </body>
 
 </html>
