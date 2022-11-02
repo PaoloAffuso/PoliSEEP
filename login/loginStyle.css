@@ -198,10 +198,10 @@ p{   /* PARAGRAFO TESTO "Please,select your role*/
     cursor: pointer;
     background: linear-gradient(to right, #4BB377, #004A86);
     --bs-btn-font-weight: 650;
-    --bs-btn-color: black;
+    --bs-btn-color: white;
     --bs-btn-bg: #000000;
     --bs-btn-border-color: #004A86;
-    --bs-btn-hover-color: white;
+    --bs-btn-hover-color: #004A86;
     --bs-btn-hover-bg: #{shade-color(#ff00ff, 10%)};
 }
 
@@ -307,10 +307,10 @@ p{   /* PARAGRAFO TESTO "Please,select your role*/
     cursor: pointer;
     background: linear-gradient(to right, #4BB377, #004A86);
     --bs-btn-font-weight: 650;
-    --bs-btn-color: black;
+    --bs-btn-color: white;
     --bs-btn-bg: #000000;
     --bs-btn-border-color: #004A86;
-    --bs-btn-hover-color: white;
+    --bs-btn-hover-color: #004A86;
     --bs-btn-hover-bg: #{shade-color(#ff00ff, 10%)};
 }
 
