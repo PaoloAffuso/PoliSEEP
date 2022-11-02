@@ -7,9 +7,11 @@
 	padding: 0;
 	font-family: "Montserrat", sans-serif;
 }
+
 html {
 	scroll-behavior: smooth;
 }
+
 body {
 	background: #FFF;
 	font-family: "Montserrat", sans-serif;
@@ -17,14 +19,16 @@ body {
 
 /*------------------------------------------------------SCROLLBAR LATERALE + TO-DO LIST---------------------------------------------------*/
 ::-webkit-scrollbar {
-  width: 5px;
+	width: 5px;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #4BB377;
-  border-radius: 5px;
+	background: #4BB377;
+	border-radius: 5px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #004A86;
+	background: #004A86;
 }
 
 /*--------------------------------------------------HEADER _START-----------------------------------------------*/
@@ -61,15 +65,15 @@ nav {
 	scroll-margin-top: 100px;
 }
 
-/* Welcome back - username */
-.title span{
+/* Materia */
+.title span {
 	font-weight: 700;
 	font-family: "Montserrat", sans-serif;
 	font-size: 60px;
 	color: #004A86;
 }
 
-/* Sottotitolo welcome back */
+/* Info generali */
 .title .shortdesc {
 	padding: 10px;
 	font-family: "Montserrat", sans-serif;
@@ -78,16 +82,17 @@ nav {
 	margin-bottom: 50px;
 }
 
-.title .span2 .h3{
+.h3 {
 	font-weight: bold;
-	color:rgba(0, 74, 134, 0.993);
+	color: rgba(0, 74, 134, 0.993);
 }
 
-.title .span2 .h4{
-	color:#000;
+.h4 {
+	color: #000;
 }
+
 /* Logo */
-.logo img{
+.logo img {
 	width: 120px;
 	cursor: pointer;
 	transition: all 1s;
@@ -116,7 +121,7 @@ nav ul li a {
 nav ul li a:hover {
 	color: #fff;
 	border-radius: 5px;
-	background:rgba(0, 74, 134, 0.993)
+	background: rgba(0, 74, 134, 0.993)
 }
 
 /* Elemento attivo (home) */
@@ -126,7 +131,8 @@ nav ul li a:hover {
 	background: rgba(0, 74, 134, 0.993);
 }
 
-.login { /*pulsante login*/
+.login {
+	/*pulsante login*/
 	margin-left: 50px;
 	padding: 5px 20px;
 	border: 2px solid rgba(255, 0, 0, 0.993);
@@ -136,12 +142,15 @@ nav ul li a:hover {
 	background-color: rgba(255, 0, 0, 0.993);
 	color: #fff;
 }
+
 .login:hover {
 	color: #47506B;
 	background: #fff;
 }
 
 /*---HEAD-CONTAINER---*/
+
+
 .head-container {
 	margin-top: 12%;
 	display: flex;
@@ -151,11 +160,31 @@ nav ul li a:hover {
 	font-family: "Montserrat", sans-serif;
 }
 
-.svg-image img{ /*immagine a fianco*/
-	margin-top: -15px;
+.head-container1 {
+	margin-top: 12%;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-around;
+	font-family: "Montserrat", sans-serif;
+}
+
+
+.head-container2 {
+	margin-top: 12%;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-around;
+	font-family: "Montserrat", sans-serif;
+}
+
+.svg-image img {
+	/*immagine a fianco*/
+	margin-top: -150px;
 	margin-right: -30px;
-	width: 450px;
-	filter: drop-shadow(0 20px 10px rgba(0,0,0,0.2));
+	width: 480px;
+	filter: drop-shadow(0 20px 10px rgba(0, 0, 0, 0.2));
 }
 
 .info {
@@ -169,7 +198,8 @@ nav ul li a:hover {
 }
 
 /* Testo degli elementi non attivi della navbar */
-a, button {
+a,
+button {
 	float: left;
 	font-family: "Montserrat", sans-serif;
 	font-weight: 500;
@@ -214,12 +244,13 @@ a, button {
 }
 
 /* Testo indicato dal cursore - hover */
-.side-menu ul li:hover a{
+.side-menu ul li:hover a {
 	background: #fff;
-	color: rgba(0, 74, 134, 0.993);;
+	color: rgba(0, 74, 134, 0.993);
+	;
 }
 
-.side-menu ul li a{
+.side-menu ul li a {
 	color: #FFF;
 	width: 100%;
 	font-size: 1em;
@@ -227,7 +258,7 @@ a, button {
 	padding: 15px 0px;
 }
 
-.close img{
+.close img {
 	float: right;
 	width: 35px;
 	cursor: pointer;
@@ -243,7 +274,7 @@ a, button {
 }
 
 /* titolo */
-.title span{
+.title span {
 	font-weight: 700;
 	font-family: "Montserrat", sans-serif;
 	font-size: 60px;
@@ -259,42 +290,128 @@ a, button {
 	margin-bottom: 50px;
 }
 
-/*parte relativa alla descrizione*/
-.quote { /*immagine + descrizione*/
+/*parte relativa agli obiettivi*/
+.quote {
+	/*immagine + descrizione*/
 	margin-top: -50px;
-	width: 600px;
-	margin-left: -20px;
+	width: 1300px;
+	margin-left: -80px;
+	margin-right: -80px;
 }
-.quote img{ /*immagine*/
-	width: 600px;
-	filter: drop-shadow(0 20px 10px rgba(0,0,0,0.2));
-}
-.quote h1{
+
+.quote h1 {
 	color: #004A86;
 }
-.quote h4{
+
+.quote h4 {
 	margin-left: 9px;
 	margin-top: 10px;
 	color: rgba(0, 0, 0, 0.725);
 	line-height: 20px;
-	text-align:justify;
+	text-align: justify;
 }
-.quote h5 {
-	margin-top: 20px;
-	color: #0009;
-	line-height: 20px;
-}
+
 .quote .play {
 	margin-top: 20px;
 	display: flex;
 	align-items: center;
 }
-.quote .play img {
+
+.quote .play span a {
+	margin-left: 10px;
+	font-size: 20px;
+	font-weight: 900;
+	color: rgba(0, 0, 0, 0.8);
+	cursor: pointer;
+}
+
+/*parte relativa alla descrizione*/
+.quote1 {
+	/*immagine + descrizione*/
+	margin-top: -150px;
+	width: 600px;
+	margin-left: -20px;
+}
+
+.quote1 img {
+	/*immagine*/
+	width: 600px;
+	filter: drop-shadow(0 20px 10px rgba(0, 0, 0, 0.2));
+}
+
+.quote1 h1 {
+	color: #004A86;
+}
+
+.quote1 h4 {
+	margin-left: 9px;
+	margin-top: 10px;
+	color: rgba(0, 0, 0, 0.725);
+	line-height: 20px;
+	text-align: justify;
+}
+
+.quote1 h5 {
+	margin-top: 20px;
+	color: #0009;
+	line-height: 20px;
+}
+
+.quote1 .play {
+	margin-top: 20px;
+	display: flex;
+	align-items: center;
+}
+
+.quote1 .play img {
 	width: 45px;
 	cursor: pointer;
 	filter: drop-shadow(0 0 10px #0002);
 }
-.quote .play span a{
+
+.quote1 .play span a {
+	margin-left: 10px;
+	font-size: 20px;
+	font-weight: 900;
+	color: rgba(0, 0, 0, 0.8);
+	cursor: pointer;
+}
+
+/*parte relativa alla verifica apprendimento*/
+.quote2 {
+	/*immagine + descrizione*/
+	margin-top: -150px;
+	width: 1300px;
+	margin-left: -80px;
+	margin-right: -80px;
+	margin-bottom: 50px;
+}
+
+.quote2 img {
+	/*immagine*/
+	width: 600px;
+	filter: drop-shadow(0 20px 10px rgba(0, 0, 0, 0.2));
+}
+
+.quote2 h1 {
+	color: #004A86;
+}
+
+.quote2 h4 {
+	margin-left: 9px;
+	margin-top: 10px;
+	color: rgba(0, 0, 0, 0.725);
+	line-height: 20px;
+	text-align: justify;
+}
+
+.quote2 .play {
+	margin-top: 20px;
+	display: flex;
+	align-items: center;
+}
+
+.quote2 .play span a {
 	margin-left: 10px;
 	font-size: 20px;
 	font-weight: 900;
@@ -305,146 +422,59 @@ a, button {
 /* -----------------------------INFO PARAGRAPH----------------------------------------------*/
 .h3 {
 	font-size: 10 px;
-	color:rgba(0, 74, 134, 0.993);
+	color: rgba(0, 74, 134, 0.993);
 }
 
 .h4 {
 	font-size: 5 px;
-	color:#000;
+	color: #000;
 }
 
 /* ------------------------------------- USR IMG --------------------------------------------- */
 
-.ccard_usrimg{
+.ccard_usrimg {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: right;
 	align-items: flex-start;
-	margin-top: -150px;
+	margin-top: -100px;
 	margin-bottom: -200px;
 }
 
-.profile-pic-div{
-    height: 200px;
-    width: 200px;
-    position: right;
-    transform: translate(-50%,-50%);
-    border-radius: 50%;
-    overflow: hidden;
+.profile-pic-div {
+	height: 200px;
+	width: 200px;
+	position: right;
+	transform: translate(-50%, -50%);
+	border-radius: 50%;
+	overflow: hidden;
 }
 
-#photo{
-    height: 100%;
-    width: 100%;
+#photo {
+	height: 100%;
+	width: 100%;
 }
 
 
 /* Freccia per tornare su */
 .go-top {
-    position: fixed;
-    width: 3rem;
-    height: 3rem;
-    background: #fff;
-    bottom: 2rem;
-    right: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    color: #004A86;
-    border-radius: 50%;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-    z-index: 1000;
+	position: fixed;
+	width: 3rem;
+	height: 3rem;
+	background: #fff;
+	bottom: 2rem;
+	right: 2rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 2rem;
+	color: #004A86;
+	border-radius: 50%;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+	z-index: 1000;
 }
 
 /*--------------------------------------------------HEADER(navbar, title, side-menu) _END-----------------------------------------------*/
-
-
-/*------------------------------------------------------------SEZIONE CORSI _START------------------------------------------------------*/
-
-/* Sezione Corsi */
-.inbt {
-	padding: 10px;
-	font-family: "Montserrat", sans-serif;
-	font-size: 20px;
-	color: #004A86;
-	margin: 100px;
-	margin-bottom: 50px;
-	scroll-margin-top: 80px;
-}
-
-/* Titolo principale sezione corsi */
-.inbt span{
-	font-weight: 700;
-	font-family: "Montserrat", sans-serif;
-	font-size: 40px;
-	color: #004A86;
-}
-
-/* Sottotitolo sezione corsi */
-.inbt .shortdesc2 {
-	padding: 10px;
-	font-family: "Montserrat", sans-serif;
-	font-size: 15px;
-	color: #47506B;
-	margin-bottom: 10px;
-}
-
-/*COURSES AVAILABLE*/
-.ccard {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	align-items: center;
-}
-.ccardbox {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-}
-
-/*Card corso complessiva*/
-.dcard {
-	margin: 10px;
-	width: 300px;
-	height: 210px;
-	background: linear-gradient(to right, #4BB377, #004A86);
-	border-radius: 10px;
-	box-shadow: 0 0 20px rgba(0,0,0,0.4);
-	cursor: pointer;
-}
-
-/*Sezione card contenente l'immagine*/
-.dcard .fpart {
-	width: inherit;
-	height: 150px;
-	color: #000;
-	text-align: left;
-	overflow: hidden;
-}
-
-/*immagine della sezione fpart*/
-.dcard .fpart img {
-	width: 100%;
-	height: 100%;
-}
-
-/*Sezione card contenente il nome del corso*/
-.dcard .spart {
-	padding: 10px;
-	padding-right: 0px;
-	color: #fff;
-	text-align: left;
-	cursor: pointer;
-	font-size: 15px;
-}
-
-.dcard:hover .fpart img{
-	transition: .8s ease;
-	transform: scale(1.2);
-}
-
-/*------------------------------------------------------------SEZIONE CORSI _END------------------------------------------------------*/
 
 
 
@@ -455,12 +485,14 @@ footer {
 	background: #000D;
 	padding: 50px 0;
 }
+
 footer .footer-container {
 	max-width: 1300px;
 	margin: auto;
 	padding: 0 20px;
 }
-footer .footer-container .foot{
+
+footer .footer-container .foot {
 	display: flex;
 	align-items: center;
 	align-content: center;
@@ -477,33 +509,40 @@ footer .footer-container .foot{
 	.footer-container {
 		max-width: 600px;
 	}
+
 	.right-col {
 		width: 100%;
 		margin-bottom: 60px;
 	}
+
 	.left-col {
 		width: 100%;
 		text-align: center;
 	}
+
 	.social-media {
 		display: flex;
 		justify-content: center;
 	}
+
 	.menu {
 		display: block;
 	}
+
 	.logo {
 		transition: 1s ease;
 		margin-left: 45%;
 		transform: scale(1.5);
 	}
-	nav ul, .login{
+
+	nav ul,
+	.login {
 		display: none;
 	}
 }
 
 @media screen and (max-width: 700px) {
-	footer .btn{
+	footer .btn {
 		margin: 0;
 		width: 100%;
 		margin-top: 20px;
@@ -517,24 +556,31 @@ footer .footer-container .foot{
 }
 
 @media screen and (max-width: 1000px) {
-	.nav ul, .nav .search {
+
+	.nav ul,
+	.nav .search {
 		display: none;
 	}
+
 	.go-top {
 		display: none;
 	}
+
 	.logo {
 		transition: 1s ease;
 		margin-left: 45%;
 		transform: scale(1.5);
 	}
-	.nav ul li{
+
+	.nav ul li {
 		width: 100%;
 		margin-bottom: 5px;
 	}
+
 	.nav .switch-tab {
 		visibility: visible;
 	}
+
 	.nav .check-box {
 		visibility: visible;
 	}
@@ -544,20 +590,22 @@ footer .footer-container .foot{
 	.container {
 		padding: 25px 10px;
 	}
-	}
+}
 
 
 @media screen and (max-width: 700px) {
-	footer .btn{
+	footer .btn {
 		margin: 0;
 		width: 100%;
 		margin-top: 20px;
 	}
+
 	.svg-image img {
 		width: 90%;
 		margin: 20px;
 		/* align-self: center; */
 	}
+
 	.quote img {
 		width: 90%;
 		margin: 20px;
@@ -568,7 +616,3 @@ footer .footer-container .foot{
 
 
 /*-------------------------------------------------Sezione per Responsive Website _END--------------------------------------------*/
-
-
-
-

@@ -1,114 +1,155 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Comaptible" content="IE=edge">
-		<title>Course page</title>
-		<meta name="desciption" content="">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Comaptible" content="IE=edge">
+	<title>Course page</title>
+	<meta name="desciption" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<link rel="stylesheet" type="text/css" href="courses.css">
-		<link rel="shortcut icon" type="png" href="../images/icon/favicon.png">
-		<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"/>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+	<link rel="stylesheet" type="text/css" href="courses.css">
+	<link rel="shortcut icon" type="png" href="../images/icon/favicon.png">
+	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
-		<script type="text/javascript" src="../script.js"></script>
-		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="../script.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 
-		<script> // script per la gestione dell'ombra nera della navbar
-			$(window).on('scroll', function(){
-				if($(window).scrollTop()){
+	<script> // script per la gestione dell'ombra nera della navbar
+		$(window).on('scroll', function () {
+			if ($(window).scrollTop()) {
 				$('nav').addClass('black');
-				}else {
-			$('nav').removeClass('black');
+			} else {
+				$('nav').removeClass('black');
 			}
-			})
-		</script>
-	</head>
+		})
+	</script>
+</head>
 
-	<body>
+<body>
 
-		<!----------------------------------------------------HEADER (navbar, title, side-menu)--------------------------------------------->
-		<header id="header">
+	<!----------------------------------------------------HEADER (navbar, title, side-menu)--------------------------------------------->
+	<header id="header">
 
-			<!-- Navigation Bar -->
-			<nav>
-				<div class="logo" href="#"><img src="../images/logo.png" alt="logo"></div>
-				<ul>
-					<li><a class="active" href="#info">Info</a></li>
-					<li><a href="#sezione_corsi_disponibili">Files</a></li>
-					<li><a href="">Quiz</a></li>
-				</ul>
-                <a class="login" href="login.html">Login</a>
-				<img src="../images/icon_/menu.png" class="menu" onclick="sideMenu(0)" alt="menu"> <!--menu a scomparsa-->
-			</nav>
+		<!-- Navigation Bar -->
+		<nav>
+			<div class="logo" href="#"><img src="../images/logo.png" alt="logo"></div>
+			<ul>
+				<li><a class="active" href="#info">Info</a></li>
+				<li><a href="#sezione_corsi_disponibili">Files</a></li>
+				<li><a href="">Quiz</a></li>
+			</ul>
+			<a class="login" href="login.html">Login</a>
+			<img src="../images/icon_/menu.png" class="menu" onclick="sideMenu(0)" alt="menu">
+			<!--menu a scomparsa-->
+		</nav>
 
-			<!-- Title -->
-			<div class="title" id="dash">
-				<span>Internet Of Things</span>
-				<div class="shortdesc">
-					<p>
+		<!-- Title -->
+		<div class="title" id="dash">
+			<span>Internet Of Things</span>
+			<div class="shortdesc">
+				<p>
 					<span2 class="h3">CFU:</span>
-					<span2 class="h4">6</span>
-					</p>
-					<br>
-					<p>
+						<span2 class="h4">6</span>
+				</p>
+				<br>
+				<p>
 					<span2 class="h3">Professor:</span>
-					<span2 class="h4">Gennaro Boggia</span>
-					</p>
-					<br>
-					<p>
-					<span2 class="h3">Exam Modality:</span2> 
-					<span2 class="h4">The exam will take place with a written test, including 15 questions regarding all</span2></p>
-					<span2 class="h4">the topics done during the course. The exam will be considered passed if a score of at least 18/30.</span2>
-					</p>
-				</div>
+						<span2 class="h4">Gennaro Boggia</span>
+				</p>
 			</div>
+		</div>
 
-			<!-- Immagine di profilo -->
-			<main class="ccard_usrimg">
-				<div class="profile-pic-div">
-					<img src="../images/courses_/usrimg.png" id="photo">
-				</div>
-			</main>
-
-			<!-- Freccia per tornare su -->
-			<a href="#" class="go-top"><i class="fas fa-arrow-up"></i></a>
-
-		</header>
-
-			<div class="head-container">
-                <!--logo + frasi-->
-                <div class="quote">
-                    <h1>Brief description of the course</h1> 
-					<h4> is an idea from computer science: 
-					connecting ordinary things
-					like lights and doors to a computer network to make them "intelligent".
-					An embedded system or a computer connects each thing together in a network
-					and to the internet. Some technologies used for the internet of things are
-					RFID and mesh nets. The connections allow each thing to collect and exchange
-					data, and we can control them remotely or by setting rules or chains of actions.
-					IoT improves the ease of life of humans and their daily activities. Experts
-					estimate that the IoT will consist of almost 50 billion objects by 2020.</h4>
-                </div>
-                <!--immagine-->
-                <div class="svg-image">
-                    <img src="../images/courses_/IoT.jpg" alt="svg">
-                </div>
-            </div>
-
-		<!-----------------------------------------------------------FOOTER----------------------------------------------------------->
-		<footer>
-			<div class="footer-container">
-				<div class="foot">
-					<p>Copyright © 2021<br>Created By Politecnico di Bari<br>All Rights Reserved.</p>
-					<p><img src="../images/icon_/location.png"> Politecnico di Bari, via Edoardo Orabona, 4, 70126 Bari BA</p>
-					<p><img src="../images/icon_/phone.png"> 080 596 2111<br><img src="../images/icon_/mail.png">&nbsp;
-						francy9937@gmail.com</p>
-				</div>
+		<!-- Immagine di profilo -->
+		<main class="ccard_usrimg">
+			<div class="profile-pic-div">
+				<img src="../images/courses_/usrimg.png" id="photo">
 			</div>
-		</footer>
+		</main>
 
-	</body>
+		<!-- Freccia per tornare su -->
+		<a href="#" class="go-top"><i class="fas fa-arrow-up"></i></a>
+
+	</header>
+
+	<div class="head-container">
+		<!--logo + frasi-->
+		<div class="quote">
+			<h1>Course Goals</h1>
+			<p>
+			<h4> The purpose of the course is to describe the architectures, enabling technologies and design principles
+				of telecommunications networks in the Internet of Things. The topics covered in the theoretical lessons
+				will be
+				in the laboratory to obtain tangible demonstrations
+				in the field of the effectiveness of the architectural solutions presented in the course.
+				</p>
+				<br>
+				<p>
+				<h4>
+
+					Knowledge and skills attested:<br>
+					Knowledge of the main IoT architectures<br>
+					Knowledge of IPv6 and 6LoWPAN protocols<br>
+					Ability to analyze the elements of an IoT network (WPAN and WAN)<br>
+					Ability to use correct scientific technical language.<br>
+					Ability to design complex IoTs</h4>
+				</p>
+		</div>
+	</div>
+
+	<div class="head-container1">
+		<!--logo + frasi-->
+		<div class="quote1">
+			<h1>Brief description of the course</h1>
+			<h4> is an idea from computer science:
+				connecting ordinary things
+				like lights and doors to a computer network to make them "intelligent".
+				An embedded system or a computer connects each thing together in a network
+				and to the internet. Some technologies used for the internet of things are
+				RFID and mesh nets. The connections allow each thing to collect and exchange
+				data, and we can control them remotely or by setting rules or chains of actions.
+				IoT improves the ease of life of humans and their daily activities. Experts
+				estimate that the IoT will consist of almost 50 billion objects by 2020.</h4>
+		</div>
+		<!--immagine-->
+		<div class="svg-image">
+			<img src="../images/courses_/IoT.jpg" alt="svg">
+		</div>
+	</div>
+
+	<div class="head-container2">
+		<!--logo + frasi-->
+		<div class="quote2">
+			<h1>Learning Verification</h1>
+			<p>
+			<h4> Verification of learning is established through an oral test aimed at ascertaining the level of
+				knowledge
+				and understanding reached by the student on the theoretical and methodological contents indicated in the
+				program.
+				</p>
+				<p>
+				<h4>
+					The oral exam also allows to verify the student's communication skills with language properties and
+					autonomous organization of the exhibition.
+					Minimum contents: short long range protocol architectures for IoT systems. IPv6
+					</p>
+		</div>
+	</div>
+
+	<!-----------------------------------------------------------FOOTER----------------------------------------------------------->
+	<footer>
+		<div class="footer-container">
+			<div class="foot">
+				<p>Copyright © 2021<br>Created By Politecnico di Bari<br>All Rights Reserved.</p>
+				<p><img src="../images/icon_/location.png"> Politecnico di Bari, via Edoardo Orabona, 4, 70126 Bari BA
+				</p>
+				<p><img src="../images/icon_/phone.png"> 080 596 2111<br><img src="../images/icon_/mail.png">&nbsp;
+					francy9937@gmail.com</p>
+			</div>
+		</div>
+	</footer>
+
+</body>
+
 </html>
