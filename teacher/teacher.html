@@ -117,18 +117,21 @@
 
 		<script>
 			var xValues = ["Databases", "OS", "IoT","ML"];
-			var yValues = [55, 49, 44,50];
-			var barColors = ["red", "green","blue","white"];
 
 			new Chart("myChart", {
 				type: "bar",
 				data: {
 					labels: xValues,
 					datasets: [{
-					backgroundColor: barColors,
-					data: yValues
-					}]
-				},
+									label: "My First dataset",
+									backgroundColor: "#FC9775",
+									data: [65, 59, 80, 81, 56, 55, 40]
+								}, {
+									label: "My Second dataset",
+									backgroundColor: "#5A69A6",
+									data: [28, 48, 40, 19, 86, 27, 90]
+								}]
+						},
 				options: {
 					legend: {display: false},
 					title: {
