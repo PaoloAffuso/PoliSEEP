@@ -1,0 +1,278 @@
+/* Import dei font*/
+@import url('https://fonts.googleapis.com/css?family=Montserrat:500&display=swap');
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: "Montserrat", sans-serif;
+}
+html {
+	scroll-behavior: smooth;
+}
+body {
+	background: #FFF;
+	font-family: "Montserrat", sans-serif;
+}
+
+/*------------------------------------------------------SCROLLBAR LATERALE ---------------------------------------------------*/
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background: #4BB377;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #004A86;
+}
+
+/* Navbar */
+nav {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	padding-left: 40px;
+	padding-right: 40px;
+	top: 0;
+	position: fixed;
+	display: flex;
+	width: 100%;
+	z-index: 1000;
+	background: #fff;
+	justify-content: space-between;
+	transition: 1.5s;
+	align-items: center;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Logo */
+.logo img{
+	width: 120px;
+	cursor: pointer;
+	transition: all 1s;
+}
+
+/* Unordered List contenente gli elementi della navbar */
+nav ul {
+	display: flex;
+	align-items: center;
+}
+
+nav ul li {
+	list-style: none;
+	margin: 5px 10px;
+}
+
+nav ul li a {
+	padding: 2px 10px;
+	color: #47506B;
+	cursor: pointer;
+	transition: .5s;
+	text-decoration: none;
+}
+
+/* Elemento indicato dal cursore - hover */
+nav ul li a:hover {
+	color: #fff;
+	border-radius: 5px;
+	background:rgba(0, 74, 134, 0.993)
+}
+
+/* Elemento attivo (home) */
+.active {
+	color: #fff;
+	border-radius: 5px;
+	background: rgba(0, 74, 134, 0.993);
+}
+
+.logout { /*pulsante logout*/
+	margin-left: 50px;
+	padding: 5px 20px;
+	border: 2px solid rgba(255, 0, 0, 0.993);
+	border-radius: 20px;
+	text-decoration: none;
+	transition: .5s;
+	background-color: rgba(255, 0, 0, 0.993);
+	color: #fff;
+}
+.logout:hover {
+	color: #47506B;
+	background: #fff;
+}
+
+/* Testo degli elementi non attivi della navbar */
+a, button {
+	float: left;
+	font-family: "Montserrat", sans-serif;
+	font-weight: 500;
+	color: #47506B;
+	display: block;
+	text-decoration: none;
+	text-align: center;
+}
+
+/* ------------------------------------- SIDE MENU --------------------------------------------- */
+
+.menu {
+	cursor: pointer;
+	width: 25px;
+	display: none;
+}
+
+/* Side menu (background ecc...) */
+.side-menu {
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 74, 134, 0.993);
+	position: absolute;
+	top: 0;
+	transition: .8s;
+	z-index: 2000;
+	transform: translateX(-100%);
+}
+
+.side-menu ul {
+	margin-top: 50%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.side-menu ul li {
+	list-style: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* Testo indicato dal cursore - hover */
+.side-menu ul li:hover a{
+	background: #fff;
+	color: rgba(0, 74, 134, 0.993);;
+}
+
+.side-menu ul li a{
+	color: #FFF;
+	width: 100%;
+	font-size: 1em;
+	text-decoration: none;
+	padding: 15px 0px;
+}
+
+.close img{
+	float: right;
+	width: 35px;
+	cursor: pointer;
+	margin: 10px;
+}
+
+
+
+/* ------------------------------------- Pannello laterale sinistro --------------------------------------------- */
+.panel {
+	display: inline-flex;
+	width: 100%;
+	height: 100vh;
+	position: fixed;
+}
+
+/* Container dei singoli moduli*/
+.left-side {
+	background: #FFF;
+	height: 100%;
+	width: 25%;
+	display: block;
+	justify-content: center;
+	box-shadow: inset 0 0 20px rgba(0,0,0,0.7),
+					0 0 30px rgba(0,0,0,0.5);
+}
+
+/* -------------------------- Pannello laterale destro (Google Form container) --------------------------------- */
+.right-side {
+	background: #fff;
+	height: 100%;
+	width: 75%;
+	display: block;
+}
+.left-side ul {
+	margin: 50px;
+	margin-top: 150px;
+}
+.left-side li {
+	list-style-type: none;
+	cursor: pointer;
+	color: #004A86;
+	font-weight: 700;
+	font-size: 1.2em;
+	margin-bottom: 20px;
+}
+.left-side li:hover {
+	color: #000;
+	font-size: 1.5em;
+	font-weight: 900;
+	transition: .3s ease-in-out;
+}
+
+#quiz-container {
+	margin-top: 80px;
+	width: 100%;
+	height: 100%;
+}
+
+.quiz-frame {
+	width: 100%;
+	height: 95vh;
+	border: none;
+}
+
+.main-frame {
+	background: url(../images/extra/quiz.jpeg);
+	background-size: contain;
+	background-position:top;
+	margin-top: -10px;
+}
+
+
+/*-------------------------------------------------Sezione per Responsive Website _START--------------------------------------------*/
+
+@media screen and (max-width: 960px) {
+	.menu {
+		display: block;
+	}
+	.logo {
+		transition: 1s ease;
+		margin-left: 45%;
+		transform: scale(1.5);
+	}
+	nav ul, .logout{
+		display: none;
+	}
+}
+
+
+@media screen and (max-width: 1000px) {
+	.nav ul, .nav {
+		display: none;
+	}
+	.go-top {
+		display: none;
+	}
+	.logo {
+		transition: 1s ease;
+		margin-left: 45%;
+		transform: scale(1.5);
+	}
+	.nav ul li{
+		width: 100%;
+		margin-bottom: 5px;
+	}
+	.nav .switch-tab {
+		visibility: visible;
+	}
+	.nav .check-box {
+		visibility: visible;
+	}
+}
+
+/*-------------------------------------------------Sezione per Responsive Website _END--------------------------------------------*/
+

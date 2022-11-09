@@ -17,7 +17,7 @@ body {
 	font-family: "Montserrat", sans-serif;
 }
 
-/*------------------------------------------------------SCROLLBAR LATERALE + TO-DO LIST---------------------------------------------------*/
+/*------------------------------------------------------SCROLLBAR LATERALE ---------------------------------------------------*/
 ::-webkit-scrollbar {
 	width: 5px;
 }
@@ -292,6 +292,11 @@ button {
 	margin-top: -50px;
 }
 
+p, h4 {
+	text-align: justify;
+	font-size: 15px;
+}
+
 /* ------------------------------------- COURSE GOALS --------------------------------------------- */
 
 .inbt {
@@ -321,36 +326,38 @@ button {
 
 /* ------------------------------------- BRIEF DESCRIPTION --------------------------------------------- */
 
-.inbt_middle {
+
+.head-container {
+	margin-top: -80px;
+	margin-bottom: 50px;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-around;
+	font-family: "Montserrat", sans-serif;
+	max-width: 100%;
+}
+
+.container {
+	position: relative;
+	max-width: auto;
+	max-height: auto;
+	width: fit-content;
+	border-radius: 8px;
 	padding: 10px;
-	font-family: "Montserrat", sans-serif;
-	font-size: 20px;
-	color: #004A86;
-	margin: 100px;
-	margin-bottom: 10px;
-	margin-top: 20px;
-	margin-right: 50px;
-	scroll-margin-top: 80px;
+	box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.342);
+	background: linear-gradient(to right, #4BB377, #004A86);
+	align-items:center;
+	margin-top: -20px;
+	margin-bottom: 50px;
 }
 
-/* Titolo principale sezione corsi */
-.inbt_middle span{
-	font-weight: 700;
-	font-family: "Montserrat", sans-serif;
-	font-size: 40px;
-	color: #004A86;
+.container img{ /*immagine a fianco*/
+	border-radius: 8px;
+	width: 700px;
+	height: 350px;
 }
 
-/* Sottotitolo sezione corsi */
-.inbt_middle .shortdesc2 {
-	padding: 10px;
-	font-family: "Montserrat", sans-serif;
-	font-size: 15px;
-	color: #47506B;
-	margin-bottom: 10px;
-	max-width: fit-content;
-
-}
 
 /* ------------------------------------- LEARNING VERIFICATION --------------------------------------------- */
 
@@ -382,33 +389,6 @@ button {
 	margin-bottom: 10px;
 }
 
-
-
-/* ------------------------------------- COURSE IMAGE --------------------------------------------- */
-
-.container {
-	position:relative;
-	width: 500px;
-	height: 250px;
-	border-radius: 8px;
-	padding: 5px;
-	box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.342);
-	background: linear-gradient(to right, #4BB377, #004A86);
-	align-items: center;
-	margin-bottom: 10px;
-	margin-top: 80px;
-}
-
-/* Resize images */
-.container img {
-    width: 100%;
-    height: 100%;
-	border-radius: 8px;
-}
-
-p {
-	text-align: justify;
-}
 
 
 /*-------------------------------------------------------------FOOTER _START----------------------------------------------------------*/
@@ -474,19 +454,7 @@ footer .footer-container .foot {
 	}
 }
 
-@media screen and (max-width: 1100px) {
-	.container {
-		margin-top: 5px;
-	}
-	.ccard_text{
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-	}
-	.inbt_end {
-		margin-top: 20px;
-	}
-}
+
 
 @media screen and (max-width: 1200px) {
 	.ccard_usrimg {
@@ -494,17 +462,9 @@ footer .footer-container .foot {
 	}
 }
 
-@media screen and (max-width: 1300px) {
-	.container {
-		position:relative;
-		width: 300px;
-		height: 150px;
-	}
-}
 
 
 @media screen and (max-width: 1000px) {
-
 	.nav ul,
 	.nav .search {
 		display: none;
@@ -535,18 +495,18 @@ footer .footer-container .foot {
 }
 
 @media screen and (max-width: 700px) {
-	.container {
-		margin-top: 5px;
-	}
-	.ccard_text{
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-	}
 	footer .btn {
 		margin: 0;
 		width: 100%;
 		margin-top: 20px;
+	}
+	.container img {
+		width: 100%;
+		/* align-self: center; */
+	}
+	.container {
+		width: 75%;
+		/* align-self: center; */
 	}
 }
 
