@@ -12,6 +12,7 @@
 		<link rel="shortcut icon" type="png" href="../images/icon/favicon.png">
 		<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"/>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+		
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
         </script>
@@ -123,12 +124,12 @@
 				data: {
 					labels: xValues,
 					datasets: [{
-									label: "My First dataset",
-									backgroundColor: "#FC9775",
+									label: "NUMBER OF STUDENT THAT HAVE COMPLETED THE QUIZ",
+									backgroundColor: "#4BB377",
 									data: [65, 59, 80, 81, 56, 55, 40]
 								}, {
-									label: "My Second dataset",
-									backgroundColor: "#5A69A6",
+									label: "NUMBER OF STUDENT THAT HAVEN'T COMPLETED THE QUIZ",
+									backgroundColor: "#004A86",
 									data: [28, 48, 40, 19, 86, 27, 90]
 								}]
 						},
@@ -136,7 +137,7 @@
 					legend: {display: false},
 					title: {
 					display: true,
-					text: "World Wine Production 2018"
+					text: "TOTAL COMPLETED QUIZ"
 					}
 				}
 				});
@@ -151,7 +152,10 @@
 			<div class="shortdesc2">
 				<p>Here you can manage your courses</p>
 			</div>
-
+			<div class="nuovo_corso">
+				<!-- Trigger/Open The Modal -->
+				<button onclick="toggleModal()" type="button">Insert a new course</button>
+			</div>
 			<!-- Insieme dei corsi disponibili -->
 			<div class="ccard">
 				<center>
@@ -185,18 +189,19 @@
 					</div>
 				</center>
 			</div>
-			<!-- Trigger/Open The Modal -->
-			<button onclick="toggleModal()" type="button">Open Modal</button>
+
 
 			<!-- The Modal -->
 			<div class="modal-background" onclick="toggleModal()">
 			</div>
 			<!-- Modal content -->
 			<div class="modal">
-				ciaoO
+				<h3>Inserisci nuovo corso</h3>
+				<form action="#" method="#">
+					Nome corso: <input type="text" name="nome"></input>
+					Descrizione: <input type="text" name="nome"></input>
+				</form>
 			</div>
-
-			
 			<script type="text/javascript" src="../script/modale.js"></script>
 		</div>
 

@@ -14,45 +14,7 @@ body {
 	background: #FFF;
 	font-family: "Montserrat", sans-serif;
 }
-/*----------------------------------------------------- MODALE--------------------------------------------------------------------*/
-/* The Modal (background) */
-.modal {
-	display: none; /* Hidden by default */
-	position: fixed; /* Stay in place */
-	z-index: 1; /* Sit on top */
-	left: 0;
-	top: 0;
-	width: 100%; /* Full width */
-	height: 100%; /* Full height */
-	overflow: auto; /* Enable scroll if needed */
-	background-color: rgb(0,0,0); /* Fallback color */
-	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
-  
-  /* Modal Content/Box */
-  .modal-content {
-	background-color: #fefefe;
-	margin: 15% auto; /* 15% from the top and centered */
-	padding: 20px;
-	border: 1px solid #888;
-	width: 80%; /* Could be more or less, depending on screen size */
-  }
-  
-  /* The Close Button */
-  .close_modal {
-	color: #aaa;
-	float: right;
-	font-size: 28px;
-	font-weight: bold;
-  }
-  
-  .close_modal:hover,
-  .close_modal:focus {
-	color: black;
-	text-decoration: none;
-	cursor: pointer;
-  }
-/*---------------------------------------------------FINE MODALE-------------------------------------------------------------------*/
+
 
 
 /*------------------------------------------------------SCROLLBAR LATERALE + TO-DO LIST---------------------------------------------------*/
@@ -350,7 +312,7 @@ a, button {
 
 /* chart  */
 .chart {
-	background: linear-gradient(to right, rgba(75,179,119,0.7), rgba(0,74,134,0.7));
+	background: linear-gradient(to right, rgba(229, 229, 229, 0.6), rgba(157, 157, 157, 0.6));
 	border-radius: 20px;
 }
 
@@ -592,20 +554,20 @@ color: #47506B;
 
 /*------------------------------------------------------------SEZIONE CORSI _END------------------------------------------------------*/
 
-/* modale  */
+/* ------------------------------------------------------------modale ------------------------------------------------------------ */
 button{
 	border: 0;
 	border-radius: 8px;
 	padding: 20px 36px;
-	background: #47506B;
-	color: red;
+	background: linear-gradient(to right, #4BB377, #004A86);;
+	color: white;
 	cursor: pointer;
 }
 
 @keyframes background-in{
 	0% {scale: 0 0.005;}
 	33% {scale: 1 0.005;}
-	66% {scale: 1 1;}
+	66%,100% {scale: 1 1;}
 }
 
 @keyframes modal-in{
@@ -646,7 +608,7 @@ body.open .modal-background{
 	top: 50%;
 	left: 50%;
 	translate: -50% -50%;
-	width: 300px;
+	width: 700px;
 	padding: 48px 40px;
 	border-radius: 12px;
 	background: #37353b;
@@ -666,6 +628,7 @@ body.closed .modal{
 	visibility: hidden;
 	translate: -50px -50px;
 }
+/* ------------------------------------------------------------modale end ------------------------------------------------------------ */
 /*-------------------------------------------------------------FOOTER _START----------------------------------------------------------*/
 
 footer {
