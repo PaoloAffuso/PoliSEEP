@@ -608,11 +608,11 @@ body.open .modal-background{
 	top: 50%;
 	left: 50%;
 	translate: -50% -50%;
-	width: 700px;
+	width: 500px;
 	padding: 48px 40px;
 	border-radius: 12px;
-	background: #37353b;
-	color: #f9f9f9;
+	background: #f2f2f2;
+	color: #47506B;
 	opacity: 0;
 	visibility: hidden;
 	transition: 0.5s;
@@ -629,6 +629,48 @@ body.closed .modal{
 	translate: -50px -50px;
 }
 /* ------------------------------------------------------------modale end ------------------------------------------------------------ */
+/* ------------------------------------------------------------modale form  ------------------------------------------------------------ */
+form {
+	width: 100%;
+	border-radius: 30px;
+	background: #fff;
+	}
+	.form-inner {
+	padding: 15px;
+	}
+	.form-inner input,
+	.form-inner textarea {
+	display: block;
+	width: 100%;
+	padding: 15px;
+	margin-bottom: 10px;
+	border: none;
+	border-radius: 20px;
+	background: #d0dfe8;
+	}
+	.form-inner textarea {
+	resize: none;
+	}
+#form_course {
+	background: linear-gradient(to right, #3785fa, #27df8c);
+	width: 100%;
+	padding: 10px;
+	margin-top: 5px;
+	border-radius: 20px;
+	border: none;
+	font-size: 16px;
+	font-weight: 400;
+	color: #fff;
+}
+input, textarea { 
+	outline: none;
+	}
+h3 {
+	margin-top: 0;
+	font-weight: 700;
+	}
+/* ------------------------------------------------------------modale form end  ------------------------------------------------------------ */
+
 /*-------------------------------------------------------------FOOTER _START----------------------------------------------------------*/
 
 footer {

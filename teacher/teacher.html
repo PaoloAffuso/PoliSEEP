@@ -196,11 +196,24 @@
 			</div>
 			<!-- Modal content -->
 			<div class="modal">
-				<h3>Inserisci nuovo corso</h3>
-				<form action="#" method="#">
-					Nome corso: <input type="text" name="nome"></input>
-					Descrizione: <input type="text" name="nome"></input>
-				</form>
+				
+				
+					<!-- FORM CREATE NEW COURSE -->
+					
+					<form action="#" method="post" enctype="text/plain" >
+						<div class="form-inner">
+							<h3>Create new course</h3>
+							<br>
+							<input type="text" placeholder="Course name">
+							<input type="number" placeholder="CFU">
+							<input type="text" placeholder="Teacher">
+							<textarea placeholder="Goals of the course"></textarea>
+							<input type="text" placeholder="Description">
+							<input type="text" placeholder="Learning verification">				
+							<button type="submit" id="form_course">CREATE</button>
+						</div>
+					</form>
+				
 			</div>
 			<script type="text/javascript" src="../script/modale.js"></script>
 		</div>
