@@ -8,7 +8,7 @@
 		<meta name="desciption" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<link rel="stylesheet" type="text/css" href="courses.css">
+		<link rel="stylesheet" type="text/css" href="courses_teacher.css">
 		<link rel="shortcut icon" type="png" href="../images/icon/favicon.png">
 		<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
@@ -52,9 +52,36 @@
 					<h4>CFU: </h4>
 					<p>6</p><br><br>
 					<h4>Professor: </h4>
-					<p>Gennaro Boggia</p>
+					<p>Gennaro Boggia</p><br><br>
+					<h4>Number of enrolled students: </h4>
+					<p>???</p>
 				</div>
+				<!-- Trigger/Open The Modal -->
+				<button class="mng-isc" onclick="toggleModal_1()" type="button">Manage pending requests</button>
+				<button class="mng-txt" onclick="" type="button">Edit course info</button>
 			</div>
+
+			<!-- The Modal -->
+			<div class="modal-background" onclick="toggleModal_1()">
+			</div>
+			<!-- Modal content -->
+			<div class="modal">
+				<h3>Pending requests:</h3>
+				<form class="liststud">
+					<input class = "cb" type="checkbox" id="stud1" name="stud1" value="Paolo Affuso">
+					<label for="stud1"> Paolo Affuso</label>
+					<input class = "cb" type="checkbox" id="stud2" name="stud2" value="Natale Rossiello">
+					<label for="stud2"> Natale Rossiello</label>
+					<input class = "cb" type="checkbox" id="stud3" name="stud3" value="Francesca Albano">
+					<label for="stud3"> Francesca Albano</label>
+					<input class = "cb" type="checkbox" id="stud4" name="stud4" value="Alessandro Mezzina">
+					<label for="stud4"> Alessandro Mezzina</label>
+				</form>
+				<button class="accept-button">Accept</button>
+				<button class="decline-button">Decline</button>
+			</div>
+			<script type="text/javascript" src="../script/modale.js"></script>
+
 
 			<!-- Immagine di profilo -->
 			<main class="ccard_usrimg">
@@ -117,7 +144,15 @@
 							data, and we can control them remotely or by setting rules or chains of actions.
 							IoT improves the ease of life of humans and their daily activities. Experts
 							estimate that the IoT will consist of almost 50 billion objects by 2020.
-						</p>
+							The course is divided into the following chapters:
+						</p><br>
+						<h4>
+							- Chapter 1<br>
+							- Chapter 2<br>
+							- Chapter 3<br>
+							- Chapter 4<br>
+							- Chapter 5
+						</h4>
 					</div>
 				</div>
 				<!--immagine-->

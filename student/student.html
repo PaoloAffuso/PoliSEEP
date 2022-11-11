@@ -144,35 +144,57 @@
 			<div class="ccard">
 				<center>
 					<div class="ccardbox">
-						<div class="dcard">
+						<div class="dcard" onclick="toggleModal()" type="button">
 							<div class="fpart"><img src="../images/student_/ADS.jpeg"></div>
-							<a href=""><div class="spart">Algorithms and Data Structures</div></a>
+							<a><div class="spart">Algorithms and Data Structures</div></a>
 						</div>
-						<div class="dcard">
+						<div class="dcard" onclick="toggleModal()" type="button">
 							<div class="fpart"><img src="../images/student_/DB.png"></div>
-							<a href=""><div class="spart">Databases</div></a>
+							<a><div class="spart">Databases</div></a>
 						</div>
-						<div class="dcard">
+						<div class="dcard" onclick="toggleModal()" type="button">
 							<div class="fpart"><img src="../images/student_/SWE.png"></div>
-							<a href=""><div class="spart">Software Engineering</div></a>
+							<a><div class="spart">Software Engineering</div></a>
 						</div>
 					</div>
 					<div class="ccardbox">
-						<div class="dcard">
+						<div class="dcard" onclick="toggleModal()" type="button">
 							<div class="fpart"><img src="../images/student_/OS.jpg"></div>
-							<a href=""><div class="spart">Operating Systems</div></a>
+							<a><div class="spart">Operating Systems</div></a>
 						</div>
-						<div class="dcard">
+						<div class="dcard" onclick="toggleModal()" type="button">
 							<div class="fpart"><img src="../images/student_/IoT.jpg"></div>
-							<a href=""><div class="spart">Internet of Things</div></a>
+							<a><div class="spart">Internet of Things</div></a>
 						</div>
-						<div class="dcard">
+						<div class="dcard" onclick="toggleModal()" type="button">
 							<div class="fpart"><img src="../images/student_/AIML.jpeg"></div>
-							<a href=""><div class="spart">Artificial Intelligence and Machine Learning</div></a>
+							<a><div class="spart">Artificial Intelligence and Machine Learning</div></a>
 						</div>
 					</div>
 				</center>
 			</div>
+
+
+			<!-- The Modal -->
+			<div class="modal-background" onclick="toggleModal()">
+			</div>
+			<!-- Modal content -->
+			<div class="modal">
+				<h3>Select one of the available teachers teaching this course:</h3>
+				<form class="listprof">
+					<input class = "cb" type="checkbox" id="prof1" name="prof1" value="Nicola Giaquinto" onchange="cbChange(this)">
+					<label for="prof1"> Nicola Giaquinto</label>
+					<input class = "cb" type="checkbox" id="prof2" name="prof2" value="Gennaro Boggia" onchange="cbChange(this)">
+					<label for="prof2"> Gennaro Boggia</label>
+					<input class = "cb" type="checkbox" id="prof3" name="prof3" value="Luigi Alfredo Grieco" onchange="cbChange(this)">
+					<label for="prof3"> Luigi Alfredo Grieco</label>
+					<input class = "cb" type="checkbox" id="prof4" name="prof4" value="Marina Mongiello" onchange="cbChange(this)">
+					<label for="prof4"> Marina Mongiello</label>
+				</form>
+				<button class="send-button">Send request</button>
+			</div>
+			<script type="text/javascript" src="../script/modale.js"></script>
+
 		</div>
 
 
