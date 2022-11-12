@@ -8,7 +8,7 @@
 	<meta name="desciption" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link rel="stylesheet" type="text/css" href="files.css">
+	<link rel="stylesheet" type="text/css" href="files_student.css">
 	<link rel="shortcut icon" type="png" href="../images/icon/favicon.png">
 	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -38,8 +38,8 @@
 		<!-- Navigation Bar -->
 		<nav>
 			<div class="logo" href="#"><img src="../images/logo.png" alt="logo"></div>
-			<ul style="margin-left:553px; margin-top:-27px">
-				<li><a style="text-decoration:none; font-size: 16px;" href="courses.html">Info</a></li>
+			<ul style="margin-left: 556px; margin-top:-27px">
+				<li><a style="text-decoration:none; font-size: 16px;" href="courses_student.html">Info</a></li>
 				<li><a style="text-decoration:none; font-size: 16px;"class ="active">Files</a></li>
 				<li><a style="text-decoration:none; font-size: 16px;" href="quiz.html">Quiz</a></li>
 			</ul>
@@ -53,15 +53,15 @@
 			<span>Files Section</span>
 			<div class="shortdesc">
 				<p>
-				<h4>Here you can read files uploaded by the professor</h4>
+				<h4>Here you can see files you uploaded for your students</h4>
 				</p>
 			</div>
 		</div>
 
 		<!-- Immagine download -->
 		<main class="ccard_usrimg">
-			<div class="profile-pic-div">
-				<img src="../images/files_/pngtree-download-button-3d-icon-render-png-image_6172244.png" id="photo">
+			<div class="profile-pic-div" style="height: 165px; width: 165px;">
+				<img src="../images/files_/upload_button.png" id="photo">
 			</div>
 		</main>
 
@@ -73,10 +73,10 @@
 	<!-- SAMPLE PAPERS -->
 	<div class="head-container">
 		<!--logo + frasi-->
-		<div class="quote">
+		<div class="quote" style="margin-top: -20px;">
 			<h1>Documents</h1>
 			<p>
-			<h4> Study and practice using following papers
+			<h4> Upload or Delete Files for your students
 				</p>
 		</div>
 	</div>
@@ -84,7 +84,7 @@
  	<div class="container" style="padding-top:50px;">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 
- 		<div class="btn btn-primary btn_delete_val">Download Files</div>
+ 		<div class="btn btn-primary btn_delete_val">Delete Files</div> | <div class="btn btn-primary" input id='actual-btn' input type= 'file'>Upload</div>
  		<div style="padding:21px;"></div>
 
 		<table class="table">
@@ -115,7 +115,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<script src="../script/download_script.js"></script>
+		<script src="../script/upload_delete.js"></script>
  		<div style="padding:10px;"></div>
  		<div class="post_msg"></div>
  	</div>
