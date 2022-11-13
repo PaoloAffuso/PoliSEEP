@@ -12,13 +12,14 @@
 		<link rel="shortcut icon" type="png" href="../images/icon/favicon.png">
 		<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"/>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
+
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
         </script>
 
 		<script type="text/javascript" src="../script.js"></script>
-		
+
 		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 
 		<script> // script per la gestione dell'ombra nera della navbar
@@ -109,7 +110,7 @@
 						<p id="number">0</p>
 					</div>
 				</div>
-			</section>		
+			</section>
 			<div class="chart">
 				<canvas id="myChart" style="width:100%;max-width:700px"></canvas>
 			</div>
@@ -142,7 +143,7 @@
 				}
 				});
 		</script>
-		
+
 
 		<!-----------------------------------------------------------SEZIONE CORSI----------------------------------------------------------->
 
@@ -196,24 +197,27 @@
 			</div>
 			<!-- Modal content -->
 			<div class="modal">
-				
-				
+
+
 					<!-- FORM CREATE NEW COURSE -->
-					
+
 					<form action="#" method="post" enctype="text/plain" >
 						<div class="form-inner">
-							<h3>Create new course</h3>
+							<h3>Create a new course</h3>
 							<br>
 							<input type="text" placeholder="Course name">
 							<input type="number" placeholder="CFU">
-							<input type="text" placeholder="Teacher">
-							<textarea placeholder="Goals of the course"></textarea>
-							<input type="text" placeholder="Description">
-							<input type="text" placeholder="Learning verification">				
+							<input type="text" placeholder="Professor">
+							<textarea placeholder="Course Goals"></textarea>
+							<input type="number" placeholder="Number of chapters">
+							<textarea placeholder="Brief description of the course"></textarea>
+							<input type="text" placeholder="Learning Verification">
+							<input type="file" id="upload_img_btn">
+							<label for="upload_img_btn" id="upload_img_lbl"><i class = "fa-solid fa-upload"></i> Choose course image</label>
 							<button type="submit" id="form_course">CREATE</button>
 						</div>
 					</form>
-				
+
 			</div>
 			<script type="text/javascript" src="../script/modale.js"></script>
 		</div>

@@ -57,25 +57,37 @@
 					<p>???</p>
 				</div>
 				<!-- Trigger/Open The Modal -->
-				<button class="mng-isc" onclick="toggleModal_1()" type="button">Manage pending requests</button>
-				<button class="mng-txt" onclick="" type="button">Edit course info</button>
+				<button class="mng-isc" onclick="toggleModal()" type="button">Manage pending requests</button>
+				<button class="mng-txt" onclick="toggleModal()" type="button">Edit course info</button>
 			</div>
 
 			<!-- The Modal -->
-			<div class="modal-background" onclick="toggleModal_1()">
+			<div class="modal-background" onclick="toggleModal()">
 			</div>
 			<!-- Modal content -->
 			<div class="modal">
 				<h3>Pending requests:</h3>
 				<form class="liststud">
-					<input class = "cb" type="checkbox" id="stud1" name="stud1" value="Paolo Affuso">
-					<label for="stud1"> Paolo Affuso</label>
-					<input class = "cb" type="checkbox" id="stud2" name="stud2" value="Natale Rossiello">
-					<label for="stud2"> Natale Rossiello</label>
-					<input class = "cb" type="checkbox" id="stud3" name="stud3" value="Francesca Albano">
-					<label for="stud3"> Francesca Albano</label>
-					<input class = "cb" type="checkbox" id="stud4" name="stud4" value="Alessandro Mezzina">
-					<label for="stud4"> Alessandro Mezzina</label>
+					<div class="form-group select-all">
+						<input type="checkbox" id="select-all">
+						<label for="select-all"><i>Select all</i></label>
+					</div>
+					<div class="form-group">
+						<input class = "cb" type="checkbox" id="stud1" name="stud1" value="Paolo Affuso">
+						<label for="stud1"> Paolo Affuso</label>
+					</div>
+					<div class="form-group">
+						<input class = "cb" type="checkbox" id="stud2" name="stud2" value="Natale Rossiello">
+						<label for="stud2"> Natale Rossiello</label>
+					</div>
+					<div class="form-group">
+						<input class = "cb" type="checkbox" id="stud3" name="stud3" value="Francesca Albano">
+						<label for="stud3"> Francesca Albano</label>
+					</div>
+					<div class="form-group">
+						<input class = "cb" type="checkbox" id="stud4" name="stud4" value="Alessandro Mezzina">
+						<label for="stud4"> Alessandro Mezzina</label>
+					</div>
 				</form>
 				<button class="accept-button">Accept</button>
 				<button class="decline-button">Decline</button>

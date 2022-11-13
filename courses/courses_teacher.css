@@ -449,6 +449,10 @@ border-color: #bfb;
 	margin-top: 20px;
 }
 
+.modal .form-group.select-all label{
+	margin-bottom: 20px;
+}
+
 /*--------------------------------------------------HEADER(navbar, title, side-menu) _END-----------------------------------------------*/
 
 /*--------------------------------------------------SEZIONE INFO _START-----------------------------------------------*/
