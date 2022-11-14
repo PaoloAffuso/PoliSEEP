@@ -1,26 +1,5 @@
 $(document).ready(function($) 
 {
-
-
-
-    //--->deletel single row > start
-    function remove_curr_tbl_row(ele) 
-    {	 
-        ele.closest('tr').css('background-color', 'red');
-        
-        ele.closest('tr').fadeOut('slow', function()
-        {
-            $(this).remove();
-        }); 	
-    };
-
-    $(document).on('click', '.btn_delete', function(event) 
-    {
-        event.preventDefault();
-
-        remove_curr_tbl_row($(this));
-    }); 		
-    //--->deletel single row > start
      
 
     //--->select/unselect all > start
@@ -48,50 +27,6 @@ $(document).ready(function($)
     //--->select/unselect all > end
 
 
-
-    //--->deletel selected rows > start
-    function remove_all_checked_val(ele) 
-    {	 
-        ele.each(function(index, v1)
-        {   
-            if($(this).prop("checked")) 
-             {
-                $(this).closest('tr').css('background-color', 'red');
-                
-                $(this).closest('tr').fadeOut('slow', function()
-                {
-                    $(this).remove();
-                }); 
-            } 
-        });
-    };
-    $(document).on('click', '.btn_delete_val', function(event) 
-    {
-        event.preventDefault();
-
-        var ele = $(document).find('.item_id'); 
-        var v1 = remove_all_checked_val(ele);
-    });
-    //--->deletel selected rows > end
-
-
-
-    //--->get selected rows values > start
-
-    function get_all_checked_val(ele, attr_lookup) 
-    {  
-        var get_obj = [];
-        ele.each(function(index, v1)
-        {   
-            if($(this).prop("checked")) 
-             {
-                get_obj.push($(this).attr(attr_lookup));
-            } 
-        });			
-        return get_obj;
-    };
-
-
     $(document).on('click', '.btn_get_val', function(event) 
     {
         event.preventDefault();
@@ -109,6 +44,25 @@ $(document).ready(function($)
 
     });		
     //--->get selected rows values > end
+
+    //--->delete files
+    function DeleteAll(){
+
+        var answer = confirm("Do you really want to delete these selected files?")
+    
+        if (answer != 0) { 
+    
+            for(var i=0; i<3; i++){
+    
+                if( (document.form1.filecheck(i).checked == true) && (document.form1.filepath(i).value != "") ){
+    
+                    var fso = new ActiveXObject( "Scripting.FileSystemObject" );
+    
+                    fso.DeleteFile(document.form1.filepath(i).value, true);
+                }
+            }
+        } 
+    }
     
     //--->upload button
     function upload_btn() {
