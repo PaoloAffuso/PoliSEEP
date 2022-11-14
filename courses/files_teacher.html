@@ -8,10 +8,11 @@
 	<meta name="desciption" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link rel="stylesheet" type="text/css" href="files_student.css">
+	<link rel="stylesheet" type="text/css" href="files_teacher.css">
 	<link rel="shortcut icon" type="png" href="../images/icon/favicon.png">
 	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 
 
 	<script type="text/javascript" src="../script.js"></script>
@@ -39,9 +40,9 @@
 		<nav>
 			<div class="logo" href="#"><img src="../images/logo.png" alt="logo"></div>
 			<ul style="margin-left: 556px; margin-top:-27px">
-				<li><a style="text-decoration:none; font-size: 16px;" href="courses_student.html">Info</a></li>
+				<li><a style="text-decoration:none; font-size: 16px;" href="courses_teacher.html">Info</a></li>
 				<li><a style="text-decoration:none; font-size: 16px;"class ="active">Files</a></li>
-				<li><a style="text-decoration:none; font-size: 16px;" href="quiz.html">Quiz</a></li>
+				<li><a style="text-decoration:none; font-size: 16px;" href="quiz_teacher.html">Quiz</a></li>
 			</ul>
 			<a class="logout" style="margin-left:1310px; text-decoration:none; margin-top:-45px; font-size: 16px" href="../login/login.html">Logout</a>
 			<img src="../images/icon_/menu.png" class="menu" onclick="sideMenu(0)" alt="menu">
@@ -65,24 +66,36 @@
 			</div>
 		</main>
 
+		<!-- side-menu (appare quando si rimpicciolisce la finestra) -->
+		<div class="side-menu" id="side-menu">
+			<div class="close" onclick="sideMenu(1)"><img src="../images/icon_/close.png" alt=""></div>
+			<ul>
+				<li><a style="text-decoration:none; font-size: 16px;" href="courses_teacher.html">Info</a></li>
+				<li><a style="text-decoration:none; font-size: 16px;"class ="active">Files</a></li>
+				<li><a style="text-decoration:none; font-size: 16px;" href="quiz_teacher.html">Quiz</a></li>
+			</ul>
+		</div>
+
 		<!-- Freccia per tornare su -->
 		<a href="#" style="text-decoration:none" class="go-top"><i class="fas fa-arrow-up"></i></a>
 
-	    </header>
+	</header>
 
-	<!-- SAMPLE PAPERS -->
-	<div class="head-container">
-		<!--logo + frasi-->
-		<div class="quote" style="margin-top: -20px;">
-			<h1>Documents</h1>
-			<p>
-			<h4> Upload or Delete Files for your students
-				</p>
+
+	<main class="ccard_text">
+		<!-- SAMPLE PAPERS -->
+		<div class="inbt">
+			<span>Documents</span>
+			<div class="shortdesc2">
+				<p>Upload or Delete Files for your students
+				</p><br>
+			</div>
 		</div>
-	</div>
+	</main>
+
 
  	<div class="container" style="padding-top:50px;">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+
 
  		<div class="btn btn-primary btn_delete_val">Delete Files</div> | <div class="btn btn-primary" input id='actual-btn' input type= 'file'>Upload</div>
  		<div style="padding:21px;"></div>
