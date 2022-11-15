@@ -10,6 +10,18 @@ const toggleModal = () => {
     }
 }
 
+const toggleModal1 = () => {
+    const {classList} = document.body;
+    if(classList.contains("open1")){
+        classList.remove("open1");
+        classList.add("closed1");
+    }
+    else{
+        classList.remove("closed1");
+        classList.add("open1");
+    }
+}
+
 function cbChange(obj) {
     var cbs = document.getElementsByClassName("cb");
     for (var i = 0; i < cbs.length; i++) {

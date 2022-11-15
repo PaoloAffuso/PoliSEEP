@@ -57,11 +57,11 @@
 					<p>???</p>
 				</div>
 				<!-- Trigger/Open The Modal -->
-				<button class="mng-isc" onclick="toggleModal()" type="button">Manage pending requests</button>
-				<button class="mng-txt" onclick="toggleModal()" type="button">Edit course info</button>
+				<button id="btn" class="mng-isc" onclick="toggleModal()" type="button">Manage pending requests</button>
+				<button id="btn1" class="mng-txt" onclick="toggleModal1()" type="button">Edit course info</button>
 			</div>
 
-			<!-- The Modal -->
+			<!-- The Modal: manage pending requests -->
 			<div class="modal-background" onclick="toggleModal()">
 			</div>
 			<!-- Modal content -->
@@ -93,6 +93,36 @@
 				<button class="decline-button">Decline</button>
 			</div>
 			<script type="text/javascript" src="../script/modale.js"></script>
+
+			<!-- The Modal: edit course info -->
+			<div class="modal-background1" onclick="toggleModal1()">
+			</div>
+			<!-- Modal content -->
+			<div class="modal1">
+
+
+					<!-- FORM CREATE NEW COURSE -->
+
+					<form action="#" method="post" enctype="text/plain" >
+						<div class="form-inner">
+							<h3>Create a new course</h3>
+							<br>
+							<input type="text" placeholder="Course name">
+							<input type="number" placeholder="CFU">
+							<input type="text" placeholder="Professor">
+							<textarea placeholder="Course Goals"></textarea>
+							<input type="number" placeholder="Number of chapters">
+							<textarea placeholder="Brief description of the course"></textarea>
+							<input type="text" placeholder="Learning Verification">
+							<input type="file" id="upload_img_btn">
+							<label for="upload_img_btn" id="upload_img_lbl"><i class = "fa-solid fa-upload"></i> Choose course image</label>
+							<button type="submit" id="form_course">CREATE</button>
+						</div>
+					</form>
+
+			</div>
+			<script type="text/javascript" src="../script/modale.js"></script>
+
 
 
 			<!-- Immagine di profilo -->
