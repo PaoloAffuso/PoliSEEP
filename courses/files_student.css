@@ -41,7 +41,7 @@ body {
 }
 
 /* Navbar */
-nav {
+.mynav {
 	padding-top: 20px;
 	padding-bottom: 20px;
 	padding-left: 40px;
@@ -59,65 +59,72 @@ nav {
 
 
 /* Logo */
-.logo img {
+.mynav .logo img {
 	width: 120px;
 	cursor: pointer;
 	transition: all 1s;
+	margin-top: -18px;
 }
 
 /* Unordered List contenente gli elementi della navbar */
-nav ul {
+.mynav ul {
 	display: flex;
 	align-items: center;
 }
 
-nav ul li {
+.mynav ul li {
 	list-style: none;
 	margin: 5px 10px;
 }
 
-nav ul li a {
+.mynav ul li a {
+	font-size: 16px;
 	padding: 2px 10px;
 	color: #47506B;
 	cursor: pointer;
 	transition: .5s;
 	text-decoration: none;
+	margin-top: -1px;
 }
 
 /* Elemento indicato dal cursore - hover */
-nav ul li a:hover {
+.mynav ul li a:hover {
+	font-size: 16px;
 	color: #fff;
 	border-radius: 5px;
 	background: rgba(0, 74, 134, 0.993)
 }
 
 /* Elemento attivo (home) */
-.active {
+.mynav .active {
+	font-size: 16px;
 	color: #fff;
 	border-radius: 5px;
 	background: rgba(0, 74, 134, 0.993);
 }
 
-.logout {
+.mynav .logout {
 	/*pulsante logout*/
 	margin-left: 50px;
-	padding: 5px 20px;
+	padding: 4px 20px;
 	border: 2px solid rgba(255, 0, 0, 0.993);
 	border-radius: 20px;
 	text-decoration: none;
 	transition: .5s;
 	background-color: rgba(255, 0, 0, 0.993);
 	color: #fff;
+	font-size: 16px;
+	margin-top: -12px;
 }
 
-.logout:hover {
+.mynav .logout:hover {
 	color: #47506B;
 	background: #fff;
+	font-size: 16px;
 }
 
 /* Testo degli elementi non attivi della navbar */
-a,
-button {
+.mynav a, button {
 	float: left;
 	font-family: "Montserrat", sans-serif;
 	font-weight: 500;
@@ -159,19 +166,20 @@ button {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	width: 100%;
 }
 
 /* Testo indicato dal cursore - hover */
 .side-menu ul li:hover a {
 	background: #fff;
 	color: rgba(0, 74, 134, 0.993);
-	;
+	padding-left: 100%;
+	padding-right: 100%;
 }
 
 .side-menu ul li a {
 	color: #FFF;
-	width: 100%;
-	font-size: 1em;
+	font-size: 16px;
 	text-decoration: none;
 	padding: 15px 0px;
 }
@@ -406,18 +414,18 @@ footer .footer-container .foot {
 		justify-content: center;
 	}
 
-	.menu {
+	.mynav .menu {
 		display: block;
 	}
 
-	.logo {
+	.mynav .logo {
 		transition: 1s ease;
 		margin-left: 45%;
 		transform: scale(1.5);
 	}
 
-	nav ul,
-	.logout {
+	.mynav .ul,
+	.mynav .logout {
 		display: none;
 	}
 }
@@ -438,8 +446,8 @@ footer .footer-container .foot {
 
 @media screen and (max-width: 1000px) {
 
-	.nav ul,
-	.nav .search {
+	.mynav ul,
+	.mynav .search {
 		display: none;
 	}
 
@@ -447,22 +455,22 @@ footer .footer-container .foot {
 		display: none;
 	}
 
-	.logo {
+	.mynav .logo {
 		transition: 1s ease;
 		margin-left: 45%;
 		transform: scale(1.5);
 	}
 
-	.nav ul li {
+	.mynav ul li {
 		width: 100%;
 		margin-bottom: 5px;
 	}
 
-	.nav .switch-tab {
+	.mynav .switch-tab {
 		visibility: visible;
 	}
 
-	.nav .check-box {
+	.mynav .check-box {
 		visibility: visible;
 	}
 }

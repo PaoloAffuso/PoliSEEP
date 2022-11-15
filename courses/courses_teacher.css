@@ -279,7 +279,7 @@ button {
 	z-index: 1000;
 }
 
-/* -------------------- MODALE _START ---------------------------------------- */
+/* ------------------------------------------------------------ MODALE _START ----------------------------------------------------------- */
 .title .mng-isc {
 	border: 0;
 	border-radius: 8px;
@@ -452,7 +452,7 @@ border-color: #bfb;
 .modal .form-group.select-all label{
 	margin-bottom: 20px;
 }
-/*-------------------------------------------------------------modale 1-----------------------------------------------------------------*/
+/*-----------------------------modale 1------------------------------------*/
 .modal-background1{
 	position : fixed;
 	top: 0;
@@ -481,6 +481,7 @@ body.open1 .modal-background1{
 	translate: -50% -50%;
 	width: 700px;
 	padding: 48px 40px;
+	padding-top: 80px;
 	border-radius: 12px;
 	background: #f2f2f2;
 	color: #47506B;
@@ -501,76 +502,83 @@ body.closed1 .modal1{
 	translate: -50px -50px;
 }
 
-/*--------------------------------------------------------------modale 1 end -----------------------------------------------------------*/
-/* ------------------------------------------------------------modale form  ------------------------------------------------------------ */
+/*------------------------------modale 1 end -----------------------------------*/
+
+/* --------------------------------modale form  ------------------------------ */
 form {
 	width: 100%;
-	border-radius: 30px;
-	background: #fff;
-	margin-top: -50px;
-	}
-	
-	.form-inner {
-	padding: 15px;
-	margin-top: 120px;
-	}
-	
-	.form-inner input,
-	.form-inner textarea {
-	display: block;
-	width: 100%;
-	padding: 15px;
-	margin-bottom: 10px;
-	border: none;
 	border-radius: 20px;
-	background: #d0dfe8;
-	}
-	
-	.form-inner textarea {
-	resize: none;
-	}
-	
-	#form_course {
-		background: linear-gradient(to right, #4BB377, #004A86);
-		width: 100%;
-		padding: 10px;
-		margin-top: 5px;
-		border-radius: 20px;
-		border: none;
-		font-size: 15px;
-		font-weight: 400;
-		color: #fff;
-		margin-top: 30px;
-	}
-	
-	input, textarea {
-		outline: none;
-	}
-	
-	h3 {
-		margin-top: 0;
-		font-weight: 700;
-	}
-	
-	input[type=file]{
-		display: none;
-	}
-	
-	#upload_img_lbl{
-		display: inline-block;
-		background: #4BB377;
-		text-align: center;
-		padding: 10px;
-		font-size: 15px;
-		letter-spacing: 1.5px;
-		user-select: none;
-		cursor: pointer;
-		color: #fff;
-		border-radius: 20px;
-	
-	}
-	
-	/* ------------------------------------------------------------modale form end  ------------------------------------------------------------ */
+	background: #fff;
+	margin-top: -30px;
+	padding: 10px;
+}
+
+.form-inner {
+padding: 15px;
+}
+
+.form-inner input,
+.form-inner textarea {
+display: block;
+width: 100%;
+padding: 15px;
+margin-bottom: 10px;
+border: none;
+border-radius: 20px;
+background: #d0dfe8;
+}
+
+.form-inner textarea {
+resize: none;
+}
+
+#form_course {
+	background: linear-gradient(to right, #4BB377, #004A86);
+	width: 100%;
+	padding: 10px;
+	margin-top: 5px;
+	border-radius: 20px;
+	border: none;
+	font-size: 15px;
+	font-weight: 400;
+	color: #fff;
+	margin-top: 40px;
+	cursor: pointer;
+}
+
+input, textarea {
+	outline: none;
+}
+
+h3 {
+	margin-top: 0;
+	font-weight: 700;
+}
+
+input[type=file]{
+	display: none;
+}
+
+#upload_img_lbl{
+	display: inline-block;
+	background: #4BB377;
+	text-align: center;
+	padding: 10px;
+	font-size: 15px;
+	letter-spacing: 1.5px;
+	user-select: none;
+	cursor: pointer;
+	color: #fff;
+	border-radius: 20px;
+
+}
+
+/* --------------------------modale form end  --------------------------- */
+
+/* ------------------------------------------------------------- MODALE _END ----------------------------------------------------------- */
+
+
+
 /*--------------------------------------------------HEADER(navbar, title, side-menu) _END-----------------------------------------------*/
 
 /*--------------------------------------------------SEZIONE INFO _START-----------------------------------------------*/
@@ -631,7 +639,6 @@ p, h4 {
 }
 
 .container {
-	position: relative;
 	max-width: auto;
 	max-height: auto;
 	width: fit-content;
@@ -642,6 +649,7 @@ p, h4 {
 	align-items:center;
 	margin-top: -20px;
 	margin-bottom: 50px;
+	position: inherit;
 }
 
 .container img{ /*immagine a fianco*/

@@ -37,7 +37,7 @@ header {
 
 
 /*---NAVBAR---*/
-nav { 
+nav {
 	padding-top: 20px;
 	padding-bottom: 20px;
 	padding-left: 40px;
@@ -493,7 +493,7 @@ a, button {
 /*---------------------------------FORM DI CONTATTO---------------------------------*/
 .csec {
 	background: linear-gradient(to right, #3785fa, #27df8c);
-	background-attachment: fixed; 
+	background-attachment: fixed;
 	position: absolute;
 	width: 100%;
 	height: 250px;
@@ -556,7 +556,7 @@ form textarea {
 	padding: 15px;
 }
 #csubmit {
-	margin-top: 20px; 
+	margin-top: 20px;
 	background: linear-gradient(to right, #3785fa, #27df8c);
 	border-radius: 5px;
 	border-style: none;
@@ -573,7 +573,7 @@ form textarea {
 footer {
 	color: #E5E8EF;
 	background: #000D;
-	padding: 50px 0; 
+	padding: 50px 0;
 }
 footer .footer-container {
 	max-width: 1300px;
@@ -629,7 +629,7 @@ footer .footer-container .foot{
 	.title { /*forse si può togliere*/
 		margin-top: 0px;
 	}
-	
+
 }
 @media screen and (max-width: 700px) {
 	footer .btn{
@@ -649,7 +649,7 @@ footer .footer-container .foot{
 	}
 }
 
-@media screen and (max-width: 1000px) {	
+@media screen and (max-width: 1000px) {
 	.feedbox form input, .feedbox form .fname{
 		width: 100%;
 	}
