@@ -233,7 +233,9 @@ a, button {
 }
 
 .accept-button {
-	margin-left: 450px;
+	margin-left: 45%;
+	margin-top: 50px;
+	margin-bottom: 5px;
 	padding: 6px 12px;
 	outline: none;
 	border: none;
@@ -244,11 +246,13 @@ a, button {
 	cursor: pointer;
 	white-space: nowrap;
 	transition: .5s;
-	margin-top: 20px;
-	margin-right: 10px;
+	display: none;
 }
 
 .decline-button {
+	margin-left: 45%;
+	margin-top: 5px;
+	margin-bottom: 5px;
 	padding: 6px 12px;
 	outline: none;
 	border: none;
@@ -259,7 +263,7 @@ a, button {
 	cursor: pointer;
 	white-space: nowrap;
 	transition: .5s;
-	margin-top: 20px;
+	display: none;
 }
 
 /*-------------------------------------------------------------FOOTER _START----------------------------------------------------------*/
@@ -288,6 +292,21 @@ footer .footer-container .foot {
 
 /*-------------------------------------------------Sezione per Responsive Website _START--------------------------------------------*/
 
+
+@media screen and (max-width: 600px) {
+	.accept-button {
+		margin-left: 20%;
+	}
+}
+
+
+@media screen and (max-width: 700px) {
+	.accept-button {
+		margin-left: 30%;
+	}
+}
+
+
 @media screen and (max-width: 960px) {
 	.menu {
 		display: block;
@@ -299,6 +318,9 @@ footer .footer-container .foot {
 	}
 	nav ul, .logout{
 		display: none;
+	}
+	.accept-button {
+		margin-left: 35%;
 	}
 }
 
