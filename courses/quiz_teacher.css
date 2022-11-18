@@ -233,10 +233,8 @@ a, button {
 }
 
 .accept-button {
-	margin-left: 45%;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	margin-right: 10px;
+	margin-left: 15px;
+	margin-top: 20px;
 	padding: 6px 12px;
 	outline: none;
 	border: none;
@@ -251,6 +249,7 @@ a, button {
 }
 
 .decline-button {
+	margin-left: 45%;
 	margin-top: 5px;
 	margin-bottom: 5px;
 	padding: 6px 12px;
@@ -264,6 +263,32 @@ a, button {
 	white-space: nowrap;
 	transition: .5s;
 	display: none;
+}
+
+.inbt {
+	padding: 10px;
+	font-family: "Montserrat", sans-serif;
+	font-size: 20px;
+	color: #004A86;
+	margin: 100px;
+	margin-bottom: 50px;
+	scroll-margin-top: 80px;
+	display: none;
+}
+
+.inbt span{
+	font-weight: 700;
+	font-family: "Montserrat", sans-serif;
+	font-size: 40px;
+	color: #004A86;
+}
+
+.inbt .shortdesc2 {
+	padding: 10px;
+	font-family: "Montserrat", sans-serif;
+	font-size: 15px;
+	color: #47506B;
+	margin-bottom: 10px;
 }
 
 /*-------------------------------------------------------------FOOTER _START----------------------------------------------------------*/
@@ -293,20 +318,6 @@ footer .footer-container .foot {
 /*-------------------------------------------------Sezione per Responsive Website _START--------------------------------------------*/
 
 
-@media screen and (max-width: 600px) {
-	.accept-button {
-		margin-left: 20%;
-	}
-}
-
-
-@media screen and (max-width: 700px) {
-	.accept-button {
-		margin-left: 30%;
-	}
-}
-
-
 @media screen and (max-width: 960px) {
 	.menu {
 		display: block;
@@ -318,9 +329,6 @@ footer .footer-container .foot {
 	}
 	nav ul, .logout{
 		display: none;
-	}
-	.accept-button {
-		margin-left: 35%;
 	}
 }
 

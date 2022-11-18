@@ -47,19 +47,27 @@
 
 		<div class="left-side" id="left">
 			<ul>
-				<li onclick="quizt(1)">HOME</li>
-				<li onclick="quizt(2)">Java</li>
-				<li onclick="quizt(3)">Python</li>
-				<li onclick="quizt(4)">JavaScript</li>
-				<li onclick="quizt(5)">Data Structures</li>
-				<li onclick="quizt(6)">Algorithm</li>
+				<li onclick="quiz_teach(1)">HOME</li>
+				<li onclick="quiz_teach(2)">Java</li>
+				<li onclick="quiz_teach(3)">Python</li>
+				<li onclick="quiz_teach(4)">JavaScript</li>
+				<li onclick="quiz_teach(5)">Data Structures</li>
+				<li onclick="quiz_teach(6)">Algorithm</li>
+				<li onclick="quiz_teach(7)">Empty_quiz</li>
 			</ul>
 		</div>
 
 		<div class="right-side" id="right">
 			<div id="quiz-container">
 
-				<button class="accept-button" id="addButton">Add Quiz</button>
+				<div class="inbt", id="quiz_non_creato">
+					<span>No quiz created</span>
+					<div class="shortdesc2">
+						<p>Click here to create a new quiz for this chapter</p>
+						<button class="accept-button" id="addButton">Add Quiz</button>
+					</div>
+				</div>
+
 				<button class="decline-button" id="deleteButton">Delete Quiz</button>
 
 				<div id="f1">
@@ -67,32 +75,38 @@
 				</div>
 
 				<div id="f2">
-					<iframe class="quiz-frame"
+					<iframe id="frame2" class="quiz-frame"
 						src="https://docs.google.com/forms/d/e/1FAIpQLSdHFDm_BakVxro_zJI78OF2OLJpXgDzzaAVMHD9hptWlXBSpA/viewform?embedded=true"
 						frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
 				</div>
 
 				<div id="f3">
-					<iframe class="quiz-frame"
+					<iframe id="frame3" class="quiz-frame"
 						src="https://docs.google.com/forms/d/e/1FAIpQLSdgD7yFEJtqpkImDiLAaQ7w9VcsO688gr1V3Gl7FqwM5yXtWQ/viewform?embedded=true"
 						frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
 				</div>
 
 				<div id="f4">
-					<iframe class="quiz-frame"
+					<iframe id="frame4" class="quiz-frame"
 						src="https://docs.google.com/forms/d/e/1FAIpQLSchDBnai_Aup7YFJQegg4z-qoB338p010VgZRxBYDT17xoRew/viewform?embedded=true"
 						frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
 				</div>
 
 				<div id="f5">
-					<iframe class="quiz-frame"
+					<iframe id="frame5" class="quiz-frame"
 						src="https://docs.google.com/forms/d/e/1FAIpQLSfY5oIAz4R9Ty-LBpx7h4th6OJ0-RkrxIlLslRV4NjwwW8_uw/viewform?embedded=true"
 						frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
 				</div>
 
 				<div id="f6">
-					<iframe class="quiz-frame"
+					<iframe id="frame6" class="quiz-frame"
 						src="https://docs.google.com/forms/d/e/1FAIpQLSflwS89sG7H98J9vFgFqJgsKaZ5gpq3yUlOiW3up7RQQ-qRnw/viewform?embedded=true"
+						frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+				</div>
+
+				<div id="f7">
+					<iframe id="frame7" class="quiz-frame"
+						src="about:blank"
 						frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
 				</div>
 
