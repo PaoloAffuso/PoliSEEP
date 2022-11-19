@@ -12,7 +12,7 @@ frm.submit(function (e) {
 	  {
 		  alert("E-mail does not exist. Enter a valid e-mail.");
 	  }
-      else window.location = "./forgotPSW_insertPin.html"; 
+      else window.location = "../login/forgotPSW_insertPin.html"; 
     },
     error: function (data) {
       console.log("An error occurred.");

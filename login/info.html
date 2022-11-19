@@ -17,7 +17,7 @@
 
     <!--NAVBAR--> 
     <nav> <!--cliccando sul logo, vado alla Home-->
-        <div class="logo" href="../index.html"><img src="../images/logo.png" alt="logo"></div> 
+        <a href="../index.html"><div class="logo"><img src="../images/logo.png" alt="logo"></div></a>
     </nav>
 
     <!--TESTO-->
@@ -315,7 +315,7 @@
             </div>
 
             <div class="input-field buttonclosediv">
-                <a href="signup_login.php">
+                <a href="login.html">
                     <button type="submit" id="btn_close" class="btn btn-bd-primary btn_close">
                         Close
                     </button>
@@ -334,7 +334,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./script/TweenMax.min.js"></script> <!--vedere-->
 
-    <script src="../script/transition_info.js"></script>
+    <script src="../script/login/transition_info.js"></script>
     <script> // script per la gestione dell'ombra nera della navbar
         $(window).on('scroll', function () {
             if ($(window).scrollTop()) {

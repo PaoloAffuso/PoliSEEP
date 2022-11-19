@@ -8,11 +8,10 @@
 		<meta name="desciption" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<link rel="stylesheet" type="text/css" href="courses_teacher.css">
+		<link rel="stylesheet" type="text/css" href="courses_student.css">
 		<link rel="shortcut icon" type="png" href="../images/icon_/favicon.png">
-		<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"/>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
+		<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
 		<script type="text/javascript" src="../script.js"></script>
 		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
@@ -35,11 +34,11 @@
 
 			<!-- Navigation Bar -->
 			<nav>
-				<div class="logo" href="#"><img src="../images/logo.png" alt="logo"></div>
+				<a href="../index.html"><div class="logo"><img src="../images/logo.png" alt="logo"></div></a>
 				<ul>
 					<li><a class="active" href="#info">Info</a></li>
-					<li><a href="files_teacher.html">Files</a></li>
-					<li><a href="quiz_teacher.html">Quiz</a></li>
+					<li><a href="files_student.html">Files</a></li>
+					<li><a href="quiz_student.html">Quiz</a></li>
 				</ul>
 				<a class="logout" href="">Logout</a>
 				<img src="../images/icon_/menu.png" class="menu" onclick="sideMenu(0)" alt="menu">
@@ -53,78 +52,9 @@
 					<h4>CFU: </h4>
 					<p>6</p><br><br>
 					<h4>Professor: </h4>
-					<p>Gennaro Boggia</p><br><br>
-					<h4>Number of enrolled students: </h4>
-					<p>???</p>
+					<p>Gennaro Boggia</p>
 				</div>
-				<!-- Trigger/Open The Modal -->
-				<button id="btn" class="mng-isc" onclick="toggleModal()" type="button">Manage pending requests</button>
-				<button id="btn1" class="mng-txt" onclick="toggleModal1()" type="button">Edit course info</button>
 			</div>
-
-			<!-- The Modal: manage pending requests -->
-			<div class="modal-background" onclick="toggleModal()">
-			</div>
-			<!-- Modal content -->
-			<div class="modal">
-				<form class="liststud">
-					<h3>Manage pending requests</h3>
-					<br>
-					<div class="form-group select-all">
-						<input type="checkbox" id="select-all">
-						<label for="select-all"><i>Select all</i></label>
-					</div>
-					<div class="form-group">
-						<input class = "cb" type="checkbox" id="stud1" name="stud1" value="Paolo Affuso">
-						<label for="stud1"> Paolo Affuso</label>
-					</div>
-					<div class="form-group">
-						<input class = "cb" type="checkbox" id="stud2" name="stud2" value="Natale Rossiello">
-						<label for="stud2"> Natale Rossiello</label>
-					</div>
-					<div class="form-group">
-						<input class = "cb" type="checkbox" id="stud3" name="stud3" value="Francesca Albano">
-						<label for="stud3"> Francesca Albano</label>
-					</div>
-					<div class="form-group">
-						<input class = "cb" type="checkbox" id="stud4" name="stud4" value="Alessandro Mezzina">
-						<label for="stud4"> Alessandro Mezzina</label>
-					</div>
-				</form>
-				<button class="accept-button">Accept</button>
-				<button class="decline-button">Decline</button>
-			</div>
-			<script type="text/javascript" src="../script/modale.js"></script>
-
-			<!-- The Modal: edit course info -->
-			<div class="modal-background1" onclick="toggleModal1()">
-			</div>
-			<!-- Modal content -->
-			<div class="modal1">
-
-					<!-- FORM MANAGE COURSE INFO-->
-
-					<form action="#" method="post" enctype="text/plain" >
-						<div class="form-inner">
-							<h3>Edit course info</h3>
-							<br>
-							<input type="text" placeholder="Course name">
-							<input type="number" placeholder="CFU">
-							<input type="text" placeholder="Professor">
-							<textarea placeholder="Course Goals"></textarea>
-							<input type="number" placeholder="Number of chapters">
-							<textarea placeholder="Brief description of the course"></textarea>
-							<input type="text" placeholder="Learning Verification">
-							<input type="file" id="upload_img_btn">
-							<label for="upload_img_btn" id="upload_img_lbl"><i class = "fa-solid fa-upload"></i> Choose course image</label>
-							<button type="submit" id="form_course">Save</button>
-						</div>
-					</form>
-
-			</div>
-			<script type="text/javascript" src="../script/modale.js"></script>
-
-
 
 			<!-- Immagine di profilo -->
 			<main class="ccard_usrimg">
@@ -141,8 +71,8 @@
 				<div class="close" onclick="sideMenu(1)"><img src="../images/icon_/close.png" alt=""></div>
 				<ul>
 					<li><a class="active" href="#info">Info</a></li>
-					<li><a href="files_teacher.html">Files</a></li>
-					<li><a href="quiz_teacher.html">Quiz</a></li>
+					<li><a href="files_student.html">Files</a></li>
+					<li><a href="quiz_student.html">Quiz</a></li>
 				</ul>
 			</div>
 
