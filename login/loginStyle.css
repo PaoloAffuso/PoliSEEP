@@ -105,7 +105,7 @@ p{   /* PARAGRAFO TESTO "Please,select your role*/
 .form-container .form{ /*FORM SINGOLO*/
     width: 50%;   
     padding: 30px;
-    transition: margin-left 0.18s ease; 
+    transition: margin-left 0.18s ease;
 }
 
 /*TRANSIZIONI DA FORM DI LOGIN A SIGN UP E VICEVERSA*/
@@ -126,7 +126,8 @@ p{   /* PARAGRAFO TESTO "Please,select your role*/
 }
 
 .form-container.active .forms{ /*QUANDO E' ATTIVO IL FORM DI REGISTRAZIONE AUMENTA L'ALTEZZA DEL CONTAINER FORMS*/
-    height: 650px;
+    height: 750px;
+    overflow: auto;
 }
 
 .form-container .form .formtype{ /*TITOLO DEL FORM*/
@@ -135,7 +136,7 @@ p{   /* PARAGRAFO TESTO "Please,select your role*/
     font-weight: 600;
 }
 
-/*CAMPI DI INPUT DEI FORM (email, password, nickname, conferma password, pulsante)*/
+/*CAMPI DI INPUT DEI FORM (email, password, nome, studentID, conferma password, pulsante)*/
 .form .input-field{ /*CONTAINER DEI CAMPI DI INPUT*/
     position: relative;
     height: 50px;
@@ -143,7 +144,7 @@ p{   /* PARAGRAFO TESTO "Please,select your role*/
     margin-top: 30px;
 }
 
-.input-field input{ /*CAMPI DI INPUT (email, password, conferma password, nickname)*/
+.input-field input{ /*CAMPI DI INPUT (email, password, conferma password, nome, studentID,)*/
     background-color: transparent;
     height: 100%;
     width: 100%;
@@ -321,5 +322,3 @@ p{   /* PARAGRAFO TESTO "Please,select your role*/
 .p{
     margin-top: 20px;
 }
-
-
