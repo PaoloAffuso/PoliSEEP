@@ -27,34 +27,79 @@ inputField.addEventListener("keyup", (e) => {
 
   // Se si fa clic sul pulsante Invio e la lunghezza del valore assegnato è maggiore di 0
   if (e.key === "Enter" && inputVal.length > 0) {
-    let liTag = ` <li class="list pending" onclick="handleStatus(this)">
-          <input type="checkbox" />
-          <span class="task">${inputVal}</span>
-          <i class="uil uil-trash" onclick="deleteTask(this)"></i>
-        </li>`;
+    $.ajax({
+      url: "../student/task.php",
+      type: "post",
+      data : {'call':'insertTask', 'descrizione':inputVal},
+      success: function (response) {
+        console.log(response);
+        if(response=="OK") {
+          let liTag = ` <li class="list pending" onclick="handleStatus(this)">
+            <input type="checkbox" />
+            <span class="task">${inputVal}</span>
+            <i class="uil uil-trash" onclick="deleteTask(this)"></i>
+          </li>`;
 
-    todoLists.insertAdjacentHTML("beforeend", liTag); // Inserimento del tag li all'interno del div todolist
-    inputField.value = ""; // Rimuove il valore dal campo di input
-    allTasks();
+          todoLists.insertAdjacentHTML("beforeend", liTag); // Inserimento del tag li all'interno del div todolist
+          inputField.value = ""; // Rimuove il valore dal campo di input
+          allTasks();
+        }
+        else alert("Errore durante l'inserimento");
+      }
+    });
   }
 });
 
 // Seleziona e deseleziona la checkbox mentre si fa clic sul task
 function handleStatus(e) {
   const checkbox = e.querySelector("input"); // Recupera la checkbox
-  checkbox.checked = checkbox.checked ? false : true;
-  e.classList.toggle("pending");
-  allTasks();
+  const descrizione = e.querySelector("span").innerHTML;
+
+  $.ajax({
+    url: "../student/task.php",
+    type: "post",
+    data : {'call':'changeStatus', 'stato':!checkbox.checked, 'descrizione': descrizione},
+    success: function (response) {
+      if(response==="OK") {
+        if(checkbox.checked) checkbox.checked=false;
+        else checkbox.checked=true;
+        e.classList.toggle("pending");
+        allTasks();
+      }
+      else alert("Errore durante l'inserimento");
+    }
+  });
 }
 
 // Elimina il task mentre si fa clic sull'icona di eliminazione
 function deleteTask(e) {
-  e.parentElement.remove(); // Ottiene l'elemento e lo rimuove
-  allTasks();
+  $.ajax({
+    url: "../student/task.php",
+    type: "post",
+    data : {'call':'delSingleTask', 'descrizione': e.id},
+    success: function (response) {
+      if(response==="OK") {
+        e.parentElement.remove(); // Ottiene l'elemento e lo rimuove
+        allTasks();
+      }
+      else alert("Errore durante l'inserimento");
+    }
+  });
+  
 }
 
 // Cancella tutti i task mentre si fa clic sul pulsante clear.
 clearButton.addEventListener("click", () => {
-  todoLists.innerHTML = "";
-  allTasks();
+  $.ajax({
+    url: "../student/task.php",
+    type: "post",
+    data : {'call':'delAllTask'},
+    success: function (response) {
+      if(response==="OK") {
+        todoLists.innerHTML = "";
+        allTasks();
+      }
+      else alert(response);
+    }
+  });
 });

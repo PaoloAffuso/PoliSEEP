@@ -83,22 +83,26 @@
 
 				$conta_stu = $row['conta_stu'];
 
-				echo "
+				echo"
 					<div class='title' id='info'>
-						<span>Internet Of Things</span>
+						<span>".$nome_corso."</span>
 						<div class='shortdesc' id='sub-info'>
-							<h4>.$nome_corso.</h4>
-							<p>.$cfu_corso.</p><br><br>
+							<h4>CFU: </h4>
+							<p>".$cfu_corso."</p><br><br>
 							<h4>Professor: </h4>
-							<p>.$nome_doc.</p><br><br>
+							<p>".$nome_doc."</p><br><br>
 							<h4>Number of enrolled students: </h4>
-							<p>$conta_stu</p>
+							<p>".$conta_stu."</p>
 						</div>
-						<!-- Trigger/Open The Modal -->
-						<button id='btn' class='mng-isc' onclick='toggleModal()' type='button'>Manage pending requests</button>
-						<button id='btn1' class='mng-txt' onclick='toggleModal1()' type='button'>Edit course info</button>
-					</div>";
+					</div>
+					";
 			?>
+			
+			<!-- Trigger/Open The Modal -->
+			<button id="btn" class="mng-isc" onclick="toggleModal()" type="button">Manage pending requests</button>
+			<button id="btn1" class="mng-txt" onclick="toggleModal1()" type="button">Edit course info</button>
+					<!--</div>-->
+		
 
 			<!-- The Modal: manage pending requests -->
 			<div class="modal-background" onclick="toggleModal()">
@@ -112,22 +116,38 @@
 						<input type="checkbox" id="select-all">
 						<label for="select-all"><i>Select all</i></label>
 					</div>
-					<div class="form-group">
-						<input class = "cb" type="checkbox" id="stud1" name="stud1" value="Paolo Affuso">
-						<label for="stud1"> Paolo Affuso</label>
-					</div>
-					<div class="form-group">
-						<input class = "cb" type="checkbox" id="stud2" name="stud2" value="Natale Rossiello">
-						<label for="stud2"> Natale Rossiello</label>
-					</div>
-					<div class="form-group">
-						<input class = "cb" type="checkbox" id="stud3" name="stud3" value="Francesca Albano">
-						<label for="stud3"> Francesca Albano</label>
-					</div>
-					<div class="form-group">
-						<input class = "cb" type="checkbox" id="stud4" name="stud4" value="Alessandro Mezzina">
-						<label for="stud4"> Alessandro Mezzina</label>
-					</div>
+					
+					<?php
+
+						$id_corso = 1; // dummy
+
+						// QUERY: stampa lista studenti che hanno inviato una richiesta di iscrizione al corso
+
+						$sql = "SELECT UTENTE.nome AS nome_utente FROM ISCRIZIONE INNER JOIN UTENTE ON ISCRIZIONE.idUtente = UTENTE.id WHERE ISCRIZIONE.stato=-1 AND ISCRIZIONE.idCorso = '$id_corso' AND UTENTE.tipo='STU'";
+						$result = $link -> query($sql);
+						while($row = $result->fetch_assoc())
+						{
+							$nome_utente = $row['nome_utente'];
+							echo "
+								<div class='form-group'>
+									<input class = 'cb' type='checkbox' id='stud1' name='stud1' value='stud1'>
+									<label for='stud1'>".$nome_utente."</label>
+								</div>
+								";
+						}
+						// TO DO: fare in modo che i pulsante ACCEPT/DECLINE alterino il db
+						
+						// per il pulsante DECLINE usare questa query:
+						/*
+							DELETE FROM ISCRIZIONE WHERE idUtente = "$id_utente"; 
+						*/
+
+						// per il pulsante ACCEPT usare questa query:
+						/*
+							UPDATE ISCRIZIONE SET stato=1 WHERE idUtente = "$id_utente"; 
+						*/
+					?>
+
 				</form>
 				<button class="accept-button">Accept</button>
 				<button class="decline-button">Decline</button>
@@ -141,7 +161,21 @@
 			<div class="modal1">
 
 					<!-- FORM MANAGE COURSE INFO-->
+					
+					<!--I dati di questo form vanno inviati al db-->
+					<!--
+						QUERY 1:
+						UPDATE CORSO SET nome='$datoDalForm',cfu='$datoDalForm',obiettivi='$datoDalForm',descrizione='$datoDalForm',verifica='$datoDalForm' WHERE id='$id_corso'
+						
+						QUERY 2 (serve per scoprire l'id dell'utente):
+						SELECT idUtente alias id_utente FROM ISCRIZIONE WHERE idCorso='$id_corso';
+						$result = $link -> query($sql);
+						$row = $result -> fetch_assoc();
+						$id_utente = $row['id_utente'];
 
+						QUERY 3:
+						UPDATE UTENTE SET nome='$datoDalForm' WHERE id='$id_utente'
+					-->
 					<form action="#" method="post" enctype="text/plain" >
 						<div class="form-inner">
 							<h3>Edit course info</h3>
@@ -196,17 +230,21 @@
 			<div class="inbt">
 				<span>Course Goals</span>
 				<div class="shortdesc2">
-					<p>The purpose of the course is to describe the architectures, enabling technologies and design principles
-						of telecommunications networks in the Internet of Things. The topics covered in the theoretical lessons
-						will be in the laboratory to obtain tangible demonstrations in the field of the effectiveness of the architectural solutions presented in the course. Knowledge and skills attested:
-					</p><br>
-					<h4>
-						- Knowledge of the main IoT architectures<br>
-						- Knowledge of IPv6 and 6LoWPAN protocols<br>
-						- Ability to analyze the elements of an IoT network (WPAN and WAN)<br>
-						- Ability to use correct scientific technical language.<br>
-						- Ability to design complex IoTs
-					</h4>
+				<?php
+					//$id_corso = $_SESSION['id_corso'];
+
+					$id_corso = 1; //dummy
+
+					$sql = "SELECT CORSO.obiettivi FROM CORSO WHERE CORSO.id='$id_corso'";
+					$result = $link -> query($sql);
+					$row = $result -> fetch_assoc();
+					$obiettivi_corso = $row['obiettivi'];
+
+					echo"
+						<div class='shortdesc2'>
+							<p>".$obiettivi_corso."</p><br>
+						</div>";
+				?>
 				</div>
 			</div>
 
@@ -216,30 +254,53 @@
 				<div class="inbt">
 					<span>Brief description of the course</span>
 					<div class="shortdesc2">
-						<p> Is an idea from computer science:
-							connecting ordinary things
-							like lights and doors to a computer network to make them "intelligent".
-							An embedded system or a computer connects each thing together in a network
-							and to the internet. Some technologies used for the internet of things are
-							RFID and mesh nets. The connections allow each thing to collect and exchange
-							data, and we can control them remotely or by setting rules or chains of actions.
-							IoT improves the ease of life of humans and their daily activities. Experts
-							estimate that the IoT will consist of almost 50 billion objects by 2020.
-							The course is divided into the following chapters:
-						</p><br>
-						<h4>
-							- Chapter 1<br>
-							- Chapter 2<br>
-							- Chapter 3<br>
-							- Chapter 4<br>
-							- Chapter 5
-						</h4>
+					<?php
+						
+						//$id_corso = $_SESSION['id_corso'];
+						$id_corso = 1; //dummy
+
+						// QUERY: recupera descrizione del corso
+						$sql = "SELECT CORSO.descrizione FROM CORSO WHERE CORSO.id='$id_corso'";
+						$result = $link -> query($sql);
+						$row = $result -> fetch_assoc();
+						$descrizione_corso = $row['descrizione'];
+
+						echo"
+							<div class='shortdesc2'>
+							<p>".$descrizione_corso."</p><br>
+							</div>";
+
+						// QUERY: recupera lista capitoli del corso
+						$sql = "SELECT max(CAPITOLO.num) AS max_num FROM CAPITOLO WHERE CAPITOLO.idCorso='$id_corso'";
+						$result = $link -> query($sql);
+						$row = $result -> fetch_assoc();
+						$max_num = $row['max_num'];
+
+						for($i=0; $i<$max_num; $i++)
+						{
+							echo "Chapter ".$i."<br>";
+						}
+					?>
 					</div>
 				</div>
 				<!--immagine-->
-				<div class="container">
-					<img src="../images/courses_/IoT.jpg" alt="svg">
-				</div>
+				<?php
+				
+					//$id_corso = $_SESSION['id_corso'];
+
+					$id_corso = 1; //dummy
+
+					$sql = "SELECT CORSO.copertina FROM CORSO WHERE CORSO.id='$id_corso'";
+					$result = $link -> query($sql);
+					$row = $result -> fetch_assoc();
+					$copertina = $row['copertina'];
+
+					echo"
+					<div class='container'>
+						<img src='data:image/gif;base64," .base64_encode($copertina). "' alt='svg'>
+					</div>";
+
+				?>
 			</div>
 
 
@@ -247,14 +308,23 @@
 			<div class="inbt_end">
 				<span>Learning Verification</span>
 				<div class="shortdesc2">
-					<p>Verification of learning is established through an oral test aimed at ascertaining the level of
-						knowledge and understanding reached by the student on the theoretical and methodological contents indicated in the program.
-					</p><br>
-					<p>
-						The oral exam also allows to verify the student's communication skills with language properties and
-						autonomous organization of the exhibition.
-						Minimum contents: short long range protocol architectures for IoT systems. IPv6
-					</p>
+				<?php
+
+					$id_corso = 1; //dummy
+
+					//$id_corso = $_SESSION['id_corso'];
+
+					$sql = "SELECT CORSO.verifica FROM CORSO WHERE CORSO.id='$id_corso'";
+					$result = $link -> query($sql);
+					$row = $result -> fetch_assoc();
+					$verifica = $row['verifica'];
+
+					echo "
+					<div class='shortdesc2'>
+						<p>".$verifica."</p>
+					</div>
+					";
+				?>
 				</div>
 			</div>
 

@@ -9,8 +9,10 @@ frm.submit(function (e) {
     url: frm.attr("action"),
     data: frm.serialize(),
     success: function (data) {
+      console.log(data)
       if (data == "ERRORE") alert("Wrong credentials. Please, try again.");
-      else window.location = "./intro.php"; /*VEDERE, CAMBIARE Intro.php*/
+      else if (data == "OK-STU") window.location = "../student/student.php";
+      else if (data == "OK-DOC") window.location = "../teacher/teacher.php";
     },
     error: function (data) {
       console.log("An error occurred.");
