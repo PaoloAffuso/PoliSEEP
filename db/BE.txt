@@ -1,0 +1,95 @@
+// QUERY CHE STAMPA TUTTI I CORSI
+
+SELECT CORSO.nome, CORSO.copertina, UTENTE.nome
+FROM CORSO INNER JOIN UTENTE ON CORSO.idDocente = UTENTE.id
+
+-------------------------------------------------------------------------
+
+// QUERY CHE STAMPA I CORSI RAGGRUPPATI PER NOME (es: tutti i corsi di analisi in un'unica categoria)
+
+// in pagina (1)
+
+SELECT nome, links
+FROM CORSO
+
+// in pagina (2)
+
+SELECT UTENTE.nome
+FROM UTENTE INNER JOIN CORSO ON UTENTE.id = CORSO.idDocente
+WHERE CORSO.nome = '$nomeCorso' //nomeCorso è stata ricavata dalle variabili di sessione dalla pagina (1) verso la pagina (2)
+
+-------------------------------------------------------------------------
+
+// Gestione del sign-up (per fare in modo che gli id siano sempre unici)
+
+// PAGINA PHP: signup.php
+
+$tipoUtente = ... // dato che arriva dal radio-button
+$querySelezione = SELECT max(id) FROM UTENTE WHERE id LIKE 'DOC%';
+$id = risultato della query;
+$idArray = str_split(string $string, int $length = 1);
+$idParteLetterale = $idArray[0] . idArray[1] . idArray[2];
+$idParteNumerica = $idArray[3] . idArray[4] . idArray[5];
+$idParteNumerica = $idParteNumerica + 1;
+$id = $idParteLetterale . $idParteNumerica;
+$queryInserimento = INSERT INTO UTENTE(id, nome, email, password) VALUES ($id, $nome, $email, $password);
+
+// PAGINA PHP: login.php
+
+if($count > 0)
+{
+	$_SESSION["loggedin"]="True";
+        if(isset($chk)) 
+	{
+        	setcookie ("email",$email,time()+ 3600, '/');
+		setcookie ("password",$password,time()+ 3600, '/');
+            	echo "ATTIVO";
+        }
+        else if($tipoUtente == "DOC")
+	{
+		echo "OK-DOC";
+	}
+        else if($tipoUtente == "STU")
+	{
+		echo "OK-STU";
+	}
+}
+else
+{
+	echo "ERRORE";
+}
+
+// PAGINA JS: login.js
+
+var frm = $("#frm");
+
+frm.submit
+(
+	function (e) 
+	{
+		e.preventDefault();
+
+  		$.ajax
+		(
+			{
+    				type: frm.attr("method"),
+    				url: frm.attr("action"),
+    				data: frm.serialize(),
+    				success: function (data) 
+				{
+      					if (data == "ERRORE") alert("Wrong credentials. Please, try again.");
+      					else if("OK-DOC") window.location = "paginaDoc.php";
+					else if("OK-STU") window.location = "paginaStu.php";
+    				},
+    				error: function (data) 
+				{
+      					console.log("An error occurred.");
+      					console.log(data);
+    				},
+  			}
+		);
+	}
+);
+
+
+

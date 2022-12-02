@@ -1,0 +1,174 @@
+// CREATE TABLE
+
+CREATE TABLE UTENTE
+(
+	id int,
+	nome varchar(50),
+	email varchar(50) UNIQUE,
+	pass varchar(200),
+	tipo char(3),
+	propic longblob,
+	PRIMARY KEY(id, tipo)
+);
+
+CREATE TABLE CORSO
+( 
+	id int,
+	nome varchar(100),
+	copertina longblob,
+	obiettivi varchar(1000),
+	descrizione varchar(1000),
+	verifica varchar(1000),
+	cfu int(2), 
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE ISCRIZIONE 
+(
+	idUtente int,
+	tipoUtente char(3),
+	idCorso int,
+	stato int(1),
+	FOREIGN KEY(idUtente) REFERENCES UTENTE(id),
+	FOREIGN KEY(idCorso) REFERENCES CORSO(id),
+	PRIMARY KEY(idUtente, tipoUtente, idCorso)
+);
+
+CREATE TABLE FILES
+(
+	idCorso int,
+	nome varchar(100) UNIQUE,
+	dataOraCaricamento datetime,	
+	dimensione int,
+	documento longblob,
+	FOREIGN KEY(idCorso) REFERENCES CORSO (id),
+	PRIMARY KEY(idCorso, nome)
+);
+
+CREATE TABLE QUIZ
+(
+	numCapitolo int,
+	idCorsoCapitolo int,
+	num int,
+	linkGF varchar(200),
+	FOREIGN KEY(numCapitolo) REFERENCES CAPITOLO(num),
+	FOREIGN KEY(idCorsoCapitolo) REFERENCES CAPITOLO (idCorso),
+	PRIMARY KEY(numCapitolo, idCorsoCapitolo, num)
+);
+
+CREATE TABLE TAKE_QUIZ
+(
+	idUtente int,
+	tipoUtente char(3),
+	capitolo int,
+	idCorsoCapitoloQuiz int,
+	numQuiz int,
+	stato int(1),
+	FOREIGN KEY(idUtente, tipoUtente) REFERENCES UTENTE(id, tipo),
+	FOREIGN KEY(numCapitoloQuiz, idCorsoCapitoloQuiz, numQuiz) REFERENCES QUIZ(numCapitolo, idCorsoCapitolo, num),
+	PRIMARY KEY(idUtente, tipoUtente, numCapitoloQuiz, idCorsoCapitoloQuiz, numQuiz)
+);
+
+CREATE TABLE TASKS
+(
+	idUtente int,
+	tipoUtente char(3),
+	num int,
+	completo int(1),
+	descrizione varchar(50),
+	FOREIGN KEY(idUtente, tipoUtente) REFERENCES UTENTE (id, tipo),
+	PRIMARY KEY(idUtente, tipoUtente, num)
+);
+
+--------------------------------------------------------------------
+
+// INSERT INTO
+
+
+INSERT INTO UTENTE (id,nome,email,pass,tipo,propic) VALUES
+(1,"Sara Banda","sarabanda@poli.stu.it","password","STU"), 
+(2,"Pino Abete","pinoabete@poli.stu.it","password","STU"), 
+(3,"Pino Abete","pinoabete1@poli.stu.it","password","STU"), 
+(1,"Santo Natale","santonatale@poli.doc.it","password","DOC"),
+(2,"Pasqua Felice","pasquafelice@poli.doc.it","password","DOC"),
+(3,"Silvestro Gatto","silvestrogatto@poli.doc.it","password","DOC");
+
+INSERT INTO CORSO (id,nome,cfu) VALUES
+(1,"IoT",6),
+(2,"IoT",6),
+(3,"AIML",12)
+(4,"ADS",6);
+
+INSERT INTO CORSO (id,nome,cfu) VALUES
+(4,"ADS",6);
+
+INSERT INTO ISCRIZIONE (idUtente,tipoUtente,idCorso,stato) VALUES
+(1, "STU", 1, -1),
+(1, "STU", 3, 1),
+(1, "DOC", 1, 0),
+(2, "DOC", 2, 0),
+(3, "DOC", 3, 0),
+(3, "DOC", 4, 2),
+(2, "STU", 4, 0);
+
+INSERT INTO FILES (idCorso,nome,dimensione) VALUES
+(1,"Intro",1500),
+(1,"Wireless",10000);
+
+--------------------------------------------------------------------
+
+UPDATE CORSO
+SET obiettivi = "bla bla bla", descrizione = "bla bla bla";
+
+UPDATE CORSO
+SET obiettivi = "The purpose of the course is to describe the architectures, enabling technologies and design principles of telecommunications networks in the Internet of Things. The topics covered in the theoretical lessons will be in the laboratory to obtain tangible demonstrations in the field of the effectiveness of the architectural solutions presented in the course. Knowledge and skills attested:
+- Knowledge of the main IoT architectures
+- Knowledge of IPv6 and 6LoWPAN protocols
+- Ability to analyze the elements of an IoT network (WPAN and WAN)
+- Ability to use correct scientific technical language.
+- Ability to design complex IoTs", descrizione = "Is an idea from computer science: connecting ordinary things like lights and doors to a computer network to make them intelligent. An embedded system or a computer connects each thing together in a network and to the internet. Some technologies used for the internet of things are RFID and mesh nets. The connections allow each thing to collect and exchange data, and we can control them remotely or by setting rules or chains of actions. IoT improves the ease of life of humans and their daily activities. Experts estimate that the IoT will consist of almost 50 billion objects by 2020. The course is divided into the following chapters:",
+verifica = "Verification of learning is established through an oral test aimed at ascertaining the level of knowledge and understanding reached by the student on the theoretical and methodological contents indicated in the program.
+The oral exam also allows to verify the student's communication skills with language properties and autonomous organization of the exhibition. Minimum contents: short long range protocol architectures for IoT systems. IPv6"
+WHERE nome="IoT";
+
+--------------------------------------------------------------------
+
+OBIETTIVI IoT:
+
+The purpose of the course is to describe the architectures, enabling technologies and design principles of telecommunications networks in the Internet of Things. The topics covered in the theoretical lessons will be in the laboratory to obtain tangible demonstrations in the field of the effectiveness of the architectural solutions presented in the course. Knowledge and skills attested:
+
+
+- Knowledge of the main IoT architectures
+- Knowledge of IPv6 and 6LoWPAN protocols
+- Ability to analyze the elements of an IoT network (WPAN and WAN)
+- Ability to use correct scientific technical language.
+- Ability to design complex IoTs
+
+--------------------------------------------------------------------
+
+DESCRIZIONE IoT:
+
+Is an idea from computer science: connecting ordinary things like lights and doors to a computer network to make them "intelligent". An embedded system or a computer connects each thing together in a network and to the internet. Some technologies used for the internet of things are RFID and mesh nets. The connections allow each thing to collect and exchange data, and we can control them remotely or by setting rules or chains of actions. IoT improves the ease of life of humans and their daily activities. Experts estimate that the IoT will consist of almost 50 billion objects by 2020. The course is divided into the following chapters:
+
+--------------------------------------------------------------------
+
+MAPPATURA ISCRIZIONE.stato:
+
+   -1 = iscrizione studente in attesa
+	0 = il corso appartiene al prof
+	1 = iscrizione studente approvata
+	2 = corso completato dallo studente
+	
+	se il doc preme pulsante "decline", la riga relativa allo studente viene cancellata
+
+--------------------------------------------------------------------
+
+MAPPATURA TAKE_QUIZ.stato:
+
+   -1 = iscrizione studente in attesa (???)
+	0 = il corso appartiene al prof
+	1 = iscrizione studente approvata
+	2 = quiz completato dallo studente
+	
+	se il doc preme pulsante "decline", la riga relativa allo studente viene cancellata
+
