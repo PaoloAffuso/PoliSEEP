@@ -6,19 +6,27 @@ const inputField = document.querySelector(".input-field textarea"),
 
 // Questa funzione viene richiamata durante l'aggiunta, l'eliminazione e la selezione/deselezione dei task
 function allTasks() {
+  // Se non ci sono task, il contenuto del testo num in sospeso sarà no, in caso contrario il valore num in sospeso sarà pari al numero di task
   let tasks = document.querySelectorAll(".pending");
 
-  // Se non ci sono task, il contenuto del testo num in sospeso sarà no, in caso contrario il valore num in sospeso sarà pari al numero di task
-  pendingNum.textContent = tasks.length === 0 ? "no" : tasks.length;
+  $.ajax({
+    url: "../student/task.php",
+    type: "post",
+    data : {'call':'getPendingTask'},
+    success: function (response) {
+      if(response==="0") pendingNum.textContent="no";
+      else pendingNum.textContent=response;
 
-  let allLists = document.querySelectorAll(".list");
-  if (allLists.length > 0) {
-    todoLists.style.marginTop = "20px";
-    clearButton.style.pointerEvents = "auto";
-    return;
-  }
-  todoLists.style.marginTop = "0px";
-  clearButton.style.pointerEvents = "none";
+      let allLists = document.querySelectorAll(".list");
+      if (allLists.length > 0) {
+        todoLists.style.marginTop = "20px";
+        clearButton.style.pointerEvents = "auto";
+        return;
+      }
+      todoLists.style.marginTop = "0px";
+      clearButton.style.pointerEvents = "none";
+    }
+  });
 }
 
 // Aggiunge un task quando si inserisce il valore nell'area di testo e si preme invio
@@ -103,3 +111,8 @@ clearButton.addEventListener("click", () => {
     }
   });
 });
+
+//Per assicurarsi che il numero di task pending sia corretto
+window.onload = function() {
+  allTasks();
+}

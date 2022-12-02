@@ -41,5 +41,14 @@
             echo "OK";
         else echo "ERROR";
     }
+
+    if($call == "getPendingTask") {
+        $sql="select count(*) as cnt from task where idUtente=1 AND stato=0;";
+        if($result = $link -> query($sql)) {
+            $row = mysqli_fetch_array($result);
+            echo $row['cnt'];
+        }
+        else echo "ERROR";
+    }
     $link -> close();
 ?>

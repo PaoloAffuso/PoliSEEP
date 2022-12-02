@@ -147,9 +147,9 @@
                                             </div>
                                         </div>
 
-                                        <button onclick="controllo_signup(document.getElementById('nome').value, document.getElementById('email').value, document.getElementById('password1').value)" type="submit" id="btn_submit_signup" class="btn btn-bd-primary submitlogin">
+                                        <!--<button onclick="controllo_signup(document.getElementById('nome').value, document.getElementById('email').value, document.getElementById('password1').value)" type="submit" id="btn_submit_signup" class="btn btn-bd-primary submitlogin">
 											  Start now
-											</button>
+											</button>-->
                                         <div class="input-field button">
                                             <button type="submit" id="btn_submit_signup"
                                                 class="btn btn-bd-primary submitlogin">
