@@ -154,17 +154,6 @@
 							<div class='shortdesc2'>
 							<p>".$descrizione_corso."</p><br>
 							</div>";
-
-						// QUERY: recupera lista capitoli del corso
-						$sql = "SELECT max(CAPITOLO.num) AS max_num FROM CAPITOLO WHERE CAPITOLO.idCorso='$id_corso'";
-						$result = $link -> query($sql);
-						$row = $result -> fetch_assoc();
-						$max_num = $row['max_num'];
-
-						for($i=0; $i<$max_num; $i++)
-						{
-							echo "Chapter ".$i."<br>";
-						}
 					?>
 				</div>
 				

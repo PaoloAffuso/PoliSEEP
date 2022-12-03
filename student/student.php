@@ -225,6 +225,36 @@
 			<span>Your Courses</span>
 			<div class="shortdesc2">
 				<p>Here are the courses you are already enrolled in</p>
+				<?php
+					// dummy 
+					$id_utente = 2;
+					// dummy 
+
+					// QUERY: estrae nome e copertina dei corsi a cui l'utente è iscritto
+					
+					$sql = "SELECT CORSO.nome AS nome_corso, CORSO.copertina AS copertina_corso, CORSO.id AS id_corso FROM CORSO WHERE CORSO.id IN (SELECT idCorso FROM ISCRIZIONE WHERE idUtente = '$id_utente' AND tipoUtente = 'STU')";
+					$result = $link -> query($sql);
+					
+					while($row = $result->fetch_assoc())
+					{
+						echo "				
+						<center>
+							<div class='ccardbox'>
+									<div class='dcard' onclick='course_redirect(".$row['id_corso'].")' type='button'>
+										<div class='fpart'><img src='data:image/gif;base64," .base64_encode($row['copertina_corso']). "'></div>
+										<a><div class='spart'>".$row['nome_corso']."</div></a>
+									</div>
+							</div>
+						</center>";
+					}
+				?>
+
+				<script> 
+					function course_redirect(id_corso)
+					{
+						window.location.replace("courses_student.php?id_corso="+id_corso); 
+					}
+				</script>
 			</div>
 		</div>
 

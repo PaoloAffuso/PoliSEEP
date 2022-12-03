@@ -93,7 +93,7 @@
  	<div class="container" style="padding-top:50px;">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 
- 		<div class="btn btn-primary btn_delete_val downloadChecked">Download Files</div>
+ 		<div class="btn btn-primary btn_delete_val downloadChecked" id="downloadChecked">Download Files</div>
  		<div style="padding:21px;"></div>
 
 		<table class="table">
@@ -121,7 +121,7 @@
 					{
 						echo "
 						<tr>
-							<td><input type='checkbox' class='item_id' option_id='1'> </td>
+							<td><input type='checkbox' name='checkbox' class='item_id' option_id='1' value='".$id_corso."-".$row['nome']."'> </td>
 							<td>".$row['nome']."</td>
 							<td>".$row['dataOraCaricamento']."</td>
 							<td>".$row['dimensione']." kB </td>
@@ -148,7 +148,6 @@
 			</div>
 		</div>
 	</footer>
-
 </body>
 
 </html>
