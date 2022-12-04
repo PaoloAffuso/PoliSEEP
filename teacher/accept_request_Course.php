@@ -12,12 +12,12 @@
 
     			// per il pulsante DECLINE usare questa query:
 						/*
-							DELETE FROM ISCRIZIONE WHERE idUtente = "$id_utente"; 
+							DELETE FROM ISCRIZIONE WHERE idUtente = "$id_utente" AND tipoUtente = 'STU'; 
 						*/
 
 						// per il pulsante ACCEPT usare questa query:
 						/*
-							UPDATE ISCRIZIONE SET stato=1 WHERE idUtente = "$id_utente"; 
+							UPDATE ISCRIZIONE SET stato=1 WHERE idUtente = "$id_utente" AND tipoUtente = 'STU'; 
 						*/
 /*
     $sql = "INSERT INTO ISCRIZIONE (idUtente, tipoUtente, idCorso, stato) VALUES ('$id_studente', 'STU', '$id_corso', -1)";
