@@ -1,5 +1,6 @@
 <?php
 	include '../config.php';
+	session_start();
 				
 	// Check connection
 	if (mysqli_connect_errno())
@@ -32,6 +33,20 @@
 			$('nav').removeClass('black');
 			}
 			})
+		</script>
+
+		<script> 
+			function course_redirect(id_corso)
+			{
+				$.ajax({
+					url: "setSession.php",
+					type: "post",
+					data : {'id_corso':id_corso},
+					success: function (response) {
+						window.location.replace("courses_student.php?id_corso="+id_corso); 
+					}
+				});
+			}
 		</script>
 	</head>
 
@@ -126,15 +141,16 @@
 				<ul class="todoLists">
 					<?php
 						$count=0;
-						$sql="SELECT descrizione, stato FROM task WHERE idUtente=1";
+						$idUtente=$_SESSION['id_utente'];
+						$sql="SELECT descrizione, stato, num FROM task WHERE idUtente='$idUtente'";
 						$result = $link->query($sql);
 						while($row = mysqli_fetch_array($result)) {
-							echo "<li class='list pending' onclick='handleStatus(this)'>";
+							echo "<li class='list pending' onclick='handleStatus(this, ".$row['num'].")'>";
 							if(strcmp($row['stato'], "1")===0)
 								echo "<input type='checkbox' checked/>";
 							else echo "<input type='checkbox'/>";
 							echo "<span class='task'>".$row['descrizione']."</span>";
-							echo "<i class='uil uil-trash' id='".$row['descrizione']."' onclick='deleteTask(this)'></i>";
+							echo "<i class='uil uil-trash' id='".$row['descrizione']."' onclick='deleteTask(this, ".$row['num'].")'></i>";
 							echo "</li>";
 						}
 					?>
@@ -249,12 +265,6 @@
 					}
 				?>
 
-				<script> 
-					function course_redirect(id_corso)
-					{
-						window.location.replace("courses_student.php?id_corso="+id_corso); 
-					}
-				</script>
 			</div>
 		</div>
 
@@ -270,6 +280,5 @@
 				</div>
 			</div>
 		</footer>
-
 	</body>
 </html>

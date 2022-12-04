@@ -37,7 +37,7 @@
 				<a href="../index.html"><div class="logo"><img src="../images/logo.png" alt="logo"></div></a>
 				<ul>
 					<li><a class="active" href="#info">Info</a></li>
-					<li><a href="files_student.html">Files</a></li>
+					<li><a href="files_student.php">Files</a></li>
 					<li><a href="quiz_student.html">Quiz</a></li>
 				</ul>
 				<a class="logout" href="">Logout</a>
@@ -68,8 +68,6 @@
 				$nome_corso = $row['nome_corso'];
 				$cfu_corso = $row['cfu_corso'];
 				
-				$_SESSION['id_corso'] = $id_corso;
-
 				echo"
 					<div class='title' id='info'>
 						<span>".$nome_corso."</span>
@@ -86,9 +84,6 @@
 			<main class="ccard_usrimg">
 				
 				<?php
-
-					$id_corso = $_SESSION['id_corso'];
-
 					$sql = "SELECT UTENTE.propic AS propic_utente FROM UTENTE INNER JOIN ISCRIZIONE ON UTENTE.id = ISCRIZIONE.idUtente INNER JOIN CORSO ON ISCRIZIONE.idCorso = CORSO.id WHERE CORSO.id='$id_corso' AND UTENTE.tipo = 'DOC'";
 					$result = $link -> query($sql);
 					$row = $result -> fetch_assoc();
@@ -106,7 +101,7 @@
 				<div class="close" onclick="sideMenu(1)"><img src="../images/icon_/close.png" alt=""></div>
 				<ul>
 					<li><a class="active" href="#info">Info</a></li>
-					<li><a href="files_student.html">Files</a></li>
+					<li><a href="files_student.php">Files</a></li>
 					<li><a href="quiz_student.html">Quiz</a></li>
 				</ul>
 			</div>
@@ -123,7 +118,6 @@
 			<div class="inbt">
 				<span>Course Goals</span>
 				<?php
-					$id_corso = $_SESSION['id_corso'];
 					$sql = "SELECT CORSO.obiettivi FROM CORSO WHERE CORSO.id='$id_corso'";
 					$result = $link -> query($sql);
 					$row = $result -> fetch_assoc();
@@ -141,9 +135,6 @@
 				<div class="inbt">
 					<span>Brief description of the course</span>
 					<?php
-						
-						$id_corso = $_SESSION['id_corso'];
-
 						// QUERY: recupera descrizione del corso
 						$sql = "SELECT CORSO.descrizione FROM CORSO WHERE CORSO.id='$id_corso'";
 						$result = $link -> query($sql);
@@ -159,9 +150,6 @@
 				
 				<!--immagine-->
 				<?php
-				
-					$id_corso = $_SESSION['id_corso'];
-
 					$sql = "SELECT CORSO.copertina FROM CORSO WHERE CORSO.id='$id_corso'";
 					$result = $link -> query($sql);
 					$row = $result -> fetch_assoc();
@@ -180,9 +168,6 @@
 			<div class="inbt_end">
 				<span>Learning Verification</span>
 				<?php
-
-					$id_corso = $_SESSION['id_corso'];
-
 					$sql = "SELECT CORSO.verifica FROM CORSO WHERE CORSO.id='$id_corso'";
 					$result = $link -> query($sql);
 					$row = $result -> fetch_assoc();

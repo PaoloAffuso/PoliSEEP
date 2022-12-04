@@ -8,11 +8,10 @@
     $email = $_POST["email"];
     $password = $_POST["password"];
     $tipoUtente = $_POST["tipoUtente"];
-    //$mat = $_POST["mat"]; // matricola utente = id
 
-    $chk=$_POST["logCheck"];
+    if(isset($_POST["logCheck"]))
+        $chk=$_POST["logCheck"];
 
-    //$_SESSION['id_utente'] = $mat;
     
     // QUERY: verifica che l'utente esista nel db
 	$sql = "select count(*) as cntUser, id, email, pass, tipo from UTENTE where email='".$email."' and pass='".$password."' and tipo='$tipoUtente'";
@@ -24,6 +23,7 @@
     {
         $_SESSION['uname'] = $email;
         $_SESSION["loggedin"]="True";
+        $_SESSION['id_utente']=$row['id'];
         if(isset($chk)) 
         {
         	setcookie ("email",$email,time()+ 3600, '/');
@@ -31,12 +31,7 @@
             //echo "ATTIVO";
         }
         if($tipoUtente == "DOC") echo "OK-DOC";
-        else if($tipoUtente == "STU") echo "OK-STU";
-        /*else
-        {
-            if($tipoUtente == "DOC") echo "OK-DOC";
-            else if($tipoUtente == "STU") echo "OK-STU";
-        }  */    
+        else if($tipoUtente == "STU") echo "OK-STU";  
     }
     else echo "ERRORE"; // se entro nell'else l'utente non esiste
 

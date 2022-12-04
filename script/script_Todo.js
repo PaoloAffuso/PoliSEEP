@@ -59,14 +59,14 @@ inputField.addEventListener("keyup", (e) => {
 });
 
 // Seleziona e deseleziona la checkbox mentre si fa clic sul task
-function handleStatus(e) {
+function handleStatus(e, num) {
   const checkbox = e.querySelector("input"); // Recupera la checkbox
   const descrizione = e.querySelector("span").innerHTML;
 
   $.ajax({
     url: "../student/task.php",
     type: "post",
-    data : {'call':'changeStatus', 'stato':!checkbox.checked, 'descrizione': descrizione},
+    data : {'call':'changeStatus', 'stato':!checkbox.checked, 'num': num},
     success: function (response) {
       if(response==="OK") {
         if(checkbox.checked) checkbox.checked=false;
@@ -74,23 +74,23 @@ function handleStatus(e) {
         e.classList.toggle("pending");
         allTasks();
       }
-      else alert("Errore durante l'inserimento");
+      else alert("Errore durante la modifica");
     }
   });
 }
 
 // Elimina il task mentre si fa clic sull'icona di eliminazione
-function deleteTask(e) {
+function deleteTask(e, num) {
   $.ajax({
     url: "../student/task.php",
     type: "post",
-    data : {'call':'delSingleTask', 'descrizione': e.id},
+    data : {'call':'delSingleTask', 'descrizione': e.id, 'num': num},
     success: function (response) {
       if(response==="OK") {
         e.parentElement.remove(); // Ottiene l'elemento e lo rimuove
         allTasks();
       }
-      else alert("Errore durante l'inserimento");
+      else alert("Errore durante la cancellazione");
     }
   });
   
