@@ -8,6 +8,9 @@
 	if(!isset($_SESSION["loggedin"])){
 		header("location: ../index.html");
 	}
+
+	if(isset($_SESSION['tipoUtente']) && $_SESSION['tipoUtente']=="DOC")
+		header("location: ../teacher/teacher.php");
 	$id_corso = $_SESSION['idCorso'];
 ?>
 

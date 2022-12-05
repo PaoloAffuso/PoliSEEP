@@ -5,9 +5,11 @@
 	if (mysqli_connect_errno())
 		echo "Connessione al database non riuscita: " . mysqli_connect_error();
 	
-	if(!isset($_SESSION["loggedin"])){
+	if(!isset($_SESSION["loggedin"]))
 		header("location: ../index.html");
-	}
+
+	if(isset($_SESSION['tipoUtente']) && $_SESSION['tipoUtente']=="STU")
+		header("location: ../student/student.php");
 ?>
 
 <!DOCTYPE html>
@@ -50,7 +52,7 @@
 				<a href="../index.html"><div class="logo"><img src="../images/logo.png" alt="logo"></div></a>
 				<ul>
 					<li><a class="active" href="#info">Info</a></li>
-					<li><a href="files_teacher.html">Files</a></li>
+					<li><a href="files_teacher.php">Files</a></li>
 					<li><a href="quiz_teacher.html">Quiz</a></li>
 				</ul>
 				<a class="logout" href="../login/logout.php">Logout</a>
@@ -215,7 +217,7 @@
 				<div class="close" onclick="sideMenu(1)"><img src="../images/icon_/close.png" alt=""></div>
 				<ul>
 					<li><a class="active" href="#info">Info</a></li>
-					<li><a href="files_teacher.html">Files</a></li>
+					<li><a href="files_teacher.php">Files</a></li>
 					<li><a href="quiz_teacher.html">Quiz</a></li>
 				</ul>
 			</div>

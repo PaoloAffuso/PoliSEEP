@@ -1,3 +1,17 @@
+<?php
+	include '../config.php';
+	session_start();
+	// Check connection
+	if (mysqli_connect_errno())
+		echo "Connessione al database non riuscita: " . mysqli_connect_error();
+	
+	if(!isset($_SESSION["loggedin"]))
+		header("location: ../index.html");
+
+	if(isset($_SESSION['tipoUtente']) && $_SESSION['tipoUtente']=="STU")
+		header("location: ../student/student.php");
+?>
+
 <!DOCTYPE html>
 <html>
 
