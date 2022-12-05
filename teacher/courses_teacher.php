@@ -136,8 +136,8 @@
 								";
 						}
 					?>
-				<button class="accept-button">Accept</button>
-				<button class="decline-button">Decline</button>
+				<button class="accept-button" id="acceptBTN" onclick="acceptRequest();">Accept</button>
+				<button class="decline-button" id="declineBTN" onclick="declineRequest();">Decline</button>
 			</div>
 
 			<!--<div class="modal">
@@ -308,7 +308,8 @@
 				</div>
 			</div>
 		</footer>
-
+		
+		<script type="text/javascript" src="../script/course_request.js"></script>
 	</body>
 
 </html>
