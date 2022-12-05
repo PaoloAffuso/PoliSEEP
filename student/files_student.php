@@ -1,3 +1,16 @@
+<?php
+	include '../config.php';
+	session_start();						
+	// Check connection
+	if (mysqli_connect_errno())
+		echo "Connessione al database non riuscita: " . mysqli_connect_error();
+	
+	if(!isset($_SESSION["loggedin"])){
+		header("location: ../index.html");
+	}
+	$id_corso = $_SESSION['idCorso'];
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -8,11 +21,10 @@
 	<meta name="desciption" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link rel="stylesheet" type="text/css" href="files_teacher.css">
+	<link rel="stylesheet" type="text/css" href="files_student.css">
 	<link rel="shortcut icon" type="png" href="../images/icon_/favicon.png">
 	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 
 
 	<script type="text/javascript" src="../script.js"></script>
@@ -40,11 +52,11 @@
 		<nav class="mynav">
 			<a href="../index.html"><div class="logo"><img src="../images/logo.png" alt="logo"></div></a>
 			<ul>
-				<li><a href="courses_teacher.php">Info</a></li>
-				<li><a href="#dash" class ="active" >Files</a></li>
-				<li><a href="quiz_teacher.html">Quiz</a></li>
+				<li><a href="courses_student.php">Info</a></li>
+				<li><a href="#dash" class ="active">Files</a></li>
+				<li><a href="quiz_student.html">Quiz</a></li>
 			</ul>
-			<a class="logout" href="">Logout</a>
+			<a class="logout" href="../login/logout.php">Logout</a>
 			<img src="../images/icon_/menu.png" class="menu" onclick="sideMenu(0)" alt="menu">
 			<!--menu a scomparsa-->
 		</nav>
@@ -54,15 +66,15 @@
 			<span>Files Section</span>
 			<div class="shortdesc">
 				<p>
-				<h4>Here you can see files you uploaded for your students</h4>
+				<h4>Here you can read files uploaded by the professor</h4>
 				</p>
 			</div>
 		</div>
 
 		<!-- Immagine download -->
 		<main class="ccard_usrimg">
-			<div class="profile-pic-div" style="height: 165px; width: 165px;">
-				<img src="../images/files_/upload_button.png" id="photo">
+			<div class="profile-pic-div">
+				<img src="../images/files_/download_button.png" id="photo">
 			</div>
 		</main>
 
@@ -70,9 +82,9 @@
 		<div class="side-menu" id="side-menu">
 			<div class="close" onclick="sideMenu(1)"><img src="../images/icon_/close.png" alt=""></div>
 			<ul>
-				<li><a href="courses_teacher.php">Info</a></li>
+				<li><a href="courses_student.php">Info</a></li>
 				<li><a href="#dash" class ="active">Files</a></li>
-				<li><a href="quiz_teacher.html">Quiz</a></li>
+				<li><a href="quiz_student.html">Quiz</a></li>
 			</ul>
 		</div>
 
@@ -81,54 +93,52 @@
 
 	</header>
 
-
 	<main class="ccard_text">
 		<!-- SAMPLE PAPERS -->
 		<div class="inbt">
 			<span>Documents</span>
 			<div class="shortdesc2">
-				<p>Upload or Delete Files for your students
-				</p><br>
+				<p>Study and practice using following material</p><br>
 			</div>
 		</div>
 	</main>
 
-
  	<div class="container" style="padding-top:50px;">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 
-		<input type="file" id="uploadFile" style="display:none"/>
- 		<div class="btn btn-primary btn_delete_val">Delete Files</div> | <div class="btn btn-primary" input id='actual-btn' input type= 'file'>Upload</div>
+ 		<div class="btn btn-primary btn_delete_val downloadChecked" id="downloadChecked">Download Files</div>
  		<div style="padding:21px;"></div>
 
 		<table class="table">
 			<tbody>
-				<tr>
-					<td style="font-family:Montserrat, sans-serif;"><b>Select<br> <input type="checkbox" class="select_all_items"></td>
-					<td style="font-family:Montserrat, sans-serif;"><b>Pdf Name </td>
-					<td style="font-family:Montserrat, sans-serif;"><b>Upload Date</td>
-					<td style="font-family:Montserrat, sans-serif;"><b>Weight</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" class="item_id" option_id="1"> </td>
-					<td>lecture1.pdf</td>
-					<td>10/09/2022</td>
-					<td>20kB</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" class="item_id" option_id="2"> </td>
-					<td>lecture2.pdf</td>
-					<td>15/03/2022</td>
-					<td>30kB</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" class="item_id" option_id="3"> </td>
-					<td>lecture3.pdf</td>
-					<td>03/05/2022</td>
-					<td>40kB</td>
-				</tr>
+				<?php
+					$sql = "SELECT nome, dataOraCaricamento, dimensione, documento FROM FILES WHERE idCorso='$id_corso'";
+					$result = $link -> query($sql);
+
+					echo "
+						<tr>
+							<td style='font-family:Montserrat, sans-serif;'><b>Select<br> <input type='checkbox' class='select_all_items'></td>
+							<td style='font-family:Montserrat, sans-serif;'><b>Pdf Name </td>
+							<td style='font-family:Montserrat, sans-serif;'><b>Upload Date</td>
+							<td style='font-family:Montserrat, sans-serif;'><b>Weight</td>
+						</tr>";
+
+					while($row = $result->fetch_assoc())
+					{
+						echo "
+						<tr>
+							<td><input type='checkbox' name='checkbox' class='item_id' option_id='1' value='".$id_corso."-".$row['nome']."'> </td>
+							<td>".$row['nome']."</td>
+							<td>".$row['dataOraCaricamento']."</td>
+							<td>".$row['dimensione']." kB </td>
+						</tr>
+						";
+					}
+
+				?>
 			</tbody>
 		</table>
-		<script src="../script/upload_delete.js"></script>
+		<script src="../script/download_script.js"></script>
  	</div>
 
 
@@ -144,7 +154,6 @@
 			</div>
 		</div>
 	</footer>
-
 </body>
 
 </html>

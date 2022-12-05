@@ -1,5 +1,7 @@
 $(document).ready(function($) 
 {
+     
+
     //--->select/unselect all > start
      function select_unselect_checkbox (this_el, select_el) 
      {
@@ -76,35 +78,10 @@ $(document).ready(function($)
 
     const actualBtn = document.getElementById('actual-btn');
 
-    const fileChosen = document.getElementById('file-chosen');
+        const fileChosen = document.getElementById('file-chosen');
 
-    actualBtn.addEventListener('change', function(){
+        actualBtn.addEventListener('change', function(){
         fileChosen.textContent = this.files[0].name
-    });
-    
-    $("#actual-btn").click(function(event) {
-        event.preventDefault();
-        $("#uploadFile").trigger('click');
+})  
 
-        $("#uploadFile").change(function(){
-            var file = this.files[0];
-            var form = new FormData();
-            form.append('filePdf', file);
-            form.append('nameFile', file.name);
-            form.append('sizeFile', file.size);
-
-            $.ajax({
-                url: "../teacher/upload.php",
-                type: "post",
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: form,
-                success: function(response) {
-                    console.log(response);
-                }
-            });
-        });
-    });
-    
 });

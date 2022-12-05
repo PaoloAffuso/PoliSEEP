@@ -1,3 +1,15 @@
+<?php
+	include '../config.php';
+	session_start();
+	// Check connection
+	if (mysqli_connect_errno())
+		echo "Connessione al database non riuscita: " . mysqli_connect_error();
+	
+	if(!isset($_SESSION["loggedin"])){
+		header("location: ../index.html");
+	}
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -41,6 +53,7 @@
 					<li><a href="files_teacher.html">Files</a></li>
 					<li><a href="quiz_teacher.html">Quiz</a></li>
 				</ul>
+				<a class="logout" href="../login/logout.php">Logout</a>
 				<a class="logout" href="">Logout</a>
 				<img src="../images/icon_/menu.png" class="menu" onclick="sideMenu(0)" alt="menu">
 				<!--menu a scomparsa-->
@@ -109,6 +122,16 @@
 			</div>
 			<!-- Modal content -->
 			<div class="modal">
+				<form class="liststud">
+					<h3>Manage pending requests</h3>
+					<br>
+					<div class="form-group select-all">
+						<input type="checkbox" id="select-all">
+						<label for="select-all"><i>Select all</i></label>
+					</div>
+					
+					<?php
+
 				
 					
 					<?php
@@ -126,11 +149,35 @@
 
 						// QUERY: stampa lista studenti che hanno inviato una richiesta di iscrizione al corso
 
+						$sql = "SELECT UTENTE.nome AS nome_utente FROM ISCRIZIONE INNER JOIN UTENTE ON ISCRIZIONE.idUtente = UTENTE.id WHERE ISCRIZIONE.stato=-1 AND ISCRIZIONE.idCorso = '$id_corso' AND UTENTE.tipo='STU'";
 						$sql = "SELECT UTENTE.nome AS nome_utente, UTENTE.id as id_studente FROM ISCRIZIONE INNER JOIN UTENTE ON ISCRIZIONE.idUtente = UTENTE.id WHERE ISCRIZIONE.stato=-1 AND ISCRIZIONE.idCorso = '$id_corso' AND UTENTE.tipo='STU'";
 						$result = $link -> query($sql);
 						while($row = $result->fetch_assoc())
 						{
 							$nome_utente = $row['nome_utente'];
+							echo "
+								<div class='form-group'>
+									<input class = 'cb' type='checkbox' id='stud1' name='stud1' value='stud1'>
+									<label for='stud1'>".$nome_utente."</label>
+								</div>
+								";
+						}
+						// TO DO: fare in modo che i pulsante ACCEPT/DECLINE alterino il db
+						
+						// per il pulsante DECLINE usare questa query:
+						/*
+							DELETE FROM ISCRIZIONE WHERE idUtente = "$id_utente"; 
+						*/
+
+						// per il pulsante ACCEPT usare questa query:
+						/*
+							UPDATE ISCRIZIONE SET stato=1 WHERE idUtente = "$id_utente"; 
+						*/
+					?>
+
+				</form>
+				<button class="accept-button">Accept</button>
+				<button class="decline-button">Decline</button>
 							$id_studente = $row['id_studente'];
 
 							echo "

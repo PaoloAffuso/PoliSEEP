@@ -47,20 +47,58 @@
 			</nav>
 
 			<!-- Title -->
-			<div class="title" id="info">
-				<span>Internet Of Things</span>
-				<div class="shortdesc" id="sub-info">
-					<h4>CFU: </h4>
-					<p>6</p><br><br>
-					<h4>Professor: </h4>
-					<p>Gennaro Boggia</p><br><br>
-					<h4>Number of enrolled students: </h4>
-					<p>???</p>
-				</div>
-				<!-- Trigger/Open The Modal -->
-				<button id="btn" class="mng-isc" onclick="toggleModal()" type="button">Manage pending requests</button>
-				<button id="btn1" class="mng-txt" onclick="toggleModal1()" type="button">Edit course info</button>
-			</div>
+			<?php
+				include '../config.php';
+				// Check connection
+				if (mysqli_connect_errno())
+					echo "Connessione al database non riuscita: " . mysqli_connect_error();
+
+				//$id_corso = $_GET['id_corso'];
+
+				$id_corso = 1; //dummy
+
+				// QUERY: estrae nome doc, nome corso, num cfu corso
+				
+				$sql = "SELECT UTENTE.nome AS nome_doc, CORSO.nome AS nome_corso, CORSO.cfu AS cfu_corso 
+						FROM CORSO INNER JOIN ISCRIZIONE ON CORSO.id = ISCRIZIONE.idCorso INNER JOIN UTENTE ON ISCRIZIONE.idUtente = UTENTE.id 
+						WHERE ISCRIZIONE.idCorso='$id_corso' AND ISCRIZIONE.tipoUtente = 'DOC'";
+
+				$result = $link -> query($sql);
+				$row = $result -> fetch_assoc();
+				
+				$nome_doc = $row['nome_doc'];
+				$nome_corso = $row['nome_corso'];
+				$cfu_corso = $row['cfu_corso'];
+				
+				$_SESSION['id_corso'] = $id_corso;
+
+				// QUERY: estrae il numero di studenti iscritti a quel corso
+
+				$sql = "SELECT count(ISCRIZIONE.idUtente) AS conta_stu
+						FROM ISCRIZIONE
+						WHERE ISCRIZIONE.idCorso='$id_corso' AND iscrizione.tipoUtente = 'STU'";
+
+				$result = $link -> query($sql);
+				$row = $result -> fetch_assoc();
+
+				$conta_stu = $row['conta_stu'];
+
+				echo "
+					<div class='title' id='info'>
+						<span>Internet Of Things</span>
+						<div class='shortdesc' id='sub-info'>
+							<h4>.$nome_corso.</h4>
+							<p>.$cfu_corso.</p><br><br>
+							<h4>Professor: </h4>
+							<p>.$nome_doc.</p><br><br>
+							<h4>Number of enrolled students: </h4>
+							<p>$conta_stu</p>
+						</div>
+						<!-- Trigger/Open The Modal -->
+						<button id='btn' class='mng-isc' onclick='toggleModal()' type='button'>Manage pending requests</button>
+						<button id='btn1' class='mng-txt' onclick='toggleModal1()' type='button'>Edit course info</button>
+					</div>";
+			?>
 
 			<!-- The Modal: manage pending requests -->
 			<div class="modal-background" onclick="toggleModal()">

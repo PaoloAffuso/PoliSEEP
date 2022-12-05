@@ -1,3 +1,15 @@
+<?php
+	include '../config.php';
+	session_start();
+	// Check connection
+	if (mysqli_connect_errno())
+		echo "Connessione al database non riuscita: " . mysqli_connect_error();
+	
+	if(!isset($_SESSION["loggedin"])){
+		header("location: ../index.html");
+	}
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -40,30 +52,56 @@
 					<li><a href="files_student.php">Files</a></li>
 					<li><a href="quiz_student.html">Quiz</a></li>
 				</ul>
-				<a class="logout" href="">Logout</a>
+				<a class="logout" href="../login/logout.php">Logout</a>
 				<img src="../images/icon_/menu.png" class="menu" onclick="sideMenu(0)" alt="menu">
 				<!--menu a scomparsa-->
 			</nav>
 
 			<!-- Title -->
-			<div class="title" id="info">
-				<span>Internet Of Things</span>
-				<div class="shortdesc" id="sub-info">
-					<h4>CFU: </h4>
-					<p>6</p><br><br>
-					<h4>Professor: </h4>
-					<p>Gennaro Boggia</p>
-				</div>
-			</div>
+			<?php
 
+				$id_corso = $_GET['id_corso'];
+
+				$id_corso = 1; //dummy
+
+				// QUERY: estrae nome doc, nome corso, num cfu corso
+				
+				$sql = "SELECT UTENTE.nome AS nome_doc, CORSO.nome AS nome_corso, CORSO.cfu AS cfu_corso 
+						FROM CORSO INNER JOIN ISCRIZIONE ON CORSO.id = ISCRIZIONE.idCorso INNER JOIN UTENTE ON ISCRIZIONE.idUtente = UTENTE.id 
+						WHERE ISCRIZIONE.idCorso='$id_corso' AND iscrizione.tipoUtente = 'DOC'";
+
+				$result = $link -> query($sql);
+				$row = $result -> fetch_assoc();
+				$nome_doc = $row['nome_doc'];
+				$nome_corso = $row['nome_corso'];
+				$cfu_corso = $row['cfu_corso'];
+				
+				echo"
+					<div class='title' id='info'>
+						<span>".$nome_corso."</span>
+						<div class='shortdesc' id='sub-info'>
+							<h4>CFU: </h4>
+							<p>".$cfu_corso."</p><br><br>
+							<h4>Professor: </h4>
+							<p>".$nome_doc."</p>
+						</div>
+					</div>";
+			?>
+			
 			<!-- Immagine di profilo -->
 			<main class="ccard_usrimg">
-				<div class="profile-pic-div">
-					<img src="../images/student_/usrimg.png" id="photo">
-					<input type="file" id="file">
-					<label for="file" id="uploadBtn">Change Photo</label>
-				</div>
-				<script src="../script/user_img.js"></script>
+				
+				<?php
+					$sql = "SELECT UTENTE.propic AS propic_utente FROM UTENTE INNER JOIN ISCRIZIONE ON UTENTE.id = ISCRIZIONE.idUtente INNER JOIN CORSO ON ISCRIZIONE.idCorso = CORSO.id WHERE CORSO.id='$id_corso' AND UTENTE.tipo = 'DOC'";
+					$result = $link -> query($sql);
+					$row = $result -> fetch_assoc();
+					$propic = $row['propic_utente'];
+
+					echo"
+						<div class='profile-pic-div'>
+							<img src='data:image/gif;base64," .base64_encode($propic). "'>
+						</div>";
+				?>
 			</main>
 
 			<!-- side-menu (appare quando si rimpicciolisce la finestra) -->
@@ -87,67 +125,69 @@
 			<!-- Goals -->
 			<div class="inbt">
 				<span>Course Goals</span>
-				<div class="shortdesc2">
-					<p>The purpose of the course is to describe the architectures, enabling technologies and design principles
-						of telecommunications networks in the Internet of Things. The topics covered in the theoretical lessons
-						will be in the laboratory to obtain tangible demonstrations in the field of the effectiveness of the architectural solutions presented in the course. Knowledge and skills attested:
-					</p><br>
-					<h4>
-						- Knowledge of the main IoT architectures<br>
-						- Knowledge of IPv6 and 6LoWPAN protocols<br>
-						- Ability to analyze the elements of an IoT network (WPAN and WAN)<br>
-						- Ability to use correct scientific technical language.<br>
-						- Ability to design complex IoTs
-					</h4>
-				</div>
-			</div>
+				<?php
+					$sql = "SELECT CORSO.obiettivi FROM CORSO WHERE CORSO.id='$id_corso'";
+					$result = $link -> query($sql);
+					$row = $result -> fetch_assoc();
+					$obiettivi_corso = $row['obiettivi'];
 
+					echo"
+						<div class='shortdesc2'>
+							<p>".$obiettivi_corso."</p><br>
+						</div>";
+				?>
+			</div>
 
 			<!-- Description -->
 			<div class="head-container">
 				<div class="inbt">
 					<span>Brief description of the course</span>
-					<div class="shortdesc2">
-						<p> Is an idea from computer science:
-							connecting ordinary things
-							like lights and doors to a computer network to make them "intelligent".
-							An embedded system or a computer connects each thing together in a network
-							and to the internet. Some technologies used for the internet of things are
-							RFID and mesh nets. The connections allow each thing to collect and exchange
-							data, and we can control them remotely or by setting rules or chains of actions.
-							IoT improves the ease of life of humans and their daily activities. Experts
-							estimate that the IoT will consist of almost 50 billion objects by 2020.
-							The course is divided into the following chapters:
-						</p><br>
-						<h4>
-							- Chapter 1<br>
-							- Chapter 2<br>
-							- Chapter 3<br>
-							- Chapter 4<br>
-							- Chapter 5
-						</h4>
-					</div>
+					<?php
+						// QUERY: recupera descrizione del corso
+						$sql = "SELECT CORSO.descrizione FROM CORSO WHERE CORSO.id='$id_corso'";
+						$result = $link -> query($sql);
+						$row = $result -> fetch_assoc();
+						$descrizione_corso = $row['descrizione'];
+
+						echo"
+							<div class='shortdesc2'>
+							<p>".$descrizione_corso."</p><br>
+							</div>";
+					?>
 				</div>
+				
 				<!--immagine-->
-				<div class="container">
-					<img src="../images/courses_/IoT.jpg" alt="svg">
-				</div>
+				<?php
+					$sql = "SELECT CORSO.copertina FROM CORSO WHERE CORSO.id='$id_corso'";
+					$result = $link -> query($sql);
+					$row = $result -> fetch_assoc();
+					$copertina = $row['copertina'];
+
+					echo"
+					<div class='container'>
+						<img src='data:image/gif;base64," .base64_encode($copertina). "' alt='svg'>
+					</div>";
+
+				?>
 			</div>
 
 
 			<!-- Verification -->
 			<div class="inbt_end">
 				<span>Learning Verification</span>
-				<div class="shortdesc2">
-					<p>Verification of learning is established through an oral test aimed at ascertaining the level of
-						knowledge and understanding reached by the student on the theoretical and methodological contents indicated in the program.
-					</p><br>
-					<p>
-						The oral exam also allows to verify the student's communication skills with language properties and
-						autonomous organization of the exhibition.
-						Minimum contents: short long range protocol architectures for IoT systems. IPv6
-					</p>
-				</div>
+				<?php
+					$sql = "SELECT CORSO.verifica FROM CORSO WHERE CORSO.id='$id_corso'";
+					$result = $link -> query($sql);
+					$row = $result -> fetch_assoc();
+					$verifica = $row['verifica'];
+
+					echo "
+					<div class='shortdesc2'>
+						<p>".$verifica."</p>
+					</div>
+					";
+				?>
+				
 			</div>
 
 		</main>

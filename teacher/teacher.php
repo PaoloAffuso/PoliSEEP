@@ -1,6 +1,15 @@
 <?php
 	include '../config.php';
 	session_start();
+	// Check connection
+	if (mysqli_connect_errno())
+		echo "Connessione al database non riuscita: " . mysqli_connect_error();
+	
+	if(!isset($_SESSION["loggedin"])){
+		header("location: ../index.html");
+	}
+?>
+
 				
 	// Check connection
 	if (mysqli_connect_errno())
@@ -57,6 +66,7 @@
 					<li><a class="active" href="#dashboard">Dashboard</a></li>
 					<li><a href="#sezione_corsi_disponibili">Courses</a></li>
 				</ul>
+				<a class="logout" href="../login/logout.php">Logout</a>
 				<a class="logout" href="">Logout</a>
 				<img src="../images/icon_/menu.png" class="menu" onclick="sideMenu(0)" alt="menu"> <!--menu a scomparsa-->
 			</nav>
@@ -65,6 +75,13 @@
 			<div class="title" id="dash">
 				<?php
 
+					//$nome_utente = $_SESSION['nome_utente']; // dal login si ricava la variabile di sessione
+
+					// dummy
+					
+					$nome_utente = "PROVA";
+
+					// dummy
 					$sql = "SELECT nome as nome_utente FROM UTENTE WHERE id = '$id_docente' AND tipo = 'DOC'";
 										
 					$result = $link -> query($sql);
@@ -81,6 +98,11 @@
 			<!-- Immagine di profilo -->
 			<main class="ccard_usrimg">
 				<?php
+					//$id_utente = $_SESSION['id_utente'];
+
+					$id_utente = 2; // dummy
+
+					$sql = "SELECT propic FROM UTENTE WHERE id='$id_utente' AND UTENTE.tipo = 'DOC'";
 
 					$sql = "SELECT propic FROM UTENTE WHERE id='$id_docente' AND UTENTE.tipo = 'DOC'";
 					$result = $link -> query($sql);
@@ -128,6 +150,13 @@
 				<div class="overview_container">
 					<div class="overview_sub">
 						<?php
+
+						//$id_utente = $_SESSION['id_utente'];
+						
+						$id_utente = 2; // dummy
+						
+						// QUERY: conta i corsi che appartengono al docente
+						$sql = "SELECT count(ISCRIZIONE.idCorso) AS conta_corsi FROM ISCRIZIONE WHERE ISCRIZIONE.idUtente = '$id_utente' AND ISCRIZIONE.stato = 0 AND ISCRIZIONE.tipoUtente = 'DOC'";
 						
 						// QUERY: conta i corsi che appartengono al docente
 						$sql = "SELECT count(ISCRIZIONE.idCorso) AS conta_corsi FROM ISCRIZIONE WHERE ISCRIZIONE.idUtente = '$id_docente' AND ISCRIZIONE.stato = 0 AND ISCRIZIONE.tipoUtente = 'DOC'";
@@ -144,6 +173,14 @@
 					<div class="overview_sub">
 						<?php
 
+							//$id_utente = $_SESSION['id_utente'];
+							//$id_corso = $_GET['id_corso'];
+
+							$id_utente = 2; // dummy
+							$id_corso = 1; // dummy
+
+							// QUERY: conta i corsi che appartengono al docente
+							$sql = "SELECT count(ISCRIZIONE.idUtente) AS conta_iscritti FROM ISCRIZIONE WHERE ISCRIZIONE.stato = 1 AND ISCRIZIONE.tipoUtente = 'STU' AND ISCRIZIONE.idCorso='$id_corso'";
 							// QUERY: conta il numero di iscritti al corso del docente
 							$sql = "SELECT count(ISCRIZIONE.idUtente) AS conta_iscritti FROM ISCRIZIONE WHERE ISCRIZIONE.stato = 1 AND ISCRIZIONE.tipoUtente = 'STU'";
 							$result = $link -> query($sql);
@@ -159,6 +196,13 @@
 					<div class="overview_sub">
 					<?php
 
+						//$id_utente = $_SESSION['id_utente'];
+						//$id_corso = $_GET['id_corso'];
+
+						$id_utente = 2; // dummy
+						$id_corso = 1; // dummy
+
+						// QUERY: conta i corsi che appartengono al docente
 						// QUERY: conta i quiz creati dal docente
 						$sql = "SELECT count(TAKE_QUIZ.idUtente) AS conta_quiz_creati FROM TAKE_QUIZ WHERE TAKE_QUIZ.stato = 0 AND TAKE_QUIZ.tipoUtente = 'DOC'";
 						$result = $link -> query($sql);
@@ -236,6 +280,12 @@
 			<!-- Insieme dei corsi disponibili -->
 			<div class="ccard">
 				<?php
+					// dummy 
+					$id_utente = 2;
+					// dummy 
+
+					// QUERY: estrae i codici dei corsi a cui l'utente NON è iscritto
+					$sql = "SELECT CORSO.nome AS nome_corso, CORSO.copertina AS copertina_corso, CORSO.id AS id_corso FROM CORSO WHERE CORSO.id NOT IN (SELECT idCorso FROM ISCRIZIONE WHERE idUtente = '$id_utente' AND tipoUtente = 'STU')";
 
 					// QUERY: estrae i codici dei corsi a cui l'utente è iscritto
 					$sql = "SELECT CORSO.nome AS nome_corso, CORSO.copertina AS copertina_corso, CORSO.id AS id_corso FROM CORSO WHERE CORSO.id IN (SELECT idCorso FROM ISCRIZIONE WHERE idUtente = '$id_docente' AND tipoUtente = 'DOC' AND stato = 0)";

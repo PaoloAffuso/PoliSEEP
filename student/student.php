@@ -5,6 +5,10 @@
 	// Check connection
 	if (mysqli_connect_errno())
 		echo "Connessione al database non riuscita: " . mysqli_connect_error();
+	
+	if(!isset($_SESSION["loggedin"])){
+		header("location: ../index.html");
+	}
 
 		$id_studente = $_SESSION['id_utente']; 
 ?>
@@ -66,12 +70,14 @@
 					<li><a class="active" href="#dashboard">Dashboard</a></li>
 					<li><a href="#sezione_corsi_disponibili">Courses</a></li>
 				</ul>
+				<a class="logout" href="../login/logout.php">Logout</a>
 				<a class="logout" href="">Logout</a>
 				<img src="../images/icon_/menu.png" class="menu" onclick="sideMenu(0)" alt="menu"> <!--menu a scomparsa-->
 			</nav>
 
 			<!-- Title -->
 			<div class="title" id="dash">
+				<span>Welcome back Username</span>
 				<?php
 
 					$sql = "SELECT nome as nome_utente FROM UTENTE WHERE id = '$id_studente' AND tipo = 'STU'";
@@ -89,6 +95,11 @@
 
 			<!-- Immagine di profilo -->
 			<main class="ccard_usrimg">
+				<div class="profile-pic-div">
+					<img src="../images/student_/usrimg.png" id="photo">
+					<input type="file" id="file">
+					<label for="file" id="uploadBtn">Change Photo</label>
+				</div>
 				<?php
 				
 				// Check connection
@@ -140,6 +151,19 @@
 			<section class="overview">
 				<div class="overview_container">
 				<div class="overview_sub">
+					<p id="topper_overview">Enrolled Courses</p>
+					<p id="number">0</p>
+					<p id="bottom_overview">6 available courses</p>
+				</div>
+				<div class="overview_sub">
+					<p id="topper_overview">Completed Courses</p>
+					<p id="number">0</p>
+					<p id="bottom_overview">6 courses not completed yet</p>
+				</div>
+				<div class="overview_sub">
+					<p id="topper_overview">Completed quiz</p>
+					<p id="number">0</p>
+					<p id="bottom_overview">30 quizzes remaining</p>
 					<?php
 
 						// QUERY: conta i corsi a cui l'utente è iscritto
@@ -257,6 +281,36 @@
 
 			<!-- Insieme dei corsi disponibili -->
 			<div class="ccard">
+				<center>
+					<div class="ccardbox">
+						<div class="dcard" onclick="toggleModal()" type="button">
+							<div class="fpart"><img src="../images/student_/ADS.jpeg"></div>
+							<a><div class="spart">Algorithms and Data Structures</div></a>
+						</div>
+						<div class="dcard" onclick="toggleModal()" type="button">
+							<div class="fpart"><img src="../images/student_/DB.png"></div>
+							<a><div class="spart">Databases</div></a>
+						</div>
+						<div class="dcard" onclick="toggleModal()" type="button">
+							<div class="fpart"><img src="../images/student_/SWE.png"></div>
+							<a><div class="spart">Software Engineering</div></a>
+						</div>
+					</div>
+					<div class="ccardbox">
+						<div class="dcard" onclick="toggleModal()" type="button">
+							<div class="fpart"><img src="../images/student_/OS.jpg"></div>
+							<a><div class="spart">Operating Systems</div></a>
+						</div>
+						<div class="dcard" onclick="toggleModal()" type="button">
+							<div class="fpart"><img src="../images/student_/IoT.jpg"></div>
+							<a><div class="spart">Internet of Things</div></a>
+						</div>
+						<div class="dcard" onclick="toggleModal()" type="button">
+							<div class="fpart"><img src="../images/student_/AIML.jpeg"></div>
+							<a><div class="spart">Artificial Intelligence and Machine Learning</div></a>
+						</div>
+					</div>
+				</center>
 			<?php
 
 				// QUERY: estrae i codici dei corsi a cui l'utente NON è iscritto
@@ -293,6 +347,19 @@
 			<!-- Modal content -->
 			<div class="modal">
 				<h3>Select one of the available teachers teaching this course:</h3>
+				<form class="listprof">
+					<input class = "cb" type="checkbox" id="prof1" name="prof1" value="Nicola Giaquinto" onchange="cbChange(this)">
+					<label for="prof1"> Nicola Giaquinto</label>
+					<input class = "cb" type="checkbox" id="prof2" name="prof2" value="Gennaro Boggia" onchange="cbChange(this)">
+					<label for="prof2"> Gennaro Boggia</label>
+					<input class = "cb" type="checkbox" id="prof3" name="prof3" value="Luigi Alfredo Grieco" onchange="cbChange(this)">
+					<label for="prof3"> Luigi Alfredo Grieco</label>
+					<input class = "cb" type="checkbox" id="prof4" name="prof4" value="Marina Mongiello" onchange="cbChange(this)">
+					<label for="prof4"> Marina Mongiello</label>
+				</form>
+				<button class="send-button">Send request</button>
+			</div>
+			<script type="text/javascript" src="../script/modale.js"></script>
 					<?php
 
 						echo "<form class='listprof' id='formSendRequest' action='send_request_toCourse.php' method='POST'>";
@@ -351,6 +418,13 @@
 			<div class="shortdesc2">
 				<p>Here are the courses you are already enrolled in</p>
 				<?php
+					// dummy 
+					$id_utente = 2;
+					// dummy 
+
+					// QUERY: estrae nome e copertina dei corsi a cui l'utente è iscritto
+					
+					$sql = "SELECT CORSO.nome AS nome_corso, CORSO.copertina AS copertina_corso, CORSO.id AS id_corso FROM CORSO WHERE CORSO.id IN (SELECT idCorso FROM ISCRIZIONE WHERE idUtente = '$id_utente' AND tipoUtente = 'STU')";
 
 					// QUERY: estrae nome e copertina dei corsi a cui l'utente è iscritto
 					$sql = "SELECT CORSO.nome AS nome_corso, CORSO.copertina AS copertina_corso, CORSO.id AS id_corso FROM CORSO WHERE CORSO.id IN (SELECT idCorso FROM ISCRIZIONE WHERE idUtente = '$id_studente' AND tipoUtente = 'STU' AND stato=1)";
