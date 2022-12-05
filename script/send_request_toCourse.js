@@ -13,7 +13,8 @@ frm.submit(function (e) {
     data: frm.serialize(), // dati presi dal form
     success: function (data) { 
 		if(data === "OK") alert("Request sent.");
-		else alert("Ops! Something went wrong. Try again.");
+		else if(data=="DUPLICATE") alert("You are already subscribed to this course.");
+    else alert("Ops! Something went wrong. Try again.");
     },
     error: function (data) {
       console.log("An error occurred.");
