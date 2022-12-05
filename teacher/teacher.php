@@ -279,13 +279,25 @@
 					}
 					
 				?>
-				
 				<script> 
+					function course_redirect(id_corso)
+					{
+						$.ajax({
+							url: "../setSession.php",
+							type: "post",
+							data : {'id_corso':id_corso},
+							success: function (response) {
+								window.location.replace("courses_teacher.php?id_corso="+id_corso); 
+							}
+						});
+					}
+				</script>
+				<!--<script> 
 					function course_redirect(id_corso)
 					{
 						window.location.replace("courses_teacher.php?id_corso="+id_corso); 
 					}
-				</script>
+				</script>-->
 			</div>
 
 

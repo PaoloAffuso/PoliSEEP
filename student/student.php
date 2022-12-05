@@ -43,7 +43,7 @@
 			function course_redirect(id_corso)
 			{
 				$.ajax({
-					url: "setSession.php",
+					url: "../setSession.php",
 					type: "post",
 					data : {'id_corso':id_corso},
 					success: function (response) {

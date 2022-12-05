@@ -62,7 +62,7 @@
 			<?php
 				//$id_corso = $_GET['id_corso'];
 
-				$id_corso = 1; //dummy
+				$id_corso = $_SESSION['idCorso'];
 
 				// QUERY: estrae nome doc, nome corso, num cfu corso
 				
@@ -92,12 +92,12 @@
 
 				echo "
 					<div class='title' id='info'>
-						<span>Internet Of Things</span>
+						<span>$nome_corso</span>
 						<div class='shortdesc' id='sub-info'>
-							<h4>$nome_corso</h4>
+							<h4>CFU</h4>
 							<p>$cfu_corso</p><br><br>
 							<h4>Professor: </h4>
-							<p>.$nome_doc.</p><br><br>
+							<p>$nome_doc</p><br><br>
 							<h4>Number of enrolled students: </h4>
 							<p>$conta_stu</p>
 						</div>
@@ -111,7 +111,36 @@
 			<div class="modal-background" onclick="toggleModal()">
 			</div>
 			<!-- Modal content -->
+
+			<!--Prova-->
 			<div class="modal">
+					<h3>Manage pending requests</h3>
+					<br>
+					<div class="form-group select-all">
+						<input type="checkbox" id="select-all">
+						<label for="select-all"><i>Select all</i></label>
+					</div>
+
+					<?php
+						$sql = "SELECT UTENTE.nome AS nome_utente, UTENTE.id as id_studente FROM ISCRIZIONE INNER JOIN UTENTE ON ISCRIZIONE.idUtente = UTENTE.id WHERE ISCRIZIONE.stato=-1 AND ISCRIZIONE.idCorso = '$id_corso' AND UTENTE.tipo='STU'";
+						$result = $link -> query($sql);
+						while($row = $result->fetch_assoc())
+						{
+							$nome_utente = $row['nome_utente'];
+							$id_studente=$row['id_studente'];
+							echo "
+								<div class='form-group'>
+									<input class = 'cb' type='checkbox' id='stud1' name='stud1' value='".$id_studente."' prova=''>
+									<label for='stud1'>".$nome_utente."</label>
+								</div>
+								";
+						}
+					?>
+				<button class="accept-button">Accept</button>
+				<button class="decline-button">Decline</button>
+			</div>
+
+			<!--<div class="modal">
 				<form class="liststud">
 					<h3>Manage pending requests</h3>
 					<br>
@@ -138,7 +167,7 @@
 				</form>
 				<button class="accept-button">Accept</button>
 				<button class="decline-button">Decline</button>
-			</div>
+			</div>-->
 			<script type="text/javascript" src="../script/modale.js"></script>
 
 			<!-- The Modal: edit course info -->
