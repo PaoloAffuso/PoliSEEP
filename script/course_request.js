@@ -9,7 +9,7 @@ $("#acceptBTN").click(function(){
             data : {'call':'acceptRequest', 'id_studente': checkedVals[i]},
             success: function (response) {
               if(response==="OK") {
-                alert(checkedVals.length+" richieste accettate");
+                alert(checkedVals.length+" request accepted.");
               }
               else console.log(response);
             }
@@ -29,7 +29,7 @@ $("#declineBTN").click(function() {
             data : {'call':'declineRequest', 'id_studente': checkedVals[i]},
             success: function (response) {
               if(response==="OK") {
-                alert(checkedVals.length+" richieste rifiutate");
+                alert(checkedVals.length+" request denied.");
               }
               else console.log(response);
             }

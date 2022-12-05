@@ -9,6 +9,8 @@
 	if(!isset($_SESSION["loggedin"])){
 		header("location: ../index.html");
 	}
+
+	$id_studente = $_SESSION['id_utente']; 
 ?>
 
 <!DOCTYPE html>
@@ -185,6 +187,30 @@
 			<!-- Insieme dei corsi disponibili -->
 			<div class="ccard">
 				<center>
+					<div class='ccardbox'>
+				<?php
+
+					// QUERY: estrae i codici dei corsi a cui l'utente NON è iscritto
+					$sql = "SELECT CORSO.nome AS nome_corso, CORSO.copertina AS copertina_corso, CORSO.id AS id_corso FROM CORSO WHERE CORSO.id 
+							NOT IN (SELECT idCorso FROM ISCRIZIONE WHERE idUtente = '$id_studente' AND tipoUtente = 'STU')
+							OR CORSO.id IN (SELECT idCorso FROM ISCRIZIONE WHERE idUtente = '$id_studente' AND tipoUtente = 'STU' AND stato = -1)";
+					$result = $link -> query($sql);
+
+					while($row = $result->fetch_assoc())
+					{
+						echo "				
+							<div class='dcard' onclick='toggleModal()' type='button'>
+								<div class='fpart'><img src='data:image/gif;base64," .base64_encode($row['copertina_corso']). "'></div>
+								<a><div class='spart'>".$row['nome_corso']."</div></a>
+							</div>";	
+					}
+						/*if (!$row) 
+					{
+						echo "No courses available.";
+					}*/
+				?>
+					</div>
+					<!--
 					<div class="ccardbox">
 						<div class="dcard" onclick="toggleModal()" type="button">
 							<div class="fpart"><img src="../images/student_/ADS.jpeg"></div>
@@ -212,7 +238,7 @@
 							<div class="fpart"><img src="../images/student_/AIML.jpeg"></div>
 							<a><div class="spart">Artificial Intelligence and Machine Learning</div></a>
 						</div>
-					</div>
+					</div>-->
 				</center>
 			</div>
 
@@ -223,7 +249,53 @@
 			<!-- Modal content -->
 			<div class="modal">
 				<h3>Select one of the available teachers teaching this course:</h3>
-				<form class="listprof">
+
+				<?php
+
+						echo "<form class='listprof' id='formSendRequest' action='send_request_toCourse.php' method='POST'>";
+
+						//$nome_corso = $_SESSION['nome_corso'];
+
+						$nome_corso = "IoT"; // dummy
+
+						// QUERY: estrae nome e id docente sulla base del nome corso
+						$sql = "SELECT UTENTE.nome AS nome_utente, UTENTE.id AS id_docente
+								FROM UTENTE INNER JOIN ISCRIZIONE ON UTENTE.id = ISCRIZIONE.idUtente AND UTENTE.tipo = ISCRIZIONE.tipoUtente INNER JOIN CORSO ON ISCRIZIONE.idCorso = CORSO.id 
+								WHERE CORSO.nome = '$nome_corso' AND UTENTE.tipo = 'DOC' AND ISCRIZIONE.stato = 0";
+
+						$result = $link -> query($sql);
+
+						while($row = $result->fetch_assoc())
+						{
+
+							$id_docente = $row['id_docente'];
+
+							// QUERY: estrae l'id del corso sulla base dell'id docente
+							$sql2 = "SELECT CORSO.id AS id_corso
+									FROM UTENTE INNER JOIN ISCRIZIONE ON UTENTE.id = ISCRIZIONE.idUtente AND UTENTE.tipo = ISCRIZIONE.tipoUtente INNER JOIN CORSO ON ISCRIZIONE.idCorso = CORSO.id 
+									WHERE CORSO.nome = '$nome_corso' AND UTENTE.tipo = 'DOC' AND UTENTE.id = '$id_docente' ";
+						
+							$result2 = $link -> query($sql2);
+							$row2 = $result2 -> fetch_assoc();
+							$id_corso = $row2['id_corso'];
+
+							$nome_utente_doc = $row['nome_utente'];
+
+							// invio l'id_corso mediante il campo value del radio
+							echo "
+								<input class = 'cb' type='radio' id='radioSendRequest' name='id_corso' value='".$id_corso."' onchange='cbChange(this)'>
+								<label for='".$nome_utente_doc." '> ".$nome_utente_doc." </label></br>
+							";
+
+						}
+						
+						echo "
+							<button id='sendRequestBtn' class='send-button'>Send request</button>
+							</form>
+							";
+					?>
+
+				<!--<form class="listprof">
 					<input class = "cb" type="checkbox" id="prof1" name="prof1" value="Nicola Giaquinto" onchange="cbChange(this)">
 					<label for="prof1"> Nicola Giaquinto</label>
 					<input class = "cb" type="checkbox" id="prof2" name="prof2" value="Gennaro Boggia" onchange="cbChange(this)">
@@ -233,7 +305,7 @@
 					<input class = "cb" type="checkbox" id="prof4" name="prof4" value="Marina Mongiello" onchange="cbChange(this)">
 					<label for="prof4"> Marina Mongiello</label>
 				</form>
-				<button class="send-button">Send request</button>
+				<button class="send-button">Send request</button>-->
 			</div>
 			<script type="text/javascript" src="../script/modale.js"></script>
 
@@ -245,6 +317,8 @@
 			<span>Your Courses</span>
 			<div class="shortdesc2">
 				<p>Here are the courses you are already enrolled in</p>
+				<center>
+					<div class='ccardbox'>
 				<?php
 					// dummy 
 					$id_utente = 2;
@@ -258,16 +332,14 @@
 					while($row = $result->fetch_assoc())
 					{
 						echo "				
-						<center>
-							<div class='ccardbox'>
-									<div class='dcard' onclick='course_redirect(".$row['id_corso'].")' type='button'>
-										<div class='fpart'><img src='data:image/gif;base64," .base64_encode($row['copertina_corso']). "'></div>
-										<a><div class='spart'>".$row['nome_corso']."</div></a>
-									</div>
-							</div>
-						</center>";
+							<div class='dcard' onclick='course_redirect(".$row['id_corso'].")' type='button'>
+								<div class='fpart'><img src='data:image/gif;base64," .base64_encode($row['copertina_corso']). "'></div>
+								<a><div class='spart'>".$row['nome_corso']."</div></a>
+							</div>";
 					}
 				?>
+					</div>
+				</center>
 
 			</div>
 		</div>
@@ -284,5 +356,7 @@
 				</div>
 			</div>
 		</footer>
+
+		<script type="text/javascript" src="../script/send_request_toCourse.js"></script>
 	</body>
 </html>
