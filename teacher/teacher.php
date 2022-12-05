@@ -8,14 +8,7 @@
 	if(!isset($_SESSION["loggedin"])){
 		header("location: ../index.html");
 	}
-?>
-
-				
-	// Check connection
-	if (mysqli_connect_errno())
-		echo "Connessione al database non riuscita: " . mysqli_connect_error();
-
-		$id_docente = $_SESSION['id_utente']; 
+	$id_docente = $_SESSION['id_utente']; 
 ?>
 
 

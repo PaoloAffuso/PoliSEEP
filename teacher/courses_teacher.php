@@ -61,11 +61,6 @@
 
 			<!-- Title -->
 			<?php
-				include '../config.php';
-				// Check connection
-				if (mysqli_connect_errno())
-					echo "Connessione al database non riuscita: " . mysqli_connect_error();
-
 				//$id_corso = $_GET['id_corso'];
 
 				$id_corso = 1; //dummy
@@ -114,7 +109,6 @@
 			<!-- Trigger/Open The Modal -->
 			<button id="btn" class="mng-isc" onclick="toggleModal()" type="button">Manage pending requests</button>
 			<button id="btn1" class="mng-txt" onclick="toggleModal1()" type="button">Edit course info</button>
-					<!--</div>-->
 		
 
 			<!-- The Modal: manage pending requests -->
@@ -122,20 +116,7 @@
 			</div>
 			<!-- Modal content -->
 			<div class="modal">
-				<form class="liststud">
-					<h3>Manage pending requests</h3>
-					<br>
-					<div class="form-group select-all">
-						<input type="checkbox" id="select-all">
-						<label for="select-all"><i>Select all</i></label>
-					</div>
-					
 					<?php
-
-				
-					
-					<?php
-
 					echo "
 							<form class='liststud' id='formADRequest' method='POST' action='accept_request_Course.php'>
 							<h3>Manage pending requests</h3>
@@ -149,15 +130,16 @@
 
 						// QUERY: stampa lista studenti che hanno inviato una richiesta di iscrizione al corso
 
-						$sql = "SELECT UTENTE.nome AS nome_utente FROM ISCRIZIONE INNER JOIN UTENTE ON ISCRIZIONE.idUtente = UTENTE.id WHERE ISCRIZIONE.stato=-1 AND ISCRIZIONE.idCorso = '$id_corso' AND UTENTE.tipo='STU'";
+						//$sql = "SELECT UTENTE.nome AS nome_utente FROM ISCRIZIONE INNER JOIN UTENTE ON ISCRIZIONE.idUtente = UTENTE.id WHERE ISCRIZIONE.stato=-1 AND ISCRIZIONE.idCorso = '$id_corso' AND UTENTE.tipo='STU'";
 						$sql = "SELECT UTENTE.nome AS nome_utente, UTENTE.id as id_studente FROM ISCRIZIONE INNER JOIN UTENTE ON ISCRIZIONE.idUtente = UTENTE.id WHERE ISCRIZIONE.stato=-1 AND ISCRIZIONE.idCorso = '$id_corso' AND UTENTE.tipo='STU'";
 						$result = $link -> query($sql);
 						while($row = $result->fetch_assoc())
 						{
 							$nome_utente = $row['nome_utente'];
+							$id_studente=$row['id_studente'];
 							echo "
 								<div class='form-group'>
-									<input class = 'cb' type='checkbox' id='stud1' name='stud1' value='stud1'>
+									<input class = 'cb' type='checkbox' id='stud1' name='stud1' value='".$id_studente."' prova=''>
 									<label for='stud1'>".$nome_utente."</label>
 								</div>
 								";
@@ -173,20 +155,6 @@
 						/*
 							UPDATE ISCRIZIONE SET stato=1 WHERE idUtente = "$id_utente"; 
 						*/
-					?>
-
-				</form>
-				<button class="accept-button">Accept</button>
-				<button class="decline-button">Decline</button>
-							$id_studente = $row['id_studente'];
-
-							echo "
-								<div class='form-group'>
-									<input class = 'cb' type='checkbox' id='$id_studente' name='$id_studente' value='".$id_studente."'>
-									<label for='$id_studente'>".$nome_utente."</label>
-								</div>
-								";
-						}
 
 					echo "
 							<button class='accept-button' id='acceptRequestBtn'>Accept</button>
@@ -238,7 +206,6 @@
 					</form>
 
 			</div>
-			<script type="text/javascript" src="../script/modale.js"></script>
 
 
 
@@ -293,13 +260,12 @@
 			</div>
 
 
-			<!-- Description -->
-			<div class="head-container">
+			<!-- Description --> <!--dummy-->
+			<!--<div class="head-container">
 				<div class="inbt">
 					<span>Brief description of the course</span>
-					<div class="shortdesc2">
 					<?php
-						
+						/*
 						//$id_corso = $_SESSION['id_corso'];
 						$id_corso = 1; //dummy
 
@@ -323,7 +289,7 @@
 						for($i=0; $i<$max_num; $i++)
 						{
 							echo "Chapter ".$i."<br>";
-						}
+						}*/
 					?>
 					</div>
 				</div>
@@ -386,9 +352,7 @@
 				</div>
 			</div>
 		</footer>
-
 		<script type="text/javascript" src="../script/send_request_toCourse.js"></script>
-		
 	</body>
 
 </html>

@@ -28,15 +28,15 @@ frm.submit(function (e) {
 var frm1 = $("#formADRequest");
 var btn1 = $("#radioSendRequest");
 
-frm.submit(function (e) {
+frm1.submit(function (e) {
   e.preventDefault();
 
   var checkedVals = $('.cb:checkbox:checked').map(function() {
     return this.value;
   }).get();
-  
   for(i=0;i<checkedVals.length;i++) 
   {
+    console.log("FRm:"+frm.serialize())
     /*$.ajax({
       type: frm.attr("method"), // post
       url: frm.attr("action"), // dove deve andare (script php)
