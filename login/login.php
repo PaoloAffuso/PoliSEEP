@@ -3,10 +3,10 @@
 
     // TO DO: cambiare l'if aggiungendo la condizione (...&&tipoUtente='STU') header("location:.....student.php"). 
     // se invece l'utente è di tipo DOC allora si fa redirect verso teacher.php
-
-	/*if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"]==="True"){
-        header("location: intro.php");
-    }*/
+    if(isset($_SESSION["tipoUtente"])) {
+        if($_SESSION["tipoUtente"]==="DOC") header("location: ../teacher/teacher.php");
+        else if($_SESSION["tipoUtente"]==="STU") header("location: ../student/student.php");
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en" class="h-100">

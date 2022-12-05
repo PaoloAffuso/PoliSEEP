@@ -5,6 +5,10 @@
 	// Check connection
 	if (mysqli_connect_errno())
 		echo "Connessione al database non riuscita: " . mysqli_connect_error();
+	
+	if(!isset($_SESSION["loggedin"])){
+		header("location: ../index.html");
+	}
 ?>
 
 <!DOCTYPE html>
@@ -62,7 +66,7 @@
 					<li><a class="active" href="#dashboard">Dashboard</a></li>
 					<li><a href="#sezione_corsi_disponibili">Courses</a></li>
 				</ul>
-				<a class="logout" href="">Logout</a>
+				<a class="logout" href="../login/logout.php">Logout</a>
 				<img src="../images/icon_/menu.png" class="menu" onclick="sideMenu(0)" alt="menu"> <!--menu a scomparsa-->
 			</nav>
 

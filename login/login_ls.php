@@ -30,8 +30,14 @@
 			setcookie ("password",$password,time()+ 3600, '/');
             //echo "ATTIVO";
         }
-        if($tipoUtente == "DOC") echo "OK-DOC";
-        else if($tipoUtente == "STU") echo "OK-STU";  
+        if($tipoUtente == "DOC") {
+            $_SESSION['tipoUtente']="DOC";
+            echo "OK-DOC";
+        }
+        else if($tipoUtente == "STU") {
+            $_SESSION['tipoUtente']="STU";
+            echo "OK-STU";  
+        }
     }
     else echo "ERRORE"; // se entro nell'else l'utente non esiste
 
