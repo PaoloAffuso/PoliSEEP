@@ -1,4 +1,4 @@
-function acceptRequest() {
+$("#acceptBTN").click(function(){
     var checkedVals = $('.cb:checkbox:checked').map(function() {
         return this.value;
       }).get();
@@ -15,10 +15,10 @@ function acceptRequest() {
             }
           });
     }
-    location.reload();
-}
+    $("#pendingCourses").load("courses_teacher.php #pendingCourses"); //Refresh solo sul div modale
+});
 
-function declineRequest() {
+$("#declineBTN").click(function() {
     var checkedVals = $('.cb:checkbox:checked').map(function() {
         return this.value;
       }).get();
@@ -35,5 +35,5 @@ function declineRequest() {
             }
           });
     }
-    //location.reload();
-}
+    $("#pendingCourses").load("courses_teacher.php #pendingCourses");
+});

@@ -113,7 +113,7 @@
 			<!-- Modal content -->
 
 			<!--Prova-->
-			<div class="modal">
+			<div class="modal" id="pendingCourses">
 					<h3>Manage pending requests</h3>
 					<br>
 					<div class="form-group select-all">
@@ -136,8 +136,8 @@
 								";
 						}
 					?>
-				<button class="accept-button" id="acceptBTN" onclick="acceptRequest();">Accept</button>
-				<button class="decline-button" id="declineBTN" onclick="declineRequest();">Decline</button>
+				<button class="accept-button" id="acceptBTN">Accept</button>
+				<button class="decline-button" id="declineBTN">Decline</button>
 			</div>
 
 			<!--<div class="modal">

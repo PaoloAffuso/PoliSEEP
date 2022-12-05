@@ -29,7 +29,7 @@
         else echo "ERROR";
     }
 
-    if($call="declineRequest") {
+    if($call=="declineRequest") {
         $sql="DELETE FROM ISCRIZIONE WHERE idUtente = '$id_studente' AND idCorso='$id_corso' AND tipoUtente = 'STU'";
         if($result = $link -> query($sql)) echo "OK";
         else echo "ERROR";
