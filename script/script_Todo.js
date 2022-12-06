@@ -40,12 +40,13 @@ inputField.addEventListener("keyup", (e) => {
       type: "post",
       data : {'call':'insertTask', 'descrizione':inputVal},
       success: function (response) {
-        console.log(response);
-        if(response=="OK") {
-          let liTag = ` <li class="list pending" onclick="handleStatus(this)">
+        res=response.split("-");
+        console.log(res);
+        if(res[0]=="OK") {
+          let liTag = ` <li class="list pending" onclick="handleStatus(this, ${res[1]})">
             <input type="checkbox" />
             <span class="task">${inputVal}</span>
-            <i class="uil uil-trash" onclick="deleteTask(this)"></i>
+            <i class="uil uil-trash" onclick="deleteTask(this, ${res[1]})"></i>
           </li>`;
 
           todoLists.insertAdjacentHTML("beforeend", liTag); // Inserimento del tag li all'interno del div todolist

@@ -16,7 +16,7 @@
     if($call == "insertTask") {
         $descrizione = $_POST['descrizione'];
         if($result = $link -> query("INSERT INTO task(idUtente, tipoUtente, num, descrizione, dataIns, stato) VALUES ('$idUtente','STU',$num, '$descrizione', '$date', 0)"))
-            echo "OK";
+            echo "OK-".$num;
         else echo "ERROR";
     }
 
@@ -28,7 +28,7 @@
         else $sql="UPDATE task SET stato=0 WHERE idUtente='$idUtente' AND num='$num'";
         if($result = $link -> query($sql))
             echo "OK";
-        else echo "ERROR";
+        else echo $result;//"ERROR";
     }
 
     if($call == "delSingleTask") {
