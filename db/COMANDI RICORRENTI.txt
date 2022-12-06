@@ -144,8 +144,6 @@ The purpose of the course is to describe the architectures, enabling technologie
 - Ability to use correct scientific technical language.
 - Ability to design complex IoTs
 
---------------------------------------------------------------------
-
 DESCRIZIONE IoT:
 
 Is an idea from computer science: connecting ordinary things like lights and doors to a computer network to make them "intelligent". An embedded system or a computer connects each thing together in a network and to the internet. Some technologies used for the internet of things are RFID and mesh nets. The connections allow each thing to collect and exchange data, and we can control them remotely or by setting rules or chains of actions. IoT improves the ease of life of humans and their daily activities. Experts estimate that the IoT will consist of almost 50 billion objects by 2020. The course is divided into the following chapters:
@@ -161,6 +159,38 @@ MAPPATURA ISCRIZIONE.stato:
 	
 	se il doc preme pulsante "decline", la riga relativa allo studente viene cancellata
 
+DOCENTI:
+
+IoT (1) - Santo Natale		- 0
+IoT (2) - Silvestro Gatto	- 0
+AIML 	- AllMight			- 0
+ASE 	- Pasqua Felice 	- 0
+
+STUDENTI:
+
+IoT (1) - Sara Banda (1), Pino Abete1 (-1) 
+IoT (2) - Pino Abete (1)
+AIML 	- Sara Banda (1)
+ASE 	- Sara Banda (-1)
+
+// iscrizioni docenti
+
+INSERT INTO ISCRIZIONE (idUtente,tipoUtente,idCorso,stato) VALUES
+(1, "DOC", 1, 0),
+(2, "DOC", 4, 0),
+(3, "DOC", 2, 0),
+(4, "DOC", 3, 0);
+
+// iscrizioni studenti
+
+INSERT INTO ISCRIZIONE (idUtente,tipoUtente,idCorso,stato) VALUES
+(1, "STU", 1, 1),
+(1, "STU", 3, 1),
+(1, "STU", 4, -1),
+(2, "STU", 1, -1),
+(3, "STU", 2, 1);
+
+
 --------------------------------------------------------------------
 
 MAPPATURA TAKE_QUIZ.stato:
@@ -171,4 +201,21 @@ MAPPATURA TAKE_QUIZ.stato:
 	2 = quiz completato dallo studente
 	
 	se il doc preme pulsante "decline", la riga relativa allo studente viene cancellata
+	
+
+--------------------------------------------------------------------
+
+
+MAPPATURA FILES:
+
+INSERT INTO ISCRIZIONE (idCorso,nome,dimensione) VALUES
+(1,"1-IoT-Introduction",1512),
+(2,"1-IoT-Introduction",1512),
+(3,"0_ai_teaser",7150),
+(4,"01 - ASE - Introduction",204);
+
+
+
+
+
 

@@ -11,6 +11,8 @@
 
 	if(isset($_SESSION['tipoUtente']) && $_SESSION['tipoUtente']=="STU")
 		header("location: ../student/student.php");
+
+	$id_docente = $_SESSION['id_utente']; 
 ?>
 
 <!DOCTYPE html>
@@ -55,7 +57,7 @@
 
 			<!-- Navigation Bar -->
 			<nav>
-				<a href="../index.html"><div class="logo"><img src="../images/logo.png" alt="logo"></div></a>
+				<a href=""><div class="logo"><img src="../images/logo.png" alt="logo"></div></a>
 				<ul>
 					<li><a class="active" href="#dashboard">Dashboard</a></li>
 					<li><a href="#sezione_corsi_disponibili">Courses</a></li>
@@ -66,18 +68,15 @@
 
 			<!-- Title -->
 			<div class="title" id="dash">
-				<?php
+			<?php
 
-					//$nome_utente = $_SESSION['nome_utente']; // dal login si ricava la variabile di sessione
+				$sql="SELECT nome AS nome_utente FROM UTENTE WHERE id='$id_docente' AND tipo='DOC'";
+				$result = $link->query($sql);
+				$row = mysqli_fetch_array($result);
+				$nome_utente = $row['nome_utente'];
 
-					// dummy
-					
-					$nome_utente = "PROVA";
-
-					// dummy
-
-					echo "<span>Welcome back ".$nome_utente."</span>";
-				?>
+				echo "<span>Welcome back ".$nome_utente."</span>";
+			?>
 				<div class="shortdesc">
 					<p>Here you find everything you need</p>
 				</div>
@@ -86,11 +85,8 @@
 			<!-- Immagine di profilo -->
 			<main class="ccard_usrimg">
 				<?php
-					//$id_utente = $_SESSION['id_utente'];
 
-					$id_utente = 2; // dummy
-
-					$sql = "SELECT propic FROM UTENTE WHERE id='$id_utente' AND UTENTE.tipo = 'DOC'";
+					$sql = "SELECT propic FROM UTENTE WHERE id='$id_docente' AND UTENTE.tipo = 'DOC'";
 					$result = $link -> query($sql);
 					$row = $result -> fetch_assoc();
 					$propic = $row['propic'];
@@ -136,13 +132,9 @@
 				<div class="overview_container">
 					<div class="overview_sub">
 						<?php
-
-						//$id_utente = $_SESSION['id_utente'];
-						
-						$id_utente = 2; // dummy
 						
 						// QUERY: conta i corsi che appartengono al docente
-						$sql = "SELECT count(ISCRIZIONE.idCorso) AS conta_corsi FROM ISCRIZIONE WHERE ISCRIZIONE.idUtente = '$id_utente' AND ISCRIZIONE.stato = 0 AND ISCRIZIONE.tipoUtente = 'DOC'";
+						$sql = "SELECT count(ISCRIZIONE.idCorso) AS conta_corsi FROM ISCRIZIONE WHERE ISCRIZIONE.idUtente = '$id_docente' AND ISCRIZIONE.stato = 0 AND ISCRIZIONE.tipoUtente = 'DOC'";
 						$result = $link -> query($sql);
 						$row = $result -> fetch_assoc();
 						$conta_corsi = $row['conta_corsi'];
@@ -156,14 +148,8 @@
 					<div class="overview_sub">
 						<?php
 
-							//$id_utente = $_SESSION['id_utente'];
-							//$id_corso = $_GET['id_corso'];
-
-							$id_utente = 2; // dummy
-							$id_corso = 1; // dummy
-
 							// QUERY: conta i corsi che appartengono al docente
-							$sql = "SELECT count(ISCRIZIONE.idUtente) AS conta_iscritti FROM ISCRIZIONE WHERE ISCRIZIONE.stato = 1 AND ISCRIZIONE.tipoUtente = 'STU' AND ISCRIZIONE.idCorso='$id_corso'";
+							$sql = "SELECT count(ISCRIZIONE.idUtente) AS conta_iscritti FROM ISCRIZIONE WHERE ISCRIZIONE.stato = 1 AND ISCRIZIONE.tipoUtente = 'STU'";
 							$result = $link -> query($sql);
 							$row = $result -> fetch_assoc();
 							$conta_iscritti = $row['conta_iscritti'];
@@ -177,14 +163,8 @@
 					<div class="overview_sub">
 					<?php
 
-						//$id_utente = $_SESSION['id_utente'];
-						//$id_corso = $_GET['id_corso'];
-
-						$id_utente = 2; // dummy
-						$id_corso = 1; // dummy
-
-						// QUERY: conta i corsi che appartengono al docente
-						$sql = "SELECT count(TAKE_QUIZ.idUtente) AS conta_quiz_creati FROM TAKE_QUIZ WHERE TAKE_QUIZ.stato = 0 AND TAKE_QUIZ.tipoUtente = 'DOC'";
+						// QUERY: conta i quiz che appartengono al docente
+						$sql = "SELECT count(TAKE_QUIZ.idUtente) AS conta_quiz_creati FROM TAKE_QUIZ WHERE TAKE_QUIZ.stato = 0 AND TAKE_QUIZ.tipoUtente = 'DOC' AND TAKE_QUIZ.idUtente = '$id_docente'";
 						$result = $link -> query($sql);
 						$row = $result -> fetch_assoc();
 						$conta_quiz_creati = $row['conta_quiz_creati'];
@@ -206,43 +186,32 @@
 		?>
 
 
-		<script>
+	<script>
+			var xValues = ["Databases", "OS", "IoT","ML"];
 
-			function(quiz_comp, quiz_ncomp, corsi)
-			{
-				var xValues = ["Databases", "OS", "IoT","ML"]; //dummy
-				var quiz_comp = [65,59,80,81,56,55,40]; // dummy
-
-				new Chart("myChart", 
-				{
-					type: "bar",
-					data: 
-					{
-						labels: xValues,
-						datasets: [{
-										label: "NUMBER OF STUDENT THAT HAVE COMPLETED THE QUIZ",
-										backgroundColor: "#4BB377",
-										data: [65,59,80,81,56,55,40]
-									}, 
-									{
-										label: "NUMBER OF STUDENT THAT HAVEN'T COMPLETED THE QUIZ",
-										backgroundColor: "#004A86",
-										data: [28, 48, 40, 19, 86, 27, 90]
-									}]
-					},
-					options: 
-					{
-						legend: {display: false},
-						title: 
-						{
-							display: true,
-							text: "TOTAL COMPLETED QUIZ"
-						}
+			new Chart("myChart", {
+				type: "bar",
+				data: {
+					labels: xValues,
+					datasets: [{
+									label: "NUMBER OF STUDENT THAT HAVE COMPLETED THE QUIZ",
+									backgroundColor: "#4BB377",
+									data: [65, 59, 80, 81, 56, 55, 40]
+								}, {
+									label: "NUMBER OF STUDENT THAT HAVEN'T COMPLETED THE QUIZ",
+									backgroundColor: "#004A86",
+									data: [28, 48, 40, 19, 86, 27, 90]
+								}]
+						},
+				options: {
+					legend: {display: false},
+					title: {
+					display: true,
+					text: "TOTAL COMPLETED QUIZ"
 					}
+				}
 				});
-			}
-			
-		</script>
+	</script>
 
 
 		<!-----------------------------------------------------------SEZIONE CORSI----------------------------------------------------------->
@@ -257,31 +226,34 @@
 				<!-- Trigger/Open The Modal -->
 				<button onclick="toggleModal()" type="button">Insert a new course</button>
 			</div>
+
 			<!-- Insieme dei corsi disponibili -->
 			<div class="ccard">
-				<?php
-					// dummy 
-					$id_utente = 2;
-					// dummy 
+				<center>
+					<div class='ccardbox'>
+						<?php
+							// dummy 
+							$id_utente = 2;
+							// dummy 
 
-					// QUERY: estrae i codici dei corsi a cui l'utente NON è iscritto
-					$sql = "SELECT CORSO.nome AS nome_corso, CORSO.copertina AS copertina_corso, CORSO.id AS id_corso FROM CORSO WHERE CORSO.id NOT IN (SELECT idCorso FROM ISCRIZIONE WHERE idUtente = '$id_utente' AND tipoUtente = 'STU')";
-					$result = $link -> query($sql);
+							// QUERY: estrae i codici dei corsi a cui l'utente NON è iscritto
+							$sql = "SELECT CORSO.nome AS nome_corso, CORSO.copertina AS copertina_corso, CORSO.id AS id_corso FROM CORSO WHERE CORSO.id NOT IN (SELECT idCorso FROM ISCRIZIONE WHERE idUtente = '$id_utente' AND tipoUtente = 'STU')";
+							$result = $link -> query($sql);
 
-					while($row = $result->fetch_assoc())
-					{
-						echo "
-							<center>
-								<div class='ccardbox'>
-										<div class='dcard' onclick='course_redirect(".$row['id_corso'].")' type='button'>
-											<div class='fpart'><img src='data:image/gif;base64," .base64_encode($row['copertina_corso']). "'></div>
-											<a><div class='spart'>".$row['nome_corso']."</div></a>
-										</div>	
-								</div>
-							</center>";
-					}
-					
-				?>
+							
+							while($row = $result->fetch_assoc())
+							{
+								echo "
+												<div class='dcard' onclick='course_redirect(".$row['id_corso'].")' type='button'>
+													<div class='fpart'><img src='data:image/gif;base64," .base64_encode($row['copertina_corso']). "'></div>
+													<a><div class='spart'>".$row['nome_corso']."</div></a>
+												</div>	
+									";
+							}
+							
+						?>
+					</div>
+				</center>
 				<script> 
 					function course_redirect(id_corso)
 					{
@@ -295,12 +267,6 @@
 						});
 					}
 				</script>
-				<!--<script> 
-					function course_redirect(id_corso)
-					{
-						window.location.replace("courses_teacher.php?id_corso="+id_corso); 
-					}
-				</script>-->
 			</div>
 
 
@@ -313,18 +279,18 @@
 
 					<!-- FORM CREATE NEW COURSE -->
 
-					<form action="#" method="post" enctype="text/plain" >
+					<!--<form action="#" method="post" enctype="text/plain" id="frmInsertNewCourse">-->
+					<form id="frmInsertNewCourse">
 						<div class="form-inner">
 							<h3>Create a new course</h3>
 							<br>
-							<input type="text" placeholder="Course name">
-							<input type="number" placeholder="CFU">
-							<input type="text" placeholder="Professor">
-							<textarea placeholder="Course Goals"></textarea>
-							<input type="number" placeholder="Number of chapters">
-							<textarea placeholder="Brief description of the course"></textarea>
-							<input type="text" placeholder="Learning Verification">
-							<input type="file" id="upload_img_btn">
+							<input type="text" name="nomeCorso" placeholder="Course name">
+							<input type="number" name="numCfu" placeholder="CFU">
+							<input type="text" name="nomeDoc" placeholder="Professor">
+							<textarea placeholder="Course Goals" name="obiettivoCorso"></textarea>
+							<textarea placeholder="Brief description of the course" name="descrizioneCorso"></textarea>
+							<input type="text" placeholder="Learning Verification" name="verificaCorso">
+							<input type="file" name="immagineCorso" id="upload_img_btn">
 							<label for="upload_img_btn" id="upload_img_lbl"><i class = "fa-solid fa-upload"></i> Choose course image</label>
 							<button type="submit" id="form_course">Create</button>
 						</div>
@@ -332,6 +298,7 @@
 
 			</div>
 			<script type="text/javascript" src="../script/modale.js"></script>
+			<script type="text/javascript" src="../script/insert_newCourse.js"></script>
 		</div>
 
 

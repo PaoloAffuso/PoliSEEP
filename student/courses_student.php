@@ -49,7 +49,7 @@
 
 			<!-- Navigation Bar -->
 			<nav>
-				<a href="../index.html"><div class="logo"><img src="../images/logo.png" alt="logo"></div></a>
+				<a href="student.php"><div class="logo"><img src="../images/logo.png" alt="logo"></div></a>
 				<ul>
 					<li><a class="active" href="#info">Info</a></li>
 					<li><a href="files_student.php">Files</a></li>

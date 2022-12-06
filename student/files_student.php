@@ -53,7 +53,7 @@
 
 		<!-- Navigation Bar -->
 		<nav class="mynav">
-			<a href="../index.html"><div class="logo"><img src="../images/logo.png" alt="logo"></div></a>
+			<a href="student.php"><div class="logo"><img src="../images/logo.png" alt="logo"></div></a>
 			<ul>
 				<li><a href="courses_student.php">Info</a></li>
 				<li><a href="#dash" class ="active">Files</a></li>

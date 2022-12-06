@@ -32,6 +32,8 @@
 		<script type="text/javascript" src="../script.js"></script>
 		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 
+		<script type="text/javascript" src="../script/modale.js"></script>
+
 		<script> // script per la gestione dell'ombra nera della navbar
 			$(window).on('scroll', function(){
 				if($(window).scrollTop()){
@@ -64,7 +66,7 @@
 
 			<!-- Navigation Bar -->
 			<nav>
-				<a href="../index.html"><div class="logo"><img src="../images/logo.png" alt="logo"></div></a>
+				<a href=""><div class="logo"><img src="../images/logo.png" alt="logo"></div></a>
 				<ul>
 					<li><a class="active" href="#dashboard">Dashboard</a></li>
 					<li><a href="#sezione_corsi_disponibili">Courses</a></li>
@@ -75,7 +77,15 @@
 
 			<!-- Title -->
 			<div class="title" id="dash">
-				<span>Welcome back Username</span>
+			<?php
+
+				$sql="SELECT nome AS nome_utente FROM UTENTE WHERE id='$id_studente' AND tipo='STU'";
+				$result = $link->query($sql);
+				$row = mysqli_fetch_array($result);
+				$nome_utente = $row['nome_utente'];
+
+				echo "<span>Welcome back ".$nome_utente."</span>";
+			?>
 				<div class="shortdesc">
 					<p>Here you find everything you need</p>
 				</div>
@@ -83,11 +93,20 @@
 
 			<!-- Immagine di profilo -->
 			<main class="ccard_usrimg">
-				<div class="profile-pic-div">
-					<img src="../images/student_/usrimg.png" id="photo">
-					<input type="file" id="file">
-					<label for="file" id="uploadBtn">Change Photo</label>
-				</div>
+				<?php
+
+					$sql = "SELECT propic FROM UTENTE WHERE id='$id_studente' AND UTENTE.tipo = 'STU'";
+					$result = $link -> query($sql);
+					$row = $result -> fetch_assoc();
+					$propic = $row['propic'];
+
+					echo"
+					<div class='profile-pic-div'>
+						<img src='data:image/gif;base64,".base64_encode($propic)."'id='photo'>
+						<input type='file' id='file'>
+						<label for='file' id='uploadBtn'>Change Photo</label>
+				</div>";
+				?>
 				<script src="../script/user_img.js"></script>
 			</main>
 
@@ -121,19 +140,70 @@
 			<section class="overview">
 				<div class="overview_container">
 				<div class="overview_sub">
-					<p id="topper_overview">Enrolled Courses</p>
-					<p id="number">0</p>
-					<p id="bottom_overview">6 available courses</p>
+					<?php
+
+						// QUERY: conta i corsi a cui l'utente è iscritto
+						$sql = "SELECT count(ISCRIZIONE.idCorso) AS conta_corsi FROM ISCRIZIONE WHERE ISCRIZIONE.idUtente = '$id_studente' AND ISCRIZIONE.stato = 1 AND ISCRIZIONE.tipoUtente = 'STU'";
+						$result = $link -> query($sql);
+						$row = $result -> fetch_assoc();
+						$conta_corsi_iscrizione = $row['conta_corsi'];
+
+						// QUERY: conta i corsi a cui l'utente NON è iscritto
+						$sql = "SELECT count(ISCRIZIONE.idCorso) AS conta_corsi FROM ISCRIZIONE WHERE ISCRIZIONE.idUtente <> '$id_studente' AND ISCRIZIONE.tipoUtente = 'STU'";
+						$result = $link -> query($sql);
+						$row = $result -> fetch_assoc();
+						$conta_corsi_disponibili = $row['conta_corsi'];
+
+						echo "
+							<p id='topper_overview'>Enrolled Courses</p>
+							<p id='number'>".$conta_corsi_iscrizione."</p>
+							<p id='bottom_overview'>".$conta_corsi_disponibili." avaiable courses</p>";
+					?>
+					
 				</div>
 				<div class="overview_sub">
-					<p id="topper_overview">Completed Courses</p>
-					<p id="number">0</p>
-					<p id="bottom_overview">6 courses not completed yet</p>
+					<?php
+
+						// QUERY: conta quanti corsi sono stati completati
+						$sql = "SELECT count(stato) as conta_corsi FROM ISCRIZIONE WHERE ISCRIZIONE.idUtente = '$id_studente' AND ISCRIZIONE.tipoUtente = 'STU' AND ISCRIZIONE.stato = 1"; // 1 = corso completato
+						$result = $link -> query($sql);
+						$row = $result -> fetch_assoc();
+						$conta_corsi_completi = $row['conta_corsi'];
+
+						// QUERY: conta quanti corsi non sono stati completati
+						$sql = "SELECT count(stato) as conta_corsi FROM ISCRIZIONE WHERE ISCRIZIONE.idUtente = '$id_studente' AND ISCRIZIONE.tipoUtente = 'STU' AND ISCRIZIONE.stato <> 1"; // 1 = corso completato
+						$result = $link -> query($sql);
+						$row = $result -> fetch_assoc();
+						$conta_corsi_incompleti = $row['conta_corsi'];
+
+						echo "			
+							<p id='topper_overview'>Completed Courses</p>	
+							<p id='number'>".$conta_corsi_completi."</p>
+							<p id='bottom_overview'>".$conta_corsi_incompleti." courses not completed yet</p>";
+
+					?>
 				</div>
 				<div class="overview_sub">
-					<p id="topper_overview">Completed quiz</p>
-					<p id="number">0</p>
-					<p id="bottom_overview">30 quizzes remaining</p>
+					<?php
+
+						// QUERY: conta quanti quiz sono stati completati
+						$sql = "SELECT count(stato) as conta_quiz FROM TAKE_QUIZ WHERE TAKE_QUIZ.idUtente = '$id_studente' AND TAKE_QUIZ.tipoUtente = 'STU' AND TAKE_QUIZ.stato = 1"; // 1 = quiz completato
+						$result = $link -> query($sql);
+						$row = $result -> fetch_assoc();
+						$conta_quiz_completi = $row['conta_quiz'];
+
+						// QUERY: conta quanti quiz non sono stati completati
+						$sql = "SELECT count(stato) as conta_quiz FROM TAKE_QUIZ WHERE TAKE_QUIZ.idUtente = '$id_studente' AND TAKE_QUIZ.tipoUtente = 'STU' AND TAKE_QUIZ.stato <> 1"; // 1 = quiz completato
+						$result = $link -> query($sql);
+						$row = $result -> fetch_assoc();
+						$conta_quiz_incompleti = $row['conta_quiz'];
+						
+						echo "
+							<p id='topper_overview'>Completed quiz</p>
+							<p id='number'>".$conta_quiz_completi."</p>
+							<p id='bottom_overview'>".$conta_quiz_incompleti." quizzes remaining</p>";
+					?>
+					
 				</div>
 				</div>
 			</section>
@@ -186,80 +256,47 @@
 			</div>
 
 			<!-- Insieme dei corsi disponibili -->
-			<div class="ccard">
-				<center>
-					<div class='ccardbox'>
-				<?php
+			<?php
 
-					// QUERY: estrae i codici dei corsi a cui l'utente NON è iscritto
-					$sql = "SELECT CORSO.nome AS nome_corso, CORSO.copertina AS copertina_corso, CORSO.id AS id_corso FROM CORSO WHERE CORSO.id 
-							NOT IN (SELECT idCorso FROM ISCRIZIONE WHERE idUtente = '$id_studente' AND tipoUtente = 'STU')
-							OR CORSO.id IN (SELECT idCorso FROM ISCRIZIONE WHERE idUtente = '$id_studente' AND tipoUtente = 'STU' AND stato = -1)";
-					$result = $link -> query($sql);
+				$id_corsi;
+				$i=0;
 
-					while($row = $result->fetch_assoc())
-					{
-						echo "				
-							<div class='dcard' onclick='toggleModal()' type='button'>
-								<div class='fpart'><img src='data:image/gif;base64," .base64_encode($row['copertina_corso']). "'></div>
-								<a><div class='spart'>".$row['nome_corso']."</div></a>
-							</div>";	
-					}
-						/*if (!$row) 
-					{
-						echo "No courses available.";
-					}*/
-				?>
-					</div>
-					<!--
-					<div class="ccardbox">
-						<div class="dcard" onclick="toggleModal()" type="button">
-							<div class="fpart"><img src="../images/student_/ADS.jpeg"></div>
-							<a><div class="spart">Algorithms and Data Structures</div></a>
-						</div>
-						<div class="dcard" onclick="toggleModal()" type="button">
-							<div class="fpart"><img src="../images/student_/DB.png"></div>
-							<a><div class="spart">Databases</div></a>
-						</div>
-						<div class="dcard" onclick="toggleModal()" type="button">
-							<div class="fpart"><img src="../images/student_/SWE.png"></div>
-							<a><div class="spart">Software Engineering</div></a>
-						</div>
-					</div>
-					<div class="ccardbox">
-						<div class="dcard" onclick="toggleModal()" type="button">
-							<div class="fpart"><img src="../images/student_/OS.jpg"></div>
-							<a><div class="spart">Operating Systems</div></a>
-						</div>
-						<div class="dcard" onclick="toggleModal()" type="button">
-							<div class="fpart"><img src="../images/student_/IoT.jpg"></div>
-							<a><div class="spart">Internet of Things</div></a>
-						</div>
-						<div class="dcard" onclick="toggleModal()" type="button">
-							<div class="fpart"><img src="../images/student_/AIML.jpeg"></div>
-							<a><div class="spart">Artificial Intelligence and Machine Learning</div></a>
-						</div>
-					</div>-->
-				</center>
-			</div>
+				echo"<div class='ccard'>
+						<center>
+					<div class='ccardbox'>";
 
+				// QUERY: estrae i codici dei corsi a cui l'utente NON è iscritto
+				$sql = "SELECT CORSO.nome AS nome_corso, CORSO.copertina AS copertina_corso, CORSO.id AS id_corso FROM CORSO WHERE CORSO.id 
+						NOT IN (SELECT idCorso FROM ISCRIZIONE WHERE idUtente = '$id_studente' AND tipoUtente = 'STU')
+						OR CORSO.id IN (SELECT idCorso FROM ISCRIZIONE WHERE idUtente = '$id_studente' AND tipoUtente = 'STU' AND stato = -1)
+						ORDER BY CORSO.id";
+				
+				$result = $link -> query($sql);
 
-			<!-- The Modal -->
-			<div class="modal-background" onclick="toggleModal()">
-			</div>
-			<!-- Modal content -->
-			<div class="modal">
-				<h3>Select one of the available teachers teaching this course:</h3>
+				while($row = $result->fetch_assoc())
+				{
+					$nome_corso = $row['nome_corso'];
+					echo "				
+					<div class='dcard' onclick='toggleModal(&apos;".$nome_corso."&apos;);' type='button'>
+						<div class='fpart'><img src='data:image/gif;base64," .base64_encode($row['copertina_corso']). "'></div>
+						<a><div class='spart'>".$row['nome_corso']."</div></a>
+					</div>";
+				}
+				
+				echo"	</div>
+							</center>
+							</div>";
 
-				<?php
+				echo"
+							<!-- The Modal -->
+							<div class='modal-background' onclick='toggleModal()'>
+							</div>
+							<!-- Modal content -->
+							<div class='modal'>
+							<h3>Select one of the available teachers teaching this course:</h3>
+							<form class='listprof' id='formSendRequest' action='send_request_toCourse.php' method='POST'>";
 
-						echo "<form class='listprof' id='formSendRequest' action='send_request_toCourse.php' method='POST'>";
-
-						//$nome_corso = $_SESSION['nome_corso'];
-
-						$nome_corso = "IoT"; // dummy
-
-						// QUERY: estrae nome e id docente sulla base del nome corso
+						// QUERY: estrae nome e id docente sulla base dell'id corso
 						$sql = "SELECT UTENTE.nome AS nome_utente, UTENTE.id AS id_docente
 								FROM UTENTE INNER JOIN ISCRIZIONE ON UTENTE.id = ISCRIZIONE.idUtente AND UTENTE.tipo = ISCRIZIONE.tipoUtente INNER JOIN CORSO ON ISCRIZIONE.idCorso = CORSO.id 
 								WHERE CORSO.nome = '$nome_corso' AND UTENTE.tipo = 'DOC' AND ISCRIZIONE.stato = 0";
@@ -273,8 +310,8 @@
 
 							// QUERY: estrae l'id del corso sulla base dell'id docente
 							$sql2 = "SELECT CORSO.id AS id_corso
-									FROM UTENTE INNER JOIN ISCRIZIONE ON UTENTE.id = ISCRIZIONE.idUtente AND UTENTE.tipo = ISCRIZIONE.tipoUtente INNER JOIN CORSO ON ISCRIZIONE.idCorso = CORSO.id 
-									WHERE CORSO.nome = '$nome_corso' AND UTENTE.tipo = 'DOC' AND UTENTE.id = '$id_docente' ";
+									 FROM UTENTE INNER JOIN ISCRIZIONE ON UTENTE.id = ISCRIZIONE.idUtente AND UTENTE.tipo = ISCRIZIONE.tipoUtente INNER JOIN CORSO ON ISCRIZIONE.idCorso = CORSO.id 
+									 WHERE CORSO.nome = '$nome_corso' AND UTENTE.tipo = 'DOC' AND UTENTE.id = '$id_docente' ";
 						
 							$result2 = $link -> query($sql2);
 							$row2 = $result2 -> fetch_assoc();
@@ -292,23 +329,10 @@
 						
 						echo "
 							<button id='sendRequestBtn' class='send-button'>Send request</button>
-							</form>
+							</form> </div>
 							";
-					?>
-
-				<!--<form class="listprof">
-					<input class = "cb" type="checkbox" id="prof1" name="prof1" value="Nicola Giaquinto" onchange="cbChange(this)">
-					<label for="prof1"> Nicola Giaquinto</label>
-					<input class = "cb" type="checkbox" id="prof2" name="prof2" value="Gennaro Boggia" onchange="cbChange(this)">
-					<label for="prof2"> Gennaro Boggia</label>
-					<input class = "cb" type="checkbox" id="prof3" name="prof3" value="Luigi Alfredo Grieco" onchange="cbChange(this)">
-					<label for="prof3"> Luigi Alfredo Grieco</label>
-					<input class = "cb" type="checkbox" id="prof4" name="prof4" value="Marina Mongiello" onchange="cbChange(this)">
-					<label for="prof4"> Marina Mongiello</label>
-				</form>
-				<button class="send-button">Send request</button>-->
-			</div>
-			<script type="text/javascript" src="../script/modale.js"></script>
+			?>
+			
 
 		</div>
 

@@ -1,14 +1,37 @@
-const toggleModal = () => {
+function toggleModal(nome_corso)
+{
+    if(nome_corso===undefined)
+        openModal();
+    else
+    {
+        $.ajax({
+            url: "../setSession.php",
+            type: "post",
+            data : {'nome_corso':nome_corso},
+            success: function (response) 
+            {
+                openModal();
+                console.log(nome_corso);
+            }
+        });
+    }
+}
+
+function openModal()
+{
     const {classList} = document.body;
-    if(classList.contains("open")){
+    if(classList.contains("open"))
+    {
         classList.remove("open");
         classList.add("closed");
     }
-    else{
+    else
+    {
         classList.remove("closed");
         classList.add("open");
     }
 }
+
 
 const toggleModal1 = () => {
     const {classList} = document.body;
