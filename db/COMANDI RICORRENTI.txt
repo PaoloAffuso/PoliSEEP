@@ -80,6 +80,21 @@ CREATE TABLE TASKS
 	PRIMARY KEY(idUtente, tipoUtente, num)
 );
 
+create table chat 
+(
+    idDocente int,
+    tipoDoc char(3),
+    idStudente int,
+    tipoStu char(3),
+    messaggio varchar(2000),
+    allegato longblob,
+    num int, 
+    stato int, 
+    FOREIGN KEY(idDocente, tipoDoc) REFERENCES UTENTE(id,tipo),
+    FOREIGN KEY(idStudente, tipoStu) REFERENCES UTENTE(id,tipo),
+    PRIMARY KEY(idDocente, tipoDoc, idStudente, tipoStu, num)
+);
+
 --------------------------------------------------------------------
 
 // INSERT INTO

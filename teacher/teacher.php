@@ -125,6 +125,7 @@
 				<p>Here there are some statistics on your courses</p>
 			</div>
 		</div>
+
 		<main class="ccard_dash">
 
 			<!-- Overview -->
@@ -232,12 +233,12 @@
 				<center>
 					<div class='ccardbox'>
 						<?php
-							// dummy 
-							$id_utente = 2;
-							// dummy 
-
+			
 							// QUERY: estrae i codici dei corsi a cui l'utente NON è iscritto
-							$sql = "SELECT CORSO.nome AS nome_corso, CORSO.copertina AS copertina_corso, CORSO.id AS id_corso FROM CORSO WHERE CORSO.id NOT IN (SELECT idCorso FROM ISCRIZIONE WHERE idUtente = '$id_utente' AND tipoUtente = 'STU')";
+							$sql = "SELECT CORSO.nome as nome_corso, CORSO.id as id_corso, CORSO.copertina as copertina_corso
+									FROM ISCRIZIONE INNER JOIN CORSO ON ISCRIZIONE.idCorso = CORSO.id
+									WHERE ISCRIZIONE.idUtente = '$id_docente' AND ISCRIZIONE.stato = 0 AND ISCRIZIONE.tipoUtente = 'DOC'";
+
 							$result = $link -> query($sql);
 
 							
@@ -284,13 +285,13 @@
 						<div class="form-inner">
 							<h3>Create a new course</h3>
 							<br>
-							<input type="text" name="nomeCorso" placeholder="Course name">
-							<input type="number" name="numCfu" placeholder="CFU">
-							<input type="text" name="nomeDoc" placeholder="Professor">
-							<textarea placeholder="Course Goals" name="obiettivoCorso"></textarea>
-							<textarea placeholder="Brief description of the course" name="descrizioneCorso"></textarea>
-							<input type="text" placeholder="Learning Verification" name="verificaCorso">
-							<input type="file" name="immagineCorso" id="upload_img_btn">
+							<input type="text" name="nomeCorso" placeholder="Course name" required>
+							<input type="number" name="cfuCorso" placeholder="CFU" required>
+							<input type="text" name="nomeDoc" placeholder="Professor" required>
+							<textarea placeholder="Course Goals" name="obiettivoCorso" required></textarea>
+							<textarea placeholder="Brief description of the course" name="descrizioneCorso" required></textarea>
+							<input type="text" placeholder="Learning Verification" name="verificaCorso" required>
+							<input type="file" name="immagineCorso" id="upload_img_btn" required>
 							<label for="upload_img_btn" id="upload_img_lbl"><i class = "fa-solid fa-upload"></i> Choose course image</label>
 							<button type="submit" id="form_course">Create</button>
 						</div>

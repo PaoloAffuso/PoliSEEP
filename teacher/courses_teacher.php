@@ -10,6 +10,10 @@
 
 	if(isset($_SESSION['tipoUtente']) && $_SESSION['tipoUtente']=="STU")
 		header("location: ../student/student.php");
+
+	$id_docente=$_SESSION['id_utente'];
+
+	$id_corso=$_SESSION['idCorso'];
 ?>
 
 <!DOCTYPE html>
@@ -62,8 +66,6 @@
 
 			<!-- Title -->
 			<?php
-
-				$id_corso = $_SESSION['idCorso'];
 
 				// QUERY: estrae nome doc, nome corso, num cfu corso
 				$sql = "SELECT UTENTE.nome AS nome_doc, CORSO.nome AS nome_corso, CORSO.cfu AS cfu_corso 
@@ -120,8 +122,6 @@
 
 					<?php
 
-						$id_corso = $_SESSION['idCorso'];
-
 						$sql = "SELECT UTENTE.nome AS nome_utente, UTENTE.id as id_studente FROM ISCRIZIONE INNER JOIN UTENTE ON ISCRIZIONE.idUtente = UTENTE.id WHERE ISCRIZIONE.stato=-1 AND ISCRIZIONE.idCorso = '$id_corso' AND UTENTE.tipo='STU'";
 						$result = $link -> query($sql);
 						while($row = $result->fetch_assoc())
@@ -149,18 +149,28 @@
 
 					<!-- FORM MANAGE COURSE INFO-->
 
-					<form action="#" method="post" enctype="text/plain" >
+					<!--<form action="#" method="post" enctype="text/plain" >-->
+					<form id="frmUpdateCourse">
 						<div class="form-inner">
 							<h3>Edit course info</h3>
 							<br>
-							<input type="text" placeholder="Course name">
-							<input type="number" placeholder="CFU">
-							<input type="text" placeholder="Professor">
-							<textarea placeholder="Course Goals"></textarea>
-							<input type="number" placeholder="Number of chapters">
-							<textarea placeholder="Brief description of the course"></textarea>
-							<input type="text" placeholder="Learning Verification">
-							<input type="file" id="upload_img_btn">
+							<input type="text" name="nomeCorso" placeholder="Course name">
+							<input type="number" name="cfuCorso" placeholder="CFU">
+
+							<?php
+
+								$sql = "SELECT nome FROM UTENTE WHERE id = '$id_docente' AND tipo='DOC'";
+
+								$result = $link -> query($sql);
+								$row = $result->fetch_assoc();
+
+								echo "<input type='text' value='".$row['nome']."' name='nomeDoc' placeholder='Professor' disabled>";
+							?>
+							
+							<textarea  name="obiettivoCorso" placeholder="Course Goals"></textarea>
+							<textarea name="descrizioneCorso" placeholder="Brief description of the course"></textarea>
+							<input type="text" name="verificaCorso" placeholder="Learning Verification">
+							<input name="immagineCorso" type="file" id="upload_img_btn">
 							<label for="upload_img_btn" id="upload_img_lbl"><i class = "fa-solid fa-upload"></i> Choose course image</label>
 							<button type="submit" id="form_course">Save</button>
 						</div>
@@ -174,8 +184,6 @@
 			<!-- Immagine di profilo -->
 			<main class="ccard_usrimg">
 				<?php
-
-					$id_corso = $_SESSION['idCorso'];
 
 					$sql = "SELECT UTENTE.propic 
 							FROM UTENTE INNER JOIN ISCRIZIONE ON UTENTE.id = ISCRIZIONE.idUtente INNER JOIN CORSO ON ISCRIZIONE.idCorso = CORSO.id
@@ -218,8 +226,6 @@
 				<span>Course Goals</span>
 				<div class="shortdesc2">
 				<?php
-					
-					$id_corso = $_SESSION['idCorso'];
 
 					$sql = "SELECT CORSO.obiettivi FROM CORSO WHERE CORSO.id='$id_corso'";
 					$result = $link -> query($sql);
@@ -241,8 +247,6 @@
 					<span>Brief description of the course</span>
 					<div class="shortdesc2">
 					<?php
-						
-						$id_corso = $_SESSION['id_corso'];
 
 						// QUERY: recupera descrizione del corso
 						$sql = "SELECT CORSO.descrizione FROM CORSO WHERE CORSO.id='$id_corso'";
@@ -259,8 +263,6 @@
 				</div>
 				<!--immagine-->
 				<?php
-				
-					$id_corso = $_SESSION['id_corso'];
 
 					$sql = "SELECT CORSO.copertina FROM CORSO WHERE CORSO.id='$id_corso' LIMIT 1";
 					$result = $link -> query($sql);
@@ -282,10 +284,6 @@
 				<span>Learning Verification</span>
 				<div class="shortdesc2">
 				<?php
-
-					$id_corso = 1; //dummy
-
-					//$id_corso = $_SESSION['id_corso'];
 
 					$sql = "SELECT CORSO.verifica FROM CORSO WHERE CORSO.id='$id_corso'";
 					$result = $link -> query($sql);
@@ -317,6 +315,8 @@
 		</footer>
 		
 		<script type="text/javascript" src="../script/course_request.js"></script>
+		<script type="text/javascript" src="../script/update_Course.js"></script>
+
 	</body>
 
 </html>
