@@ -56,6 +56,7 @@
                                         </div>
 
                                <!--RADIO BUTTON STUDENT PROFESSOR-->
+                               <!--
                                 <div>
                                 <br>
                                 <p>Please, select your role:</p>
@@ -67,7 +68,7 @@
                                     <input name="tipoUtente" type="radio" id="DOC" value="DOC">
                                     <label for="tipoUtente">Professor</label>
                                     </div>
-                                </div>
+                                </div>-->
                               <!--fine RADIO BUTTON STUDENT PROFESSOR-->     
 
                                           <div class="checkbox-text">
@@ -126,8 +127,10 @@
                                                 required name="password2" id="password2" />
                                             <i class="uil uil-lock icon"></i>
                                         </div>
+
+                                       
                                <!--RADIO BUTTON STUDENT PROFESSOR-->
-                                        <div>
+                                         <!--<div>
                                             <br>
                                             <p>Please, select your role:</p>
                                                 <div class="form-check form-check-inline">
@@ -138,7 +141,7 @@
                                                 <input name="tipoUtente" type="radio" id="DOC" value="DOC">
                                                 <label for="tipoUtente">Professor</label>
                                                 </div>
-                                            </div>
+                                            </div>-->
                                <!--fine RADIO BUTTON STUDENT PROFESSOR-->
                                         <div class="checkbox-text">
                                             <div class="checkbox-content">

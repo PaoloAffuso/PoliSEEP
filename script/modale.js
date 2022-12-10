@@ -1,8 +1,8 @@
 function toggleModal(nome_corso)
 {
-    if(nome_corso===undefined)
+    if(nome_corso===undefined) 
         openModal();
-    else
+    else 
     {
         $.ajax({
             url: "../setSession.php",
@@ -10,8 +10,10 @@ function toggleModal(nome_corso)
             data : {'nome_corso':nome_corso},
             success: function (response) 
             {
+                document.getElementById('divModalId').setAttribute('data-value', nome_corso);
                 openModal();
                 console.log(nome_corso);
+                console.log(typeof nome_corso);
             }
         });
     }

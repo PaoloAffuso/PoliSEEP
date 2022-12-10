@@ -44,6 +44,8 @@
 			})
 		</script>
 
+		
+
 		<script> 
 			function course_redirect(id_corso)
 			{
@@ -265,7 +267,7 @@
 						<center>
 					<div class='ccardbox'>";
 
-				// QUERY: estrae i codici dei corsi a cui l'utente NON è iscritto
+				// QUERY: estrae i codici/nomi/copertine dei corsi a cui l'utente NON è iscritto
 				$sql = "SELECT CORSO.nome AS nome_corso, CORSO.copertina AS copertina_corso, CORSO.id AS id_corso FROM CORSO WHERE CORSO.id 
 						NOT IN (SELECT idCorso FROM ISCRIZIONE WHERE idUtente = '$id_studente' AND tipoUtente = 'STU')
 						OR CORSO.id IN (SELECT idCorso FROM ISCRIZIONE WHERE idUtente = '$id_studente' AND tipoUtente = 'STU' AND stato = -1)
@@ -277,7 +279,7 @@
 				{
 					$nome_corso = $row['nome_corso'];
 					echo "				
-					<div class='dcard' onclick='toggleModal(&apos;".$nome_corso."&apos;);' type='button'>
+					<div class='dcard' id='divModalId' onclick='toggleModal(&apos;".$nome_corso."&apos;);' type='button'>
 						<div class='fpart'><img src='data:image/gif;base64," .base64_encode($row['copertina_corso']). "'></div>
 						<a><div class='spart'>".$row['nome_corso']."</div></a>
 					</div>";
@@ -287,23 +289,30 @@
 							</center>
 							</div>";
 
+							$nome_corso_sessione = $_SESSION['nome_corso'];
+						//	echo $nome_corso_sessione;
+
 				echo"
 							<!-- The Modal -->
-							<div class='modal-background' onclick='toggleModal()'>
+							<div class='modal-background' id='divModalId' data-value='' onclick='toggleModal()'>
 							</div>
 							<!-- Modal content -->
 							<div class='modal'>
 							<h3>Select one of the available teachers teaching this course:</h3>
 							<form class='listprof' id='formSendRequest' action='send_request_toCourse.php' method='POST'>";
 
-						// QUERY: estrae nome e id docente sulla base dell'id corso
+
+
+						// QUERY: estrae nome e id docente sulla base del nome corso su cui ho cliccato
 						$sql = "SELECT UTENTE.nome AS nome_utente, UTENTE.id AS id_docente
 								FROM UTENTE INNER JOIN ISCRIZIONE ON UTENTE.id = ISCRIZIONE.idUtente AND UTENTE.tipo = ISCRIZIONE.tipoUtente INNER JOIN CORSO ON ISCRIZIONE.idCorso = CORSO.id 
-								WHERE CORSO.nome = '$nome_corso' AND UTENTE.tipo = 'DOC' AND ISCRIZIONE.stato = 0";
+								WHERE CORSO.nome = '$nome_corso_sessione' AND UTENTE.tipo = 'DOC' AND ISCRIZIONE.stato = 0";
+
+						//echo $nome_corso;
 
 						$result = $link -> query($sql);
 
-						while($row = $result->fetch_assoc())
+						while($row = $result->fetch_assoc()) // stampiamo la lista dei docenti ricavata dalla QUERY
 						{
 
 							$id_docente = $row['id_docente'];
@@ -311,7 +320,7 @@
 							// QUERY: estrae l'id del corso sulla base dell'id docente
 							$sql2 = "SELECT CORSO.id AS id_corso
 									 FROM UTENTE INNER JOIN ISCRIZIONE ON UTENTE.id = ISCRIZIONE.idUtente AND UTENTE.tipo = ISCRIZIONE.tipoUtente INNER JOIN CORSO ON ISCRIZIONE.idCorso = CORSO.id 
-									 WHERE CORSO.nome = '$nome_corso' AND UTENTE.tipo = 'DOC' AND UTENTE.id = '$id_docente' ";
+									 WHERE CORSO.nome = '$nome_corso_sessione' AND UTENTE.tipo = 'DOC' AND UTENTE.id = '$id_docente' ";
 						
 							$result2 = $link -> query($sql2);
 							$row2 = $result2 -> fetch_assoc();
@@ -345,13 +354,13 @@
 				<center>
 					<div class='ccardbox'>
 				<?php
-					// dummy 
-					$id_utente = 2;
-					// dummy 
 
 					// QUERY: estrae nome e copertina dei corsi a cui l'utente è iscritto
 					
-					$sql = "SELECT CORSO.nome AS nome_corso, CORSO.copertina AS copertina_corso, CORSO.id AS id_corso FROM CORSO WHERE CORSO.id IN (SELECT idCorso FROM ISCRIZIONE WHERE idUtente = '$id_utente' AND tipoUtente = 'STU')";
+					$sql = "SELECT CORSO.nome as nome_corso, CORSO.id as id_corso, CORSO.copertina as copertina_corso
+							FROM ISCRIZIONE INNER JOIN CORSO ON ISCRIZIONE.idCorso = CORSO.id
+							WHERE ISCRIZIONE.idUtente = '$id_studente' AND (ISCRIZIONE.stato = 1 OR ISCRIZIONE.stato = 2) AND ISCRIZIONE.tipoUtente = 'STU'";
+					
 					$result = $link -> query($sql);
 					
 					while($row = $result->fetch_assoc())
@@ -383,5 +392,26 @@
 		</footer>
 
 		<script type="text/javascript" src="../script/send_request_toCourse.js"></script>
-	</body>
+		
+		<script>
+			$('#divModalId').click(function(){
+				console.log("riga 396");
+				var nome_corso = document.getElementById('divModalId').getAttribute('data-value');
+				$.ajax({
+					url: "../setSession.php",
+					type: "post",
+					data : {'nome_corso':nome_corso},
+					success: function (response) 
+					{
+						//document.getElementById('divModalId').setAttribute('data-value', nome_corso);
+						//openModal();
+						console.log(nome_corso);
+						//console.log(typeof nome_corso);
+					}
+        		});
+			});
+		</script>
+	
+	
+</body>
 </html>

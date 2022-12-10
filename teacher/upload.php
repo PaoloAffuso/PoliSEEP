@@ -10,6 +10,8 @@
     $fileName=$_FILES['filePdf']['name'];
     $fileSize=$_FILES['filePdf']['size'];
 
+    $fileSize = $fileSize/1024;
+
     if(!empty($_FILES['filePdf']['tmp_name']) && file_exists($_FILES['filePdf']['tmp_name'])) {
         $pdf=addslashes(file_get_contents($_FILES['filePdf']['tmp_name']));
         echo $pdf;

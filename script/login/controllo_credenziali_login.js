@@ -11,6 +11,7 @@ frm.submit(function (e) {
     success: function (data) {
       console.log(data)
       if (data == "ERRORE") alert("Wrong credentials. Please, try again.");
+      else if (data == "FORMATO") alert("Wrong e-mail format (PoliBa domain is needed). Please, try again.");
       else if (data == "OK-STU") window.location = "../student/student.php";
       else if (data == "OK-DOC") window.location = "../teacher/teacher.php";
     },

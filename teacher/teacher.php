@@ -188,30 +188,57 @@
 
 
 	<script>
-			var xValues = ["Databases", "OS", "IoT","ML"];
 
-			new Chart("myChart", {
-				type: "bar",
-				data: {
-					labels: xValues,
-					datasets: [{
-									label: "NUMBER OF STUDENT THAT HAVE COMPLETED THE QUIZ",
-									backgroundColor: "#4BB377",
-									data: [65, 59, 80, 81, 56, 55, 40]
-								}, {
-									label: "NUMBER OF STUDENT THAT HAVEN'T COMPLETED THE QUIZ",
-									backgroundColor: "#004A86",
-									data: [28, 48, 40, 19, 86, 27, 90]
-								}]
-						},
-				options: {
-					legend: {display: false},
-					title: {
-					display: true,
-					text: "TOTAL COMPLETED QUIZ"
-					}
-				}
-				});
+			$.ajax({
+				url: "print_teacherCourses.php",
+
+				success: function (response) 
+				{
+					console.log(response);
+					var str = response.split(":::"); 
+					var xValues = str[0].split("|||");
+					var quiz_completati = str[1].split("|||");
+					var quiz_non_completati = str[2].split("|||");
+
+					xValues = xValues.filter(item => item);
+					quiz_completati = quiz_completati.filter(item => item);
+					
+					console.log(xValues);
+					console.log(quiz_completati);
+
+					//var xValues = ["Databases", "OS", "IoT","ML"];
+
+					new Chart("myChart", {
+						type: "bar",
+						data: {
+							labels: xValues,
+							datasets: [{
+											label: "NUMBER OF STUDENT THAT HAVE COMPLETED THE QUIZ",
+											backgroundColor: "#4BB377",
+											data: quiz_completati
+										}, {
+											label: "NUMBER OF STUDENT THAT HAVEN'T COMPLETED THE QUIZ",
+											backgroundColor: "#004A86",
+											data: quiz_non_completati
+										}]
+								},
+						options: {
+							legend: {display: false},
+							title: {
+							display: true,
+							text: "TOTAL COMPLETED QUIZ"
+							}
+						}
+						});
+
+							document.getElementById('divModalId').setAttribute('data-value', nome_corso);
+							openModal();
+							console.log(nome_corso);
+							console.log(typeof nome_corso);
+						}
+			});
+
+			
 	</script>
 
 
@@ -234,7 +261,7 @@
 					<div class='ccardbox'>
 						<?php
 			
-							// QUERY: estrae i codici dei corsi a cui l'utente NON è iscritto
+							// QUERY: estrae i corsi del docente
 							$sql = "SELECT CORSO.nome as nome_corso, CORSO.id as id_corso, CORSO.copertina as copertina_corso
 									FROM ISCRIZIONE INNER JOIN CORSO ON ISCRIZIONE.idCorso = CORSO.id
 									WHERE ISCRIZIONE.idUtente = '$id_docente' AND ISCRIZIONE.stato = 0 AND ISCRIZIONE.tipoUtente = 'DOC'";
@@ -300,6 +327,8 @@
 			</div>
 			<script type="text/javascript" src="../script/modale.js"></script>
 			<script type="text/javascript" src="../script/insert_newCourse.js"></script>
+
+
 		</div>
 
 

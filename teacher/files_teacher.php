@@ -10,6 +10,8 @@
 
 	if(isset($_SESSION['tipoUtente']) && $_SESSION['tipoUtente']=="STU")
 		header("location: ../student/student.php");
+
+		$id_corso = $_SESSION['idCorso'];
 ?>
 
 <!DOCTYPE html>
@@ -114,32 +116,33 @@
  		<div class="btn btn-primary btn_delete_val">Delete Files</div> | <div class="btn btn-primary" input id='actual-btn' input type= 'file'>Upload</div>
  		<div style="padding:21px;"></div>
 
-		<table class="table">
+		 <table class="table">
 			<tbody>
-				<tr>
-					<td style="font-family:Montserrat, sans-serif;"><b>Select<br> <input type="checkbox" class="select_all_items"></td>
-					<td style="font-family:Montserrat, sans-serif;"><b>Pdf Name </td>
-					<td style="font-family:Montserrat, sans-serif;"><b>Upload Date</td>
-					<td style="font-family:Montserrat, sans-serif;"><b>Weight</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" class="item_id" option_id="1"> </td>
-					<td>lecture1.pdf</td>
-					<td>10/09/2022</td>
-					<td>20kB</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" class="item_id" option_id="2"> </td>
-					<td>lecture2.pdf</td>
-					<td>15/03/2022</td>
-					<td>30kB</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" class="item_id" option_id="3"> </td>
-					<td>lecture3.pdf</td>
-					<td>03/05/2022</td>
-					<td>40kB</td>
-				</tr>
+				<?php
+					$sql = "SELECT nome, dataOraCaricamento, dimensione, documento FROM FILES WHERE idCorso='$id_corso'";
+					$result = $link -> query($sql);
+
+					echo "
+						<tr>
+							<td style='font-family:Montserrat, sans-serif;'><b>Select<br> <input type='checkbox' class='select_all_items'></td>
+							<td style='font-family:Montserrat, sans-serif;'><b>Pdf Name </td>
+							<td style='font-family:Montserrat, sans-serif;'><b>Upload Date</td>
+							<td style='font-family:Montserrat, sans-serif;'><b>Weight</td>
+						</tr>";
+
+					while($row = $result->fetch_assoc())
+					{
+						echo "
+						<tr>
+							<td><input type='checkbox' name='checkbox' class='item_id' option_id='1' value='".$id_corso."-".$row['nome']."'> </td>
+							<td>".$row['nome']."</td>
+							<td>".$row['dataOraCaricamento']."</td>
+							<td>".$row['dimensione']." kB </td>
+						</tr>
+						";
+					}
+
+				?>
 			</tbody>
 		</table>
 		<script src="../script/upload_delete.js"></script>

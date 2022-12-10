@@ -11,6 +11,8 @@
 
 	if(isset($_SESSION['tipoUtente']) && $_SESSION['tipoUtente']=="DOC")
 		header("location: ../teacher/teacher.php");
+
+	$id_corso = $_SESSION['idCorso'];
 ?>
 
 <!DOCTYPE html>
@@ -63,9 +65,7 @@
 			<!-- Title -->
 			<?php
 
-				$id_corso = $_GET['id_corso'];
-
-				$id_corso = 1; //dummy
+				//$id_corso = $_GET['id_corso'];
 
 				// QUERY: estrae nome doc, nome corso, num cfu corso
 				
