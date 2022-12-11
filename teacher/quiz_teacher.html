@@ -17,7 +17,9 @@
 
 		<!-- Navigation Bar -->
 		<nav>
-			<a href="../index.html"><div class="logo"><img src="../images/logo.png" alt="logo"></div></a>
+			<a href="../index.html">
+				<div class="logo"><img src="../images/logo.png" alt="logo"></div>
+			</a>
 			<ul>
 				<li><a href="courses_teacher.php">Info</a></li>
 				<li><a href="files_teacher.php">Files</a></li>
@@ -53,20 +55,36 @@
 				<li onclick="quiz_teach(4)">JavaScript</li>
 				<li onclick="quiz_teach(5)">Data Structures</li>
 				<li onclick="quiz_teach(6)">Algorithm</li>
-				<li onclick="quiz_teach(7)">Empty_quiz</li>
+				<li><a href="https://www.google.it/intl/it/forms/about/" target="_blank"><button onclick="toggleModal()" class="accept-button" id="addButton">Add Quiz</button></a></li>
 			</ul>
 		</div>
 
+		<!-- The Modal -->
+		<div class="modal-background" onclick="toggleModal()">
+		</div>
+		<!-- Modal content -->
+		<div class="modal">
+
+			<!-- FORM CREATE NEW QUIZ -->
+
+			<form action="#" method="post" enctype="text/plain" id="frmInsertNewQuiz">
+				<!--<form id="frmInsertNewQuiz">-->
+				<div class="form-inner">
+					<h3>Create a new quiz</h3>
+					<br>
+					<input type="text" name="nomeQuiz" placeholder="Quiz name" required>
+					<input type="number" name="numeroCap" placeholder="Chapter Number" required>
+					<input type="text" name="linkQuiz" placeholder="Quiz link" required>
+					<button type="submit" id="form_quiz">Create</button>
+				</div>
+			</form>
+
+		</div>
+		<script type="text/javascript" src="../script/modale.js"></script>
+
+
 		<div class="right-side" id="right">
 			<div id="quiz-container">
-
-				<div class="inbt", id="quiz_non_creato">
-					<span>No quiz created</span>
-					<div class="shortdesc2">
-						<p>Click here to create a new quiz for this chapter</p>
-						<button class="accept-button" id="addButton">Add Quiz</button>
-					</div>
-				</div>
 
 				<button class="decline-button" id="deleteButton">Delete Quiz</button>
 
@@ -105,9 +123,8 @@
 				</div>
 
 				<div id="f7">
-					<iframe id="frame7" class="quiz-frame"
-						src="about:blank"
-						frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+					<iframe id="frame7" class="quiz-frame" src="about:blank" frameborder="0" marginheight="0"
+						marginwidth="0">Loading…</iframe>
 				</div>
 
 
