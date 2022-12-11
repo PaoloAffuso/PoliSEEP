@@ -113,7 +113,7 @@ function quiz_teach(frame) {
   if(frame == 1) {
     document.getElementById('f1').style = 'display: block';
     document.getElementById('deleteButton').style.display = "none";
-    document.getElementById('addButton').style.display = "none";
+    //document.getElementById('addButton').style.display = "none";
   }
 
   else if(document.getElementById('frame' + frame).src == "about:blank") {
@@ -125,7 +125,7 @@ function quiz_teach(frame) {
 
   else if(document.getElementById('frame' + frame).src != "") {
     document.getElementById('f' + frame).style = 'display: block';
-    document.getElementById('addButton').style.display = "none";
+    //document.getElementById('addButton').style.display = "none";
     document.getElementById('deleteButton').style.display = "block";
     document.getElementById('quiz_non_creato').style.display = "none";
   }
