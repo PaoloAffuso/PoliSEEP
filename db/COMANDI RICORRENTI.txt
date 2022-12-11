@@ -53,9 +53,8 @@ CREATE TABLE QUIZ
 	numCap int,
 	titolo varchar(100),
 	linkGF varchar(200),
-	FOREIGN KEY(numCapitolo) REFERENCES CAPITOLO(num),
-	FOREIGN KEY(idCorsoCapitolo) REFERENCES CAPITOLO (idCorso),
-	PRIMARY KEY(numCapitolo, idCorsoCapitolo, num)
+	FOREIGN KEY(idCorso) REFERENCES CAPITOLO (id),
+	PRIMARY KEY(num, idCorso)
 );
 
 CREATE TABLE TAKE_QUIZ
@@ -212,10 +211,9 @@ INSERT INTO ISCRIZIONE (idUtente,tipoUtente,idCorso,stato) VALUES
 
 MAPPATURA TAKE_QUIZ.stato:
 
-   -1 = iscrizione studente in attesa (???)
-	0 = il corso appartiene al prof
-	1 = iscrizione studente approvata
-	2 = quiz completato dallo studente
+   -1 = quiz non sostenuto
+	0 = il quiz appartiene al prof
+	1 = quiz completato dallo studente
 	
 	se il doc preme pulsante "decline", la riga relativa allo studente viene cancellata
 	
