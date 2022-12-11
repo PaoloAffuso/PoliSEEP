@@ -50,6 +50,8 @@ CREATE TABLE QUIZ
 	numCapitolo int,
 	idCorsoCapitolo int,
 	num int,
+	numCap int,
+	titolo varchar(100),
 	linkGF varchar(200),
 	FOREIGN KEY(numCapitolo) REFERENCES CAPITOLO(num),
 	FOREIGN KEY(idCorsoCapitolo) REFERENCES CAPITOLO (idCorso),
