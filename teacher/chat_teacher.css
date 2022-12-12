@@ -184,6 +184,40 @@ a, button {
 	box-shadow: inset 0 0 20px rgba(0,0,0,0.7),
 					0 0 30px rgba(0,0,0,0.5);
 }
+.users{
+	padding: 25px 30px;
+}
+.users header{
+	display:flex;
+	align-items: center;
+	padding-bottom: 20px;
+	justify-content: space-between;
+	border-bottom: 1px solid #e6e6e6;
+
+}
+
+.left-side img{
+	object-fit: cover;
+	border-radius: 50%;
+}
+
+.users header .content{
+	display: flex;
+}
+
+.users header .content img{
+	height: 50px;
+	width:50px;
+}
+
+.users header .details{
+	margin-left: 15px;
+}
+
+.users header .details span{
+	font-size: 18px;
+	font-weight: 500;
+}
 
 /* -------------------------- Pannello laterale destro (chat singola) --------------------------------- */
 .right-side {
