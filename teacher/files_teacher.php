@@ -58,7 +58,7 @@
 			<ul>
 				<li><a href="courses_teacher.php">Info</a></li>
 				<li><a href="#dash" class ="active" >Files</a></li>
-				<li><a href="quiz_teacher.html">Quiz</a></li>
+				<li><a href="quiz_teacher.php">Quiz</a></li>
 			</ul>
 			<a class="logout" href="">Logout</a>
 			<img src="../images/icon_/menu.png" class="menu" onclick="sideMenu(0)" alt="menu">
@@ -88,7 +88,7 @@
 			<ul>
 				<li><a href="courses_teacher.php">Info</a></li>
 				<li><a href="#dash" class ="active">Files</a></li>
-				<li><a href="quiz_teacher.html">Quiz</a></li>
+				<li><a href="quiz_teacher.php">Quiz</a></li>
 			</ul>
 		</div>
 

@@ -102,18 +102,18 @@ function google() {
 
 // QUIZ Page
 function quiz_teach(frame) {
-  document.getElementById('f1').style='display: none;';
-  document.getElementById('f2').style='display: none;';
-  document.getElementById('f3').style='display: none;';
-  document.getElementById('f4').style='display: none;';
-  document.getElementById('f5').style='display: none;';
-  document.getElementById('f6').style='display: none;';
-  document.getElementById('f7').style='display: none;';
+
+  var children = document.getElementById("quiz-container").children; 
+  for (var i = 0, len = children.length ; i < len; i++) 
+  {
+    document.getElementById(children[i].id).style='display: none;'
+    console.log(children[i].id);
+  }
 
   if(frame == 1) {
     document.getElementById('f1').style = 'display: block';
     document.getElementById('deleteButton').style.display = "none";
-    document.getElementById('addButton').style.display = "none";
+    //document.getElementById('addButton').style.display = "none";
   }
 
   else if(document.getElementById('frame' + frame).src == "about:blank") {
@@ -125,7 +125,7 @@ function quiz_teach(frame) {
 
   else if(document.getElementById('frame' + frame).src != "") {
     document.getElementById('f' + frame).style = 'display: block';
-    document.getElementById('addButton').style.display = "none";
+    //document.getElementById('addButton').style.display = "none";
     document.getElementById('deleteButton').style.display = "block";
     document.getElementById('quiz_non_creato').style.display = "none";
   }
