@@ -182,43 +182,119 @@ a, button {
 	display: block;
 	justify-content: center;
 	box-shadow: inset 0 0 20px rgba(0,0,0,0.7),
-					0 0 30px rgba(0,0,0,0.5);
 }
 .users{
 	padding: 25px 30px;
+	margin-top: 61px;
 }
-.users header{
+
+.users header,
+.users-list a{
 	display:flex;
 	align-items: center;
-	padding-bottom: 20px;
+	padding-bottom: 30px;
 	justify-content: space-between;
 	border-bottom: 1px solid #e6e6e6;
-
 }
 
 .left-side img{
-	object-fit: cover;
-	border-radius: 50%;
+    height: 55px;
+    width: 55px;
+    margin: 0 15px;
 }
 
-.users header .content{
+:is(.users, .users-list) .content{
 	display: flex;
+	align-items: center;
 }
 
 .users header .content img{
 	height: 50px;
 	width:50px;
+	margin: 0 15px;
 }
 
-.users header .details{
+:is(.users, .users-list) .details{
 	margin-left: 15px;
+	color:#000;
 }
 
-.users header .details span{
-	font-size: 18px;
+:is(.users, .users-list) .details  span{
+	font-size: 17px;
 	font-weight: 500;
 }
+.users .search{
+	margin: 20px 0;
+	display: flex;
+	position: relative;
+	align-items: center;
+	justify-content: space-between;
+}
 
+.users .search .text{
+	font-size:  18px;
+}
+.users .search input{
+	position: absolute;
+	height: 42px;
+	width: calc(100% - 50px);
+	border: 1px solid #ccc;
+	padding: 0 13px;
+	font-size: 16px;
+	border-radius: 5px 0 0 5px;
+	outline: none;
+}
+.users .search button{
+	width: 47px;
+	height: 42px;
+	border:none;
+	outline: none;
+	color:#fff;
+	background:#333;
+	cursor: pointer;
+	font-size: 17px;
+	border-radius: 0 5px 5px 0;
+}
+
+.users-list{
+	max-height: 600px;
+	overflow-y: auto;
+}
+
+.users-list::-webkit-scrollbar{
+	width: 0px;
+}
+
+.users-list a{
+	margin-bottom: 10px;
+	page-break-after: 10px;
+	padding-right: 15px;
+	border-bottom-color: #f1f1f1;
+}
+
+.users-list a:last-child{
+	border: none;
+	margin-bottom: 0px;
+}
+
+.users-list a .content img{
+	height: 40px;
+	width: 40px;
+}
+
+.users-list a .status-dot{
+	font-size: 20px;
+	color: #468669;
+	padding-left: 30px;
+}
+
+.users-list a .content p{
+	color:#67676a;
+}
+/*we'll use this class name in php to show offline status
+.users-list a .status-dot.offline{
+	color: #ccc;
+}*/
 /* -------------------------- Pannello laterale destro (chat singola) --------------------------------- */
 .right-side {
 	background: #fff;
