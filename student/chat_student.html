@@ -5,7 +5,7 @@
 	<link rel="shortcut icon" type="png" href="../images/icon_/favicon.png">
 	<title>Chat page</title>
 	<link rel="stylesheet" type="text/css" href="chat_student.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
 	<script type="text/javascript" src="../script.js"></script>
 </head>
 
@@ -48,7 +48,7 @@
 			<!--QUI CI VA LA LISTA DELLE VARIE CHAT SULLA SX-->
 			<section class="users">
 				<div class="search">
-					<span class="text">Select an user to start chat</span>
+					<span class="text"></span>
 					<input type="text" placeholder="Enter name to search...">
 					<button><i class="fas fa-search"></i></button>
 				</div>
@@ -63,8 +63,8 @@
 								<p>This is text message</p>
 							</div>
 						</div>
-						<div class="status-dot">
-							<i class="fas fa-circle"></i>
+						<div class="new-messages">
+							<p>1</p>
 						</div>
 					</a>
 					<a href="#">
@@ -77,8 +77,8 @@
 								<p>This is text message</p>
 							</div>
 						</div>
-						<div class="status-dot">
-							<i class="fas fa-circle"></i>
+						<div class="new-messages">
+							<p>2</p>
 						</div>
 					</a>
 					<a href="#">
@@ -91,8 +91,8 @@
 								<p>This is text message</p>
 							</div>
 						</div>
-						<div class="status-dot">
-							<i class="fas fa-circle"></i>
+						<div class="new-messages">
+							<p>10</p>
 						</div>
 					</a>
 					<a href="#">
@@ -105,8 +105,8 @@
 								<p>This is text message</p>
 							</div>
 						</div>
-						<div class="status-dot">
-							<i class="fas fa-circle"></i>
+						<div class="new-messages">
+							<p>1</p>
 						</div>
 					</a>
 					<a href="#">
@@ -119,8 +119,8 @@
 								<p>This is text message</p>
 							</div>
 						</div>
-						<div class="status-dot">
-							<i class="fas fa-circle"></i>
+						<div class="new-messages">
+							<p>1</p>
 						</div>
 					</a>
 					<a href="#">
@@ -133,8 +133,36 @@
 								<p>This is text message</p>
 							</div>
 						</div>
-						<div class="status-dot">
-							<i class="fas fa-circle"></i>
+						<div class="new-messages">
+							<p>1</p>
+						</div>
+					</a>
+					<a href="#">
+						<div class="content">
+							<img src="../images/student_/usrimg.png" alt="">
+							<div class="details">
+								<span>
+								Nome Cognome
+								</span>
+								<p>This is text message</p>
+							</div>
+						</div>
+						<div class="new-messages">
+							<p>1</p>
+						</div>
+					</a>
+					<a href="#">
+						<div class="content">
+							<img src="../images/student_/usrimg.png" alt="">
+							<div class="details">
+								<span>
+								Nome Cognome
+								</span>
+								<p>This is text message</p>
+							</div>
+						</div>
+						<div class="new-messages">
+							<p>1</p>
 						</div>
 					</a>
 				</div>
@@ -162,10 +190,10 @@
 
                <!--Chat--> 
                <div class="chat-box">
-					
+
 					<!--Testo da visualizzare se la chat non è ancora stata avviata solo lato studente (GAIA)-->
 					<!--<div class="text">No messages are available. Once you send message they will appear here.</div>-->
-
+				
 					<!--Messaggi inviati-->	
 					<div class="chat outgoing">
 						<div class="details">
@@ -186,7 +214,8 @@
 			   <!--Form per scrivere il messaggio-->
 			   <form action="#" class="typing-area">
 					<input type="text" class="input-field" placeholder="Type a message here..." autocomplete="off">
-					<button><i class="fab fa-telegram-plane"></i></button>	
+					<button class="attachments"><i class="fa-solid fa-paperclip"></i></button>	
+					<button class="send"><i class="fa-solid fa-paper-plane"></i></button>	
 			   </form>
 
             </section>
