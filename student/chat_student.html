@@ -6,8 +6,8 @@
 	<title>Chat page</title>
 	<link rel="stylesheet" type="text/css" href="chat_student.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
-	<script type="text/javascript" src="../script.js"></script>
 	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="../script.js"></script>
 </head>
 
 <body>
@@ -50,7 +50,8 @@
 			<section class="users">
 				<div class="search">
 					<span class="text"></span>
-					<input type="text" placeholder="Enter name to search..." onkeydown="search(this)">
+					<!--Gestione ricerca js in script.js-->
+					<input type="text" id="searchInput" placeholder="Enter name to search..." onkeydown="search(this)">
 					<button id="searchBTN"><i class="fas fa-search"></i></button>
 				</div>
 				<div class="users-list" id="users-list">
@@ -222,31 +223,5 @@
             </section>
 		</div>
 	</div>
-
-	<!--Script per la ricerca chat-->
-	<script>
-		function search(ele) {
-			if(event.key === 'Enter') {
-				doSearch(ele.value);        
-			}
-		}
-
-		document.getElementById('searchBTN').onclick = function() {
-			doSearch(document.getElementById('searchInput').value)
-		}
-
-		function doSearch(search){
-			$('#users-list').empty();
-			$.ajax({
-				url: "../doSearch.php",
-				type: "post",
-				data : {'search':search, 'type': 'STU'},
-				success: function (response) {
-					$('#users-list').append(response);
-				}
-			});
-		}
-	</script>
-
 </body>
 </html>

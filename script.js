@@ -198,4 +198,37 @@ function display(n) {
   }
 }
 
+//Ricerca chat
+function search(ele) {
+  if(event.key === 'Enter') {
+    doSearch(ele.value);        
+  }
+}
+
+function doSearch(search){
+  $('#users-list').empty();
+  $.ajax({
+    url: "../doSearch.php",
+    type: "post",
+    data : {'search':search, 'type': 'STU'},
+    success: function (response) {
+      $('#users-list').append(response);
+    }
+  });
+}
+
+$(document).ready(function () {
+  $("#searchBTN").click(function(){
+    doSearch(document.getElementById('searchInput').value)
+  });
+
+  $("#searchInput").keyup(function() {
+    //Se la barra di ricerca è vuota, mostra la lista originale
+    if (!this.value) {
+        $('#users-list').load(document.URL +  ' #users-list');
+    }
+  });
+
+});
+
 
