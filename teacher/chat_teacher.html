@@ -237,7 +237,7 @@
 			$.ajax({
 				url: "../doSearch.php",
 				type: "post",
-				data : {'search':search},
+				data : {'search':search, 'type':'DOC'},
 				success: function (response) {
 					$('#users-list').append(response);
 				}

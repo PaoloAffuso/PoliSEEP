@@ -6,10 +6,16 @@
 	if (mysqli_connect_errno())
 		echo "Connessione al database non riuscita: " . mysqli_connect_error();
 
+    $type=$_POST['type'];
     $search=$_POST['search'];
     $final="";
+
+    if($type=="DOC")
+        $querySelezione = "SELECT nome from utente where nome like '%$search%' or email like '%$search%' and tipo='DOC'";
+    else
+        $querySelezione = "SELECT nome from utente where nome like '%$search%' or email like '%$search%' and tipo='STU'";
+
     
-    $querySelezione = "SELECT nome from utente where nome like '%$search%' or email like '%$search%' and tipo='DOC'";
     $result = $link -> query($querySelezione);
     while($row = $result -> fetch_assoc()) {
         $final=$final."<a href='#'>
