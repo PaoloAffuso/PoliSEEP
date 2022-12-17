@@ -71,7 +71,7 @@
 				<a href=""><div class="logo"><img src="../images/logo.png" alt="logo"></div></a>
 				<ul>
 					<li><a class="active" href="#dashboard">Dashboard</a></li>
-					<li><a href="#sezione_corsi_disponibili">Courses</a></li>
+					<li><a href="#sezione_corsi_registrati">Courses</a></li>
 					<li><a href="chat_student.html">Chat</a></li>
 				</ul>
 				<a class="logout" href="../login/logout.php">Logout</a>
@@ -252,6 +252,42 @@
 
 		<!-----------------------------------------------------------SEZIONE CORSI----------------------------------------------------------->
 
+		<!-- Sezione dei corsi a cui l'utente è già iscritto -->
+		<div class="inbt", id="sezione_corsi_registrati">
+			<span>Your Courses</span>
+			<div class="shortdesc2">
+				<p>Here are the courses you are already enrolled in</p>
+			</div>
+
+			<!-- Insieme dei corsi registrati -->
+			<div class='ccard'>
+				<center>
+					<div class='ccardbox'>
+					
+					<?php
+					// QUERY: estrae nome e copertina dei corsi a cui l'utente è iscritto
+					
+						$sql = "SELECT CORSO.nome as nome_corso, CORSO.id as id_corso, CORSO.copertina as copertina_corso
+								FROM ISCRIZIONE INNER JOIN CORSO ON ISCRIZIONE.idCorso = CORSO.id
+								WHERE ISCRIZIONE.idUtente = '$id_studente' AND (ISCRIZIONE.stato = 1 OR ISCRIZIONE.stato = 2) AND ISCRIZIONE.tipoUtente = 'STU'";
+					
+						$result = $link -> query($sql);
+					
+						while($row = $result->fetch_assoc())
+						{
+							echo "				
+								<div class='dcard' onclick='course_redirect(".$row['id_corso'].")' type='button'>
+									<div class='fpart'><img src='data:image/gif;base64," .base64_encode($row['copertina_corso']). "'></div>
+									<a><div class='spart'>".$row['nome_corso']."</div></a>
+								</div>";
+						}
+					?>
+					</div>
+				</center>
+			</div>
+		</div>
+
+
 		<!-- Sezione dei corsi disponibili -->
 		<div class="inbt", id="sezione_corsi_disponibili">
 			<span>Courses available</span>
@@ -345,39 +381,6 @@
 			?>
 			
 
-		</div>
-
-
-		<!-- Sezione dei corsi a cui l'utente è già iscritto -->
-		<div class="inbt", id="sezione_corsi_registrati">
-			<span>Your Courses</span>
-			<div class="shortdesc2">
-				<p>Here are the courses you are already enrolled in</p>
-				<center>
-					<div class='ccardbox'>
-				<?php
-
-					// QUERY: estrae nome e copertina dei corsi a cui l'utente è iscritto
-					
-					$sql = "SELECT CORSO.nome as nome_corso, CORSO.id as id_corso, CORSO.copertina as copertina_corso
-							FROM ISCRIZIONE INNER JOIN CORSO ON ISCRIZIONE.idCorso = CORSO.id
-							WHERE ISCRIZIONE.idUtente = '$id_studente' AND (ISCRIZIONE.stato = 1 OR ISCRIZIONE.stato = 2) AND ISCRIZIONE.tipoUtente = 'STU'";
-					
-					$result = $link -> query($sql);
-					
-					while($row = $result->fetch_assoc())
-					{
-						echo "				
-							<div class='dcard' onclick='course_redirect(".$row['id_corso'].")' type='button'>
-								<div class='fpart'><img src='data:image/gif;base64," .base64_encode($row['copertina_corso']). "'></div>
-								<a><div class='spart'>".$row['nome_corso']."</div></a>
-							</div>";
-					}
-				?>
-					</div>
-				</center>
-
-			</div>
 		</div>
 
 
