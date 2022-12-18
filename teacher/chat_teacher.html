@@ -69,7 +69,7 @@
 							<p>1</p>
 						</div>
 					</a>
-					<a href="#">
+					<a href="#" onclick="document.getElementById('idStudente').value=1">
 						<div class="content">
 							<img src="../images/student_/usrimg.png" alt="">
 							<div class="details">
@@ -195,15 +195,14 @@
 				
 					<!--Messaggi inviati-->	
 					<div class="chat outgoing">
-						<div class="details">
-							<p>Ciaooooooooooooooo</p>
+						<div class="details" id="chat-outgoing">
 						</div>
 					</div>
 
 					<!--Messaggi ricevuti-->
 					<div class="chat incoming">
 						<img src="../images/student_/usrimg.png" alt="">
-						<div class="details">
+						<div class="details" id="chat-incoming">
 							<p>Ciaoooooo anche a te</p>
 						</div>
 					</div>
@@ -211,10 +210,12 @@
                </div>
 
 			   <!--Form per scrivere il messaggio-->
-			   <form action="#" class="typing-area">
-					<input type="text" class="input-field" placeholder="Type a message here..." autocomplete="off">
+			   <form action="#" class="typing-area" id="FrmSendMsg">
+					<input type="text" class="input-field" placeholder="Type a message here..." autocomplete="off" name="messaggio">
+					<input type="hidden" id="idStudente" name="idStudenteHidden">
 					<button class="attachments"><i class="fa-solid fa-paperclip"></i></button>	
-					<button class="send"><i class="fa-solid fa-paper-plane"></i></button>	
+					<!--<button type="submit" class="send"><i class="fa-solid fa-paper-plane"></i></button>	-->
+					<button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
 			   </form>
 
             </section>
