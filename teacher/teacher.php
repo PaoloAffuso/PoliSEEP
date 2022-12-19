@@ -156,7 +156,7 @@
 							$conta_iscritti = $row['conta_iscritti'];
 
 							echo "
-							<p id='topper_overview'>Enrolled students</p>
+							<p id='topper_overview'>Students enrolled in your courses</p>
 							<p id='number'>".$conta_iscritti."</p>";
 						?>
 						
@@ -171,7 +171,7 @@
 						$conta_quiz_creati = $row['conta_quiz_creati'];
 
 						echo "
-						<p id='topper_overview'>Loaded quiz</p>
+						<p id='topper_overview'>Quizzes loaded in total</p>
 						<p id='number'>".$conta_quiz_creati."</p>";
 					?>
 					</div>

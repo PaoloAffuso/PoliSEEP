@@ -180,8 +180,8 @@
 							
 							<input name="immagineCorso" type="file" id="upload_img_btn">
 							<label for="upload_img_btn" id="upload_img_lbl"><i class = "fa-solid fa-upload"></i> Choose course image</label>
-							<button type="submit" id="form_course">Save</button>
 						</div>
+						<a onclick="window.location.reload();" style="float: none;"><button type="submit" id="form_course">Save</button></a>
 					</form>
 
 			</div>

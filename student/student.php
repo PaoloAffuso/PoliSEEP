@@ -179,7 +179,7 @@
 						$conta_corsi_incompleti = $row['conta_corsi'];
 
 						echo "			
-							<p id='topper_overview'>Completed Courses</p>	
+							<p id='topper_overview'>Courses with all quizzes submitted</p>	
 							<p id='number'>".$conta_corsi_completi."</p>
 							<p id='bottom_overview'>".$conta_corsi_incompleti." courses not completed yet</p>";
 
@@ -201,7 +201,7 @@
 						$conta_quiz_incompleti = $row['conta_quiz'];
 						
 						echo "
-							<p id='topper_overview'>Completed quiz</p>
+							<p id='topper_overview'>Quizzes submitted in total</p>
 							<p id='number'>".$conta_quiz_completi."</p>
 							<p id='bottom_overview'>".$conta_quiz_incompleti." quizzes remaining</p>";
 					?>
