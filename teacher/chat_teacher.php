@@ -38,9 +38,10 @@
 		<nav>
             <a href="teacher.php"><div class="logo"><img src="../images/logo.png" alt="logo"></div></a>
             <ul>
-                <li><a href="teacher.php">Dashboard</a></li>
-                <li><a href="teacher.php#sezione_corsi_disponibili">Courses</a></li>
-                <li><a class="active" href="#chat">Chat</a></li>
+				<li><a href="courses_teacher.php">Info</a></li>
+				<li><a href="files_teacher.php">Files</a></li>
+				<li><a href="quiz_teacher.php">Quiz</a></li>
+				<li><a class="active" href="#chat">Chat</a></li>
             </ul>
             <a class="logout" href="../login/logout.php">Logout</a>
             <img src="../images/icon_/menu.png" class="menu" onclick="sideMenu(0)" alt="menu"> <!--menu a scomparsa-->
@@ -50,9 +51,10 @@
 		<div class="side-menu" id="side-menu">
 			<div class="close" onclick="sideMenu(1)"><img src="../images/icon_/close.png" alt=""></div>
 			<ul>
-				<li><a href="teacher.php">Dashboard</a></li>
-                <li><a href="teacher.php">Courses</a></li>
-                <li><a class="active" href="#chat">Chat</a></li>
+				<li><a href="courses_teacher.php">Info</a></li>
+				<li><a href="files_teacher.php">Files</a></li>
+				<li><a href="quiz_teacher.php">Quiz</a></li>
+				<li><a class="active" href="#chat">Chat</a></li>
 			</ul>
 		</div>
 
