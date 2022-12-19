@@ -362,6 +362,7 @@ body.open .modal{
 	opacity: 1;
 	visibility: visible;
 	animation: modal-in 1s;
+	z-index: 1;
 }
 body.closed .modal{
 	opacity: 0;
@@ -488,13 +489,15 @@ body.open1 .modal-background1{
 	opacity: 0;
 	visibility: hidden;
 	transition: 0.5s;
-	font-family: "Montserrat", sans-serif;;
+	font-family: "Montserrat", sans-serif;
 }
 
 body.open1 .modal1{
 	opacity: 1;
 	visibility: visible;
 	animation: modal-in 1s;
+	z-index: 1;
+	margin-top: 37.5px;
 }
 body.closed1 .modal1{
 	opacity: 0;
@@ -570,6 +573,7 @@ input[type=file]{
 	cursor: pointer;
 	color: #fff;
 	border-radius: 20px;
+	margin-left: 30%;
 
 }
 

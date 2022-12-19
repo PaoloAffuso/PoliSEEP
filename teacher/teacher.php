@@ -213,11 +213,11 @@
 						data: {
 							labels: xValues,
 							datasets: [{
-											label: "NUMBER OF STUDENT THAT HAVE COMPLETED THE QUIZ",
+											label: "STUDENT THAT HAVE COMPLETED THE QUIZ",
 											backgroundColor: "#4BB377",
 											data: quiz_completati
 										}, {
-											label: "NUMBER OF STUDENT THAT HAVEN'T COMPLETED THE QUIZ",
+											label: "STUDENT THAT HAVEN'T COMPLETED THE QUIZ",
 											backgroundColor: "#004A86",
 											data: quiz_non_completati
 										}]
@@ -314,7 +314,17 @@
 							<br>
 							<input type="text" name="nomeCorso" placeholder="Course name" required>
 							<input type="number" name="cfuCorso" placeholder="CFU" required>
-							<input type="text" name="nomeDoc" placeholder="Professor" required>
+
+							<?php
+
+								$sql = "SELECT nome FROM UTENTE WHERE id = '$id_docente' AND tipo='DOC'";
+
+								$result = $link -> query($sql);
+								$row = $result->fetch_assoc();
+
+								echo "<input type='text' value='".$row['nome']."' name='nomeDoc' placeholder='Professor' disabled>";
+							?>
+							
 							<textarea placeholder="Course Goals" name="obiettivoCorso" required></textarea>
 							<textarea placeholder="Brief description of the course" name="descrizioneCorso" required></textarea>
 							<input type="text" placeholder="Learning Verification" name="verificaCorso" required>
