@@ -11,9 +11,9 @@
     $final="";
 
     if($type=="DOC")
-        $querySelezione = "SELECT nome from utente where nome like '%$search%' or email like '%$search%' and tipo='DOC'";
+        $querySelezione = "SELECT nome, email from utente where nome like '%$search%' or email like '%$search%' and tipo='DOC'";
     else
-        $querySelezione = "SELECT nome from utente where nome like '%$search%' or email like '%$search%' and tipo='STU'";
+        $querySelezione = "SELECT nome, email from utente where nome like '%$search%' or email like '%$search%' and tipo='STU'";
 
     
     $result = $link -> query($querySelezione);
@@ -25,11 +25,8 @@
                 <span>
                 ".$row['nome']."
                 </span>
-                <p>Messaggio ricerca</p>
+                <p>".$row['email']."</p>
             </div>
-        </div>
-        <div class='new-messages'>
-            <p>1</p>
         </div>
     </a>";
     }

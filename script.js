@@ -229,6 +229,41 @@ $(document).ready(function () {
     }
   });
 
+  var frm = $("#FrmSendMsg");
+
+var frm_data = new FormData();
+
+frm.submit(function (e) {
+  e.preventDefault();
+
+  frm_data.append("messaggio", $("input[name=messaggio]").val());
+  frm_data.append("idStudenteHidden", $("input[name=idStudenteHidden]").val());
+  frm_data.append("type", "DOC");
+   
+  $.ajax({
+    url: "../send_message.php",
+    type: "post",
+    cache: false,
+    contentType: false,
+    processData: false,
+    data: frm_data,
+    success: function (data) {
+      console.log(data)
+      $('#chat-outgoing').append(data);
+    },
+    error: function (data) {
+      console.log("An error occurred.");
+      console.log(data);
+    },
+  });
+
+  /*for (var key of frm_data.entries()) 
+    console.log(key[0] + ', ' + key[1]);*/
+
 });
+
+});
+
+
 
 

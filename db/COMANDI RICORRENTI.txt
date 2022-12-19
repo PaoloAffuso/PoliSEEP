@@ -230,6 +230,69 @@ INSERT INTO ISCRIZIONE (idCorso,nome,dimensione) VALUES
 (4,"01 - ASE - Introduction",204);
 
 
+-------------------------------------------------------------------
+
+MAPPATURA CHAT:
+
+Stato messaggio = 1 --> msg non letto
+
+-------------------------------------------------------------------
+
+MAPPATURA QUERY 
+
+student.php
+
+// QUERY 1: conta i corsi a cui l'utente è iscritto
+$sql = "SELECT count(ISCRIZIONE.idCorso) AS conta_corsi FROM ISCRIZIONE WHERE ISCRIZIONE.idUtente = '$id_studente' AND ISCRIZIONE.stato = 1 AND ISCRIZIONE.tipoUtente = 'STU'";
+
+// QUERY 2: conta i corsi a cui l'utente NON è iscritto
+$sql = "SELECT count(ISCRIZIONE.idCorso) AS conta_corsi FROM ISCRIZIONE WHERE ISCRIZIONE.idUtente <> '$id_studente' AND ISCRIZIONE.tipoUtente = 'STU'";
+
+// QUERY 3: conta quanti corsi sono stati completati
+$sql = "SELECT count(stato) as conta_corsi FROM ISCRIZIONE WHERE ISCRIZIONE.idUtente = '$id_studente' AND ISCRIZIONE.tipoUtente = 'STU' AND ISCRIZIONE.stato = 1"; // 1 = corso completato
+
+// QUERY 4: conta quanti corsi non sono stati completati
+$sql = "SELECT count(stato) as conta_corsi FROM ISCRIZIONE WHERE ISCRIZIONE.idUtente = '$id_studente' AND ISCRIZIONE.tipoUtente = 'STU' AND ISCRIZIONE.stato <> 1"; // 1 = corso completato
+
+// QUERY 5: conta quanti quiz sono stati completati
+$sql = "SELECT count(stato) as conta_quiz FROM TAKE_QUIZ WHERE TAKE_QUIZ.idUtente = '$id_studente' AND TAKE_QUIZ.tipoUtente = 'STU' AND TAKE_QUIZ.stato = 1"; // 1 = quiz completato
+
+// QUERY 7: conta quanti quiz non sono stati completati
+$sql = "SELECT count(stato) as conta_quiz FROM TAKE_QUIZ WHERE TAKE_QUIZ.idUtente = '$id_studente' AND TAKE_QUIZ.tipoUtente = 'STU' AND TAKE_QUIZ.stato <> 1"; // 1 = quiz completato
+
+// QUERY 8: estrae i codici/nomi/copertine dei corsi a cui l'utente NON è iscritto
+
+SELECT CORSO.nome AS nome_corso, CORSO.copertina AS copertina_corso, CORSO.id AS id_corso 
+FROM CORSO 
+WHERE CORSO.id NOT IN 
+(
+	SELECT idCorso 
+	FROM ISCRIZIONE 
+	WHERE idUtente = 1 AND tipoUtente = 'STU'
+) 
+OR CORSO.id IN 
+(
+	SELECT idCorso 
+	FROM ISCRIZIONE 
+	WHERE idUtente = 1 AND tipoUtente = 'STU' AND stato = -1
+)
+ORDER BY CORSO.id
+
+// QUERY: estrae i codici/nomi/copertine dei corsi a cui l'utente è iscritto
+
+SELECT CORSO.nome AS nome_corso, CORSO.copertina AS copertina_corso, CORSO.id AS id_corso 
+FROM CORSO 
+WHERE CORSO.id IN 
+(
+	SELECT idCorso 
+	FROM ISCRIZIONE 
+	WHERE idUtente = 1 AND tipoUtente = 'STU' AND stato = 1
+)
+ORDER BY CORSO.id
+
+
+
+
 
 
 

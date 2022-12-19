@@ -1,3 +1,20 @@
+<?php
+	include '../config.php';
+	session_start();
+	// Check connection
+	if (mysqli_connect_errno())
+		echo "Connessione al database non riuscita: " . mysqli_connect_error();
+	
+	if(!isset($_SESSION["loggedin"]))
+		header("location: ../index.html");
+
+	if(isset($_SESSION['tipoUtente']) && $_SESSION['tipoUtente']=="STU")
+		header("location: ../student/student.php");
+
+	$id_docente=$_SESSION['id_utente'];
+?>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -19,7 +36,7 @@
 
 		<!-- Navigation Bar -->
 		<nav>
-            <a href=""><div class="logo"><img src="../images/logo.png" alt="logo"></div></a>
+            <a href="teacher.php"><div class="logo"><img src="../images/logo.png" alt="logo"></div></a>
             <ul>
                 <li><a href="teacher.php">Dashboard</a></li>
                 <li><a href="teacher.php#sezione_corsi_disponibili">Courses</a></li>
@@ -55,125 +72,57 @@
 					<button id="searchBTN"><i class="fas fa-search"></i></button>
 				</div>
 				<div class="users-list" id="users-list">
-					<a href="#">
-						<div class="content">
-							<img src="../images/student_/usrimg.png" alt="">
-							<div class="details">
-								<span>
-								Nome Cognome
-								</span>
-								<p>This is text message</p>
-							</div>
-						</div>
-						<div class="new-messages">
-							<p>1</p>
-						</div>
-					</a>
-					<a href="#" onclick="document.getElementById('idStudente').value=1">
-						<div class="content">
-							<img src="../images/student_/usrimg.png" alt="">
-							<div class="details">
-								<span>
-								Nome Cognome
-								</span>
-								<p>This is text message</p>
-							</div>
-						</div>
-						<div class="new-messages">
-							<p>2</p>
-						</div>
-					</a>
-					<a href="#">
-						<div class="content">
-							<img src="../images/student_/usrimg.png" alt="">
-							<div class="details">
-								<span>
-								Nome Cognome
-								</span>
-								<p>This is text message</p>
-							</div>
-						</div>
-						<div class="new-messages">
-							<p>10</p>
-						</div>
-					</a>
-					<a href="#">
-						<div class="content">
-							<img src="../images/student_/usrimg.png" alt="">
-							<div class="details">
-								<span>
-								Nome Cognome
-								</span>
-								<p>This is text message</p>
-							</div>
-						</div>
-						<div class="new-messages">
-							<p>1</p>
-						</div>
-					</a>
-					<a href="#">
-						<div class="content">
-							<img src="../images/student_/usrimg.png" alt="">
-							<div class="details">
-								<span>
-								Nome Cognome
-								</span>
-								<p>This is text message</p>
-							</div>
-						</div>
-						<div class="new-messages">
-							<p>1</p>
-						</div>
-					</a>
-					<a href="#">
-						<div class="content">
-							<img src="../images/student_/usrimg.png" alt="">
-							<div class="details">
-								<span>
-								Nome Cognome
-								</span>
-								<p>This is text message</p>
-							</div>
-						</div>
-						<div class="new-messages">
-							<p>1</p>
-						</div>
-					</a>
-					<a href="#">
-						<div class="content">
-							<img src="../images/student_/usrimg.png" alt="">
-							<div class="details">
-								<span>
-								Nome Cognome
-								</span>
-								<p>This is text message</p>
-							</div>
-						</div>
-						<div class="new-messages">
-							<p>1</p>
-						</div>
-					</a>
-					<a href="#">
-						<div class="content">
-							<img src="../images/student_/usrimg.png" alt="">
-							<div class="details">
-								<span>
-								Nome Cognome
-								</span>
-								<p>This is text message</p>
-							</div>
-						</div>
-						<div class="new-messages">
-							<p>1</p>
-						</div>
-					</a>
+					
+					<?php
+
+						$sql = "SELECT distinct chat.idStudente as id_studente from chat where idDocente='$id_docente'";
+						$result = $link -> query($sql);
+
+						while($row = $result->fetch_assoc())
+						{
+							$id_studente = $row['id_studente'];
+
+							$sql0 = "SELECT utente.nome as nome_studente, propic from utente where utente.tipo='STU' and utente.id='$id_studente'";
+							$result0 = $link -> query($sql0);
+							$row0 = $result0->fetch_assoc();
+
+							$sql1 = "SELECT max(num) as max_num from chat where chat.idDocente='$id_docente' and chat.idStudente='$id_studente'";
+							$result1 = $link -> query($sql1);
+							$row1 = $result1->fetch_assoc();
+							$num = $row1['max_num'];
+							
+							$sql1 = "SELECT messaggio from chat where chat.idDocente='$id_docente' and chat.idStudente='$id_studente' and num = '$num'";
+							$result1 = $link -> query($sql1);
+							$row1 = $result1->fetch_assoc();
+							$messaggio = $row1['messaggio'];
+
+							$sql1 = "SELECT count(messaggio) as conta_non_letti from chat where chat.idDocente='$id_docente' and chat.idStudente='$id_studente' and stato = 1 and tipo<>'DOC'";
+							$result1 = $link -> query($sql1);
+							$row1 = $result1->fetch_assoc();
+							$conta_non_letti = $row1['conta_non_letti'];
+
+							echo "
+							<a href='#' onclick='set_idStudente(".$id_studente.")'>
+								<div class='content'>
+								<img src='data:image/gif;base64,".base64_encode($row0['propic'])."'id='photo'>
+									<div class='details'>
+										<span>
+											".$row0['nome_studente']." </br>
+										</span>
+										<p>".$messaggio."</p>
+									</div>
+								</div>
+								<div class='new-messages' id='div_contaNonLetti'>
+									<p>".$conta_non_letti."</p>
+								</div>
+							</a>";
+						}
+
+						
+					?>
 				</div>
 			</section>
 	    </div>
-
-
-
-
 
 		<div class="right-side" id="right">
             <!--QUI CI VA LA CHAT SULLA DX-->
@@ -183,8 +132,8 @@
 			    <div id="firstpart">
                     <img src="../images/student_/usrimg.png" alt="">
                     <div class="details">
-                        <span>
-                            Nome Cognome
+                        <span id='nomeUtenteAttivo'>
+                            
                         </span>
                         <p>Active now</p>
                     </div>
@@ -221,5 +170,24 @@
             </section>
 		</div>
 	</div>
+
+	<script>
+		function set_idStudente(id_studente)
+		{
+			document.getElementById('idStudente').value=id_studente;
+			$('#firstpart').empty();
+			$.ajax({
+				url: "../send_message.php",
+				type: "post",
+				data : {'id_studente' : id_studente, 'get_info': 'S'},
+				success: function (response) {
+				$('#firstpart').append(response);
+				$("#div_contaNonLetti").innerHTML("");
+				$("#div_contaNonLetti").load("chat_teacher.php #div_contaNonLetti"); //Refresh solo sul div modale
+				}
+			});
+		}
+	</script>
+
 </body>
 </html>
