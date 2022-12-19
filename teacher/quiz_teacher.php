@@ -84,8 +84,10 @@
 				while($row = $result -> fetch_assoc())
 					echo "<li onclick='quiz_teach(".$row['num'].")'>"."Chapter".$row['num_capitolo']." - ".$row['nome_capitolo']."</li>";
 					
-				echo "<li><a href='https://www.google.it/intl/it/forms/about/' target='_blank'><button onclick='toggleModal()' class='accept-button' id='addButton'>Add Quiz</button></a></li>";
-				echo "<li><button onclick='' class='decline-button' id='declineButton' style='display:inline-block;'>Remove Quiz</button></li>";
+				echo "<li style='display: flex;	justify-content: center; align-items: center;'><a href='https://www.google.it/intl/it/forms/about/' target='_blank'>
+							<button onclick='toggleModal()' class='accept-button' id='addButton'>Add Quiz</button></a>
+							<button onclick='' class='decline-button' id='declineButton' style='display:inline-block;'>Remove Quiz</button>
+						</li>";
 			?>
 			</ul>
 		</div>
