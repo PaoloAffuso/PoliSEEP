@@ -61,7 +61,6 @@
 				<ul>
 					<li><a class="active" href="#dashboard">Dashboard</a></li>
 					<li><a href="#sezione_corsi_disponibili">Courses</a></li>
-					<li><a href="chat_teacher.html">Chat</a></li>
 				</ul>
 				<a class="logout" href="../login/logout.php">Logout</a>
 				<img src="../images/icon_/menu.png" class="menu" onclick="sideMenu(0)" alt="menu"> <!--menu a scomparsa-->
@@ -108,7 +107,6 @@
 				<ul>
 					<li><a class="active" href="#dashboard">Dashboard</a></li>
 					<li><a href="#sezione_corsi_disponibili">Courses</a></li>
-					<li><a href="chat_teacher.html">Chat</a></li>
 				</ul>
 			</div>
 
