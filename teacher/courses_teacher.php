@@ -224,7 +224,6 @@
 			<!-- Goals -->
 			<div class="inbt">
 				<span>Course Goals</span>
-				<div class="shortdesc2">
 				<?php
 
 					$sql = "SELECT CORSO.obiettivi FROM CORSO WHERE CORSO.id='$id_corso'";
@@ -237,7 +236,6 @@
 							<p>".$obiettivi_corso."</p><br>
 						</div>";
 				?>
-				</div>
 			</div>
 
 
@@ -245,9 +243,7 @@
 			<div class="head-container">
 				<div class="inbt">
 					<span>Brief description of the course</span>
-					<div class="shortdesc2">
 					<?php
-
 						// QUERY: recupera descrizione del corso
 						$sql = "SELECT CORSO.descrizione FROM CORSO WHERE CORSO.id='$id_corso'";
 						$result = $link -> query($sql);
@@ -259,11 +255,10 @@
 							<p>".$descrizione_corso."</p><br>
 							</div>";
 					?>
-					</div>
 				</div>
+
 				<!--immagine-->
 				<?php
-
 					$sql = "SELECT CORSO.copertina FROM CORSO WHERE CORSO.id='$id_corso' LIMIT 1";
 					$result = $link -> query($sql);
 					$row = $result -> fetch_assoc();
@@ -275,16 +270,13 @@
 					</div>";
 
 				?>
-				</div>
 			</div>
 
 
 			<!-- Verification -->
 			<div class="inbt_end">
 				<span>Learning Verification</span>
-				<div class="shortdesc2">
 				<?php
-
 					$sql = "SELECT CORSO.verifica FROM CORSO WHERE CORSO.id='$id_corso'";
 					$result = $link -> query($sql);
 					$row = $result -> fetch_assoc();
@@ -296,7 +288,7 @@
 					</div>
 					";
 				?>
-				</div>
+				
 			</div>
 
 		</main>
