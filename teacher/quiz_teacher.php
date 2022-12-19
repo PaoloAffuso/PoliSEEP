@@ -47,6 +47,7 @@
 				<li><a href="courses_teacher.php">Info</a></li>
 				<li><a href="files_teacher.php">Files</a></li>
 				<li><a class="active" href="#quiz">Quiz</a></li>
+				<li><a href="chat_teacher.php">Chat</a></li>
 			</ul>
 			<a class="logout" href="../login/logout.php">Logout</a>
 			<img src="../images/icon_/menu.png" class="menu" onclick="sideMenu(0)" alt="menu">
@@ -60,6 +61,7 @@
 				<li><a href="courses_teacher.php">Info</a></li>
 				<li><a href="files_teacher.php">Files</a></li>
 				<li><a class="active" href="#quiz">Quiz</a></li>
+				<li><a href="chat_teacher.php">Chat</a></li>
 			</ul>
 		</div>
 
