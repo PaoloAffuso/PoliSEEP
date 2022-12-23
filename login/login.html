@@ -1,9 +1,3 @@
-<!--<?php
-	session_start();
-	if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"]==="True"){
-        header("location: intro.php");
-    }
-?>-->
 <!DOCTYPE html>
 <html lang="en" class="h-100">
 
@@ -16,6 +10,9 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
     
     <link rel="stylesheet" href="./loginStyle.css" />
+
+    <script type="module" src="../firebaseConfig.js"></script>
+    <script type="module" src="../script/login/controllo_credenziali_login.js"></script>
     
     <title>PoliSƎEP - A smart Software Engineering Education Platform</title>
 </head>
@@ -34,10 +31,9 @@
                                 <!--FORM LOGIN-->
                                 <div class="form login">
                                     <span class="text-black text-center formtype">Login</span>
-                                    <form class="frm" id="frm" action="./php/login_ls.php" method="POST" class="text-white">
                                         <div class="input-field">
                                             <input type="text" placeholder="Enter your e-mail" required name="email"
-                                                id="email" />
+                                                id="email_login" />
                                             <i class="uil uil-envelope icon"></i>
                                         </div>
 
@@ -75,7 +71,6 @@
                                                 Start now
                                             </button>
                                         </div>
-                                    </form>
                                     <div class="login-signup">
                                         <span class="text">Not a member?
                                             <a href="#" class="text signup-link">Signup now</a>
@@ -86,8 +81,7 @@
                                 <!--FORM SIGNUP-->
                                 <div class="form signup">
                                     <span class="text-black text-center formtype">Registration</span>
-
-                                    <form class="frm_signup" id="frm_signup" action="./php/signup_ls.php" method="POST" class="text-white">
+                                    <!--<form>-->
                                         <div class="input-field">
                                             <input type="text" name="nome" id="nome" placeholder="Enter your name"
                                                 required />
@@ -102,7 +96,7 @@
 
                                         <div class="input-field">
                                             <input type="text" placeholder="Enter your e-mail" required name="email"
-                                                id="email" />
+                                                id="email" required/>
                                             <i class="uil uil-envelope icon"></i>
                                         </div>
 
@@ -148,8 +142,7 @@
                                                 Start now
                                             </button>
                                         </div>
-                                    </form>
-
+                                    <!--</form>-->
                                     <div class="login-signup">
                                         <span class="text">Already member?
                                             <a href="#" class="text login-link">Login now</a>
