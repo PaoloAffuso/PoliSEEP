@@ -467,7 +467,7 @@ body.open .modal-background{
 	translate: -50% -50%;
 	width: 500px;
 	padding: 48px 40px;
-	padding-top: 100px;
+	padding-top: 80px;
 	border-radius: 12px;
 	background: #f2f2f2;
 	color: #47506B;
@@ -480,6 +480,7 @@ body.open .modal{
 	opacity: 1;
 	visibility: visible;
 	animation: modal-in 1s;
+	margin-top: 37.5px;
 }
 body.closed .modal{
 	opacity: 0;
@@ -551,6 +552,7 @@ input[type=file]{
 	cursor: pointer;
 	color: #fff;
 	border-radius: 20px;
+	margin-left: 20%;
 
 }
 

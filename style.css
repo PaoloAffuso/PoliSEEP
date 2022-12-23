@@ -492,7 +492,7 @@ a, button {
 
 /*---------------------------------FORM DI CONTATTO---------------------------------*/
 .csec {
-	background: linear-gradient(to right, #3785fa, #27df8c);
+	background: linear-gradient(to right, #004a86, #4bb377);
 	background-attachment: fixed;
 	position: absolute;
 	width: 100%;
@@ -557,7 +557,7 @@ form textarea {
 }
 #csubmit {
 	margin-top: 20px;
-	background: linear-gradient(to right, #3785fa, #27df8c);
+	background: linear-gradient(to right, #004a86, #4bb377);
 	border-radius: 5px;
 	border-style: none;
 	outline: none;
