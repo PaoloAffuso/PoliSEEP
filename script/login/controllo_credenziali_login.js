@@ -8,7 +8,7 @@ document.getElementById('btn_submit_signup').addEventListener("click", function(
     let pass1=document.getElementById('password1');
     let pass2=document.getElementById('password2');
 
-    signup(nome, email, pass1, pass2);
+    signup(nome, email,pass1, pass2);
 });
 
 function validation(nome, email, pass1, pass2) {
@@ -78,12 +78,56 @@ function signup(nome,email, pass1, pass2) {
                 fullname: nome.value,
                 email: email.value,
                 tipo: tipo,
-                password: pass1.value
+                password: encPass(pass1)
             }).then(() =>{
-                alert("User added successfully");
+                location.reload();
+                //alert("User added successfully");
             }).catch((error)=> {
-                alert("Error "+error);
+                alert("Something went wrong. Try again.")
             });
         }
     });
+}
+
+
+/*-----------------------------LOGIN----------------------------*/
+document.getElementById('btn_submit').addEventListener("click", function() {
+    let email=document.getElementById('email_login');
+    let pass=document.getElementById('password');
+    
+    authenticate(email, pass);
+});
+
+function authenticate(email, password) {
+    const dbRef=ref(db);
+    var username=getUsername(email);
+
+    get(child(dbRef, "UsersList/"+username)).then((snaphot) => {
+        console.log(snaphot.val().password)
+        //snaphot=risultato ricerca. Se l'email esiste gia' nel db, l'utente esiste
+        if(snaphot.exists()) {
+            let dbPass=decPass(snaphot.val().password, password);
+            if(dbPass==password.value) {
+                alert("Ciao");
+            }
+            else {
+                alert("Password incorrect");
+            }
+        }
+        else {
+            alert("No user found with that mail.");
+        }
+    });
+}
+
+
+/*---------------------COMUNI---------------------*/
+function encPass(password) {
+    var enc_pass=CryptoJS.AES.encrypt(password.value, password.value);
+    return enc_pass.toString();
+}
+
+function decPass(enc_password, password) {
+    var dec_pass=CryptoJS.AES.decrypt(enc_password, password.value);
+    return dec_pass.toString(CryptoJS.enc.Utf8);
 }

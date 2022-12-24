@@ -25,5 +25,4 @@ const firebaseConfig = {
   import {getDatabase, ref, set, child, get} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
 
   const db=getDatabase();
-  var prova="Ciao";
-  export {db, prova};
+  export {db};
