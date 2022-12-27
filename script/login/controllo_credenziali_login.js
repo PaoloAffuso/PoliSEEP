@@ -28,7 +28,6 @@ function validation(nome, email, pass1, pass2) {
         return false;
     }
     if(email.value && !regexMail.test(email.value)) {
-        console.log(email.value);
         alert("Enter a valid mail.\nMail should be in poliba domain.");
         return false;
     }
@@ -48,16 +47,6 @@ function isEmptyOrSpaces(str) {
 function checkPass(pass1, pass2) {
     if(pass1.value===pass2.value) return true;
     else return false;
-}
-
-function checkDomain(email) {
-    var domain=email.value.split("@")[1];
-    if(domain.includes("studenti")) return "STU";
-    else return "DOC";
-}
-
-function getUsername(email) {
-    return email.value.split("@")[0].replace(".","");
 }
 
 function signup(nome,email, pass1, pass2) {
@@ -103,12 +92,14 @@ function authenticate(email, password) {
     var username=getUsername(email);
 
     get(child(dbRef, "UsersList/"+username)).then((snaphot) => {
-        console.log(snaphot.val().password)
         //snaphot=risultato ricerca. Se l'email esiste gia' nel db, l'utente esiste
         if(snaphot.exists()) {
             let dbPass=decPass(snaphot.val().password, password);
             if(dbPass==password.value) {
-                alert("Ciao");
+                localStorage.setItem("email", email.value); 
+                let domain=checkDomain(email);
+                if(domain==="STU") location.href = '../student/student.html';
+                else location.href = '../teacher/teacher.html';
             }
             else {
                 alert("Password incorrect");
@@ -120,7 +111,6 @@ function authenticate(email, password) {
     });
 }
 
-
 /*---------------------COMUNI---------------------*/
 function encPass(password) {
     var enc_pass=CryptoJS.AES.encrypt(password.value, password.value);
@@ -130,4 +120,14 @@ function encPass(password) {
 function decPass(enc_password, password) {
     var dec_pass=CryptoJS.AES.decrypt(enc_password, password.value);
     return dec_pass.toString(CryptoJS.enc.Utf8);
+}
+
+function getUsername(email) {
+    return email.value.split("@")[0].replace(".","");
+}
+
+function checkDomain(email) {
+    var domain=email.value.split("@")[1];
+    if(domain.includes("studenti")) return "STU";
+    else return "DOC";
 }

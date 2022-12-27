@@ -18,7 +18,9 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
         </script>
 
+		<script type="module" src="../firebaseConfig.js"></script>
 		<script type="text/javascript" src="../script.js"></script>
+		<script type="module" src="../script/teacher.js"></script>
 
 		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 
@@ -51,7 +53,7 @@
 
 			<!-- Title -->
 			<div class="title" id="dash">
-				<span>Welcome back Username</span>
+				<span>Welcome back <span id="username"></span></span>
 				<div class="shortdesc">
 					<p>Here you find everything you need</p>
 				</div>
@@ -212,22 +214,22 @@
 
 					<!-- FORM CREATE NEW COURSE -->
 
-					<form action="#" method="post" enctype="text/plain" >
+					<!--<form action="#">-->
 						<div class="form-inner">
 							<h3>Create a new course</h3>
 							<br>
-							<input type="text" placeholder="Course name">
-							<input type="number" placeholder="CFU">
-							<input type="text" placeholder="Professor">
-							<textarea placeholder="Course Goals"></textarea>
-							<input type="number" placeholder="Number of chapters">
-							<textarea placeholder="Brief description of the course"></textarea>
-							<input type="text" placeholder="Learning Verification">
-							<input type="file" id="upload_img_btn">
+							<input type="text" placeholder="Course name" id="course_name">
+							<input type="number" placeholder="CFU" id="cfu">
+							<input type="text" placeholder="Professor" id="professor">
+							<textarea placeholder="Course Goals" id="course_goals"></textarea>
+							<input type="number" placeholder="Number of chapters" id="num_ch">
+							<textarea placeholder="Brief description of the course" id="brief_description"></textarea>
+							<input type="text" placeholder="Learning Verification" id="learning_verification">
+							<input type="file" id="upload_img_btn" id="upload_btn">
 							<label for="upload_img_btn" id="upload_img_lbl"><i class = "fa-solid fa-upload"></i> Choose course image</label>
 							<button type="submit" id="form_course">Create</button>
 						</div>
-					</form>
+					<!--</form>-->
 
 			</div>
 			<script type="text/javascript" src="../script/modale.js"></script>
@@ -248,6 +250,5 @@
 				</div>
 			</div>
 		</footer>
-
 	</body>
 </html>
