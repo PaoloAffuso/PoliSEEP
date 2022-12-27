@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="shortcut icon" type="png" href="../images/icon_/favicon.png">
+	<title>Quiz page</title>
+	<link rel="stylesheet" type="text/css" href="quiz_student.css">
+	<script type="text/javascript" src="../script.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+
+</head>
+
+<body>
+
+	<!-- NAVIGATION -->
+
+	<!----------------------------------------------------HEADER (navbar, title, side-menu)--------------------------------------------->
+	<header id="header">
+
+		<!-- Navigation Bar -->
+		<nav>
+			<a href="../index.html">
+				<div class="logo"><img src="../images/logo.png" alt="logo"></div>
+			</a>
+			<ul>
+				<li><a href="courses_student.php">Info</a></li>
+				<li><a href="files_student.php">Files</a></li>
+				<li><a class="active" href="#quiz">Quiz</a></li>
+				<li><a href="chat_student.html">Chat</a></li>
+			</ul>
+			<a class="logout" href="../login/logout.php">Logout</a>
+			<img src="../images/icon_/menu.png" class="menu" onclick="sideMenu(0)" alt="menu">
+			<!--menu a scomparsa-->
+		</nav>
+
+		<!-- side-menu (appare quando si rimpicciolisce la finestra) -->
+		<div class="side-menu" id="side-menu">
+			<div class="close" onclick="sideMenu(1)"><img src="../images/icon_/close.png" alt=""></div>
+			<ul>
+				<li><a href="courses_student.php">Info</a></li>
+				<li><a href="files_student.php">Files</a></li>
+				<li><a class="active" href="#quiz">Quiz</a></li>
+				<li><a href="chat_student.html">Chat</a></li>
+			</ul>
+		</div>
+
+	</header>
+
+
+	<!-- Sezione quiz -->
+
+	<div class="panel" id="panel">
+
+		<div class="left-side" id="left">
+			<ul>
+				<li onclick="quiz_stud(1)">HOME</li>
+				<li onclick="quiz_stud(2)">Java</li>
+				<li onclick="quiz_stud(3)">Python</li>
+				<li onclick="quiz_stud(4)">JavaScript</li>
+				<li onclick="quiz_stud(5)">Data Structures</li>
+				<li onclick="quiz_stud(6)">Algorithm</li>
+			</ul>
+		</div>
+
+
+		<div class="right-side" id="right">
+
+			<header id="quiz-header">
+				<h1>Javascript Quiz</h1>
+				<p>Train yourself with Javascript language</p>
+			</header id="quiz-header">
+
+			<div class="container">
+				<section id="p1">
+					<h3>1 - Inside which HTML element do we put the JavaScript?</h3>
+					<label>
+						<input type="radio" value="1" name="p1" onclick="risposta(1,this)"> &lt;js&gt;
+					</label>
+					<label>
+						<input type="radio" value="2" name="p1" onclick="risposta(1,this)"> &lt;scripting&gt;
+					</label>
+					<label>
+						<input type="radio" value="3" name="p1" onclick="risposta(1,this)"> &lt;script&gt;
+					</label>
+					<label>
+						<input type="radio" value="4" name="p1" onclick="risposta(1,this)"> &lt;javascript&gt;
+					</label>
+				</section>
+
+				<section id="p2">
+					<h3>2 - What is the correct JavaScript syntax to change the content of the HTML element below? &lt;p id="demo"&gt; This is a demonstration.&lt;/p&gt;</h3>
+					<label>
+						<input type="radio" value="1" name="p2" onclick="risposta(2,this)"> document.getElement("p").innerHTML = "HELLO";
+					</label>
+					<label>
+						<input type="radio" value="2" name="p2" onclick="risposta(2,this)"> document.getElementByName("p").innerHTML = "HELLO";
+					</label>
+					<label>
+						<input type="radio" value="3" name="p2" onclick="risposta(2,this)"> document.getElementById("p").innerHTML = "HELLO";
+					</label>
+					<label>
+						<input type="radio" value="4" name="p2" onclick="risposta(2,this)"> #demo.innerHTML = "HELLO";
+					</label>
+				</section>
+
+				<section id="p3">
+					<h3>3 - Where is the correct place to insert a JavaScript?</h3>
+					<label>
+						<input type="radio" value="1" name="p3" onclick="risposta(3,this)"> The &lt;head&gt; section
+					</label>
+					<label>
+						<input type="radio" value="2" name="p3" onclick="risposta(3,this)"> Both the &lt;head&gt; section and the &lt;body&gt; section are correct
+					</label>
+					<label>
+						<input type="radio" value="3" name="p3" onclick="risposta(3,this)"> The &lt;body&gt; section
+					</label>
+				</section>
+
+				<section id="p4">
+					<h3>4 - What is the correct syntax for referring to an external script called "xxx.js"?</h3>
+					<label>
+						<input type="radio" value="1" name="p4" onclick="risposta(4,this)"> &lt;script src = "xxx.js"&gt;
+					</label>
+					<label>
+						<input type="radio" value="2" name="p4" onclick="risposta(4,this)"> &lt;script name = "xxx.js"&gt;
+					</label>
+					<label>
+						<input type="radio" value="3" name="p4" onclick="risposta(4,this)"> &lt;script href = "xxx.js"&gt;
+					</label>
+				</section>
+
+				<section id="p5">
+					<h3>5 - The external javascript must contain script tag</h3>
+					<label>
+						<input type="radio" value="1" name="p5" onclick="risposta(5,this)"> True
+					</label>
+					<label>
+						<input type="radio" value="2" name="p5" onclick="risposta(5,this)"> False
+					</label>
+				</section>
+
+				<section id="p6">
+					<h3>6 - How do you write "Hello World" in an alert box?</h3>
+					<label>
+						<input type="radio" value="1" name="p6" onclick="risposta(6,this)"> msgBox("Hello World")
+					</label>
+					<label>
+						<input type="radio" value="2" name="p6" onclick="risposta(6,this)"> alertBox("Hello World")
+					</label>
+					<label>
+						<input type="radio" value="3" name="p6" onclick="risposta(6,this)"> alert("Hello World")
+					</label>
+					<label>
+						<input type="radio" value="4" name="p6" onclick="risposta(6,this)"> console.write("Hello World")
+					</label>
+				</section>
+
+				<section id="p7">
+					<h3>7 - How do you create a function in JavaScript?</h3>
+					<label>
+						<input type="radio" value="1" name="p7" onclick="risposta(7,this)"> function myfunction;
+					</label>
+					<label>
+						<input type="radio" value="2" name="p7" onclick="risposta(7,this)"> function myfunction()
+					</label>
+					<label>
+						<input type="radio" value="3" name="p7" onclick="risposta(7,this)"> myfunction()
+					</label>
+					<label>
+						<input type="radio" value="4" name="p7" onclick="risposta(7,this)"> function = myfunction()
+					</label>
+				</section>
+
+				<section id="p8">
+					<h3>8 - Speak about hoisting mechanism</h3>
+					<label>
+						<textarea rows="5" placeholder="You can type here your answer"></textarea>
+					</label>
+				</section>
+
+				<button class="send-button">Send</button>
+			</div>
+
+		</div>
+	</div>
+
+	<!-----------------------------------------------------------FOOTER----------------------------------------------------------->
+<footer>
+	<div class="footer-container">
+		<div class="foot">
+			<p>Copyright © 2022<br>Created By PoliSEEP Team<br>All Rights Reserved.</p>
+			<p><img src="../images/icon_/location.png"> Politecnico di Bari, via Edoardo Orabona, 4, 70126 Bari BA
+			</p>
+			<p><img src="../images/icon_/phone.png"> 345 1122333<br><img src="../images/icon_/mail.png">&nbsp;
+				poliseepteam@gmail.com</p>
+		</div>
+	</div>
+</footer>
+
+	<script type="text/javascript" src="../script.js"></script>
+	<script type="text/javascript" src="../script/insert_newQuiz.js"></script>
+
+
+</body>
+
+
+
+</html>
