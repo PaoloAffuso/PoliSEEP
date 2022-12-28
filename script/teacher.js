@@ -14,16 +14,6 @@ async function prova(){
     console.log(prova.val())
 }
 
-// document.getElementById('upload_img_btn').addEventListener("change", function(e) {
-//     let file = e.target.files[0];
-//     console.log(file.name);
-//     const storo = sRef(storage, 'CoursesImages/'+file.name);
-    
-//     uploadBytes(storo, file).then((snapshot) => {
-//         console.log("Uploaded");
-//     })
-// });
-
 function setNameByMail(email) {
     let username=email.split("@")[0].replace(".","");
     
