@@ -46,131 +46,182 @@
 
 	</header>
 
-
-	<!-- Sezione quiz -->
+	<!----------------------------------------------------SEZIONE QUIZ --------------------------------------------->
 
 	<div class="panel" id="panel">
 
+		<!-- pannello laterale (sx) -->
 		<div class="left-side" id="left">
 			<ul>
-				<li onclick="quiz_stud(1)">HOME</li>
-				<li onclick="quiz_stud(2)">Java</li>
-				<li onclick="quiz_stud(3)">Python</li>
-				<li onclick="quiz_stud(4)">JavaScript</li>
-				<li onclick="quiz_stud(5)">Data Structures</li>
-				<li onclick="quiz_stud(6)">Algorithm</li>
+				<li onclick="document.getElementById('quiz1').style.display='block'; document.getElementById('noquiz').style.display='none';">Java</li>
+				<li onclick="document.getElementById('quiz2').style.display='block'; document.getElementById('noquiz').style.display='none';">Python</li>
+				<li onclick="document.getElementById('quiz3').style.display='block'; document.getElementById('noquiz').style.display='none';">JavaScript</li>
+				<li onclick="document.getElementById('quiz4').style.display='block'; document.getElementById('noquiz').style.display='none';">Data Structures</li>
+				<li onclick="document.getElementById('quiz5').style.display='block'; document.getElementById('noquiz').style.display='none';">Algorithm</li>
 			</ul>
 		</div>
 
+		<!-- sezione iniziale di benvenuto -->
+		<div class="inbt", id="noquiz">
+			<span>Quiz page</span>
+			<div class="shortdesc2">
+				<br><p>Here you can find various quizzes to train yourself while learning the contents of the course.</p><br>
+				<p>Select one of the quizzes on the left to get started!</p>
+			</div>
 
-		<div class="right-side" id="right">
+			<!--immagine-->
+			<div class="container_img">
+				<img src="../images/quiz_/quiz.jpeg" alt="svg">
+			</div>
+		</div>
 
-			<header id="quiz-header">
+		<!-- quiz 3 - Javascript -->
+		<div class="quiz-side" id="quiz3">
+
+			<header class="quiz-header">
 				<h1>Javascript Quiz</h1>
 				<p>Train yourself with Javascript language</p>
-			</header id="quiz-header">
+			</header>
 
 			<div class="container">
+
+				<!-- TEMP - Domanda a risposta singola -->
 				<section id="p1">
 					<h3>1 - Inside which HTML element do we put the JavaScript?</h3>
 					<label>
-						<input type="radio" value="1" name="p1" onclick="risposta(1,this)"> &lt;js&gt;
+						<input type="radio" value="1" name="p1"> &lt;js&gt;
 					</label>
 					<label>
-						<input type="radio" value="2" name="p1" onclick="risposta(1,this)"> &lt;scripting&gt;
+						<input type="radio" value="2" name="p1"> &lt;scripting&gt;
 					</label>
 					<label>
-						<input type="radio" value="3" name="p1" onclick="risposta(1,this)"> &lt;script&gt;
+						<input type="radio" value="3" name="p1"> &lt;script&gt;
 					</label>
 					<label>
-						<input type="radio" value="4" name="p1" onclick="risposta(1,this)"> &lt;javascript&gt;
+						<input type="radio" value="4" name="p1"> &lt;javascript&gt;
+					</label>
+				</section>
+
+				<!-- TEMP - Domanda a risposta singola errata-->
+				<section class="wrong_section" id="p1">
+					<h3>1 - Inside which HTML element do we put the JavaScript?</h3>
+					<label class="wrong_label">
+						<input type="radio" disabled="disabled" value="1" name="p1" checked> &lt;js&gt;
+						<br><br>This answer is wrong because...
+					</label>
+					<label class="neutral_label">
+						<input type="radio" disabled="disabled" value="2" name="p1"> &lt;scripting&gt;
+					</label>
+					<label class="right_label">
+						<input type="radio" disabled="disabled" value="3" name="p1"> &lt;script&gt;
+					</label>
+					<label class="neutral_label">
+						<input type="radio" disabled="disabled" value="4" name="p1"> &lt;javascript&gt;
+					</label>
+				</section>
+
+				<!-- TEMP - Domanda a risposta singola corretta -->
+				<section class="right_section" id="p1">
+					<h3>1 - Inside which HTML element do we put the JavaScript?</h3>
+					<label class="neutral_label">
+						<input type="radio" disabled="disabled" value="1" name="p1"> &lt;js&gt;
+					</label>
+					<label class="neutral_label">
+						<input type="radio" disabled="disabled" value="2" name="p1"> &lt;scripting&gt;
+					</label>
+					<label class="right_label">
+						<input type="radio" disabled="disabled" value="3" name="p1" checked> &lt;script&gt;
+					</label>
+					<label class="neutral_label">
+						<input type="radio" disabled="disabled" value="4" name="p1"> &lt;javascript&gt;
 					</label>
 				</section>
 
 				<section id="p2">
-					<h3>2 - What is the correct JavaScript syntax to change the content of the HTML element below? &lt;p id="demo"&gt; This is a demonstration.&lt;/p&gt;</h3>
+					<h3>2 - What is the correct JavaScript syntax to change the content of the HTML element below? <br><br> &lt;p id="demo"&gt;This is a demonstration.&lt;/p&gt;</h3>
 					<label>
-						<input type="radio" value="1" name="p2" onclick="risposta(2,this)"> document.getElement("p").innerHTML = "HELLO";
+						<input type="radio" value="1" name="p2"> document.getElement("p").innerHTML = "HELLO";
 					</label>
 					<label>
-						<input type="radio" value="2" name="p2" onclick="risposta(2,this)"> document.getElementByName("p").innerHTML = "HELLO";
+						<input type="radio" value="2" name="p2"> document.getElementByName("p").innerHTML = "HELLO";
 					</label>
 					<label>
-						<input type="radio" value="3" name="p2" onclick="risposta(2,this)"> document.getElementById("p").innerHTML = "HELLO";
+						<input type="radio" value="3" name="p2"> document.getElementById("p").innerHTML = "HELLO";
 					</label>
 					<label>
-						<input type="radio" value="4" name="p2" onclick="risposta(2,this)"> #demo.innerHTML = "HELLO";
+						<input type="radio" value="4" name="p2"> #demo.innerHTML = "HELLO";
 					</label>
 				</section>
 
 				<section id="p3">
 					<h3>3 - Where is the correct place to insert a JavaScript?</h3>
 					<label>
-						<input type="radio" value="1" name="p3" onclick="risposta(3,this)"> The &lt;head&gt; section
+						<input type="radio" value="1" name="p3"> The &lt;head&gt; section
 					</label>
 					<label>
-						<input type="radio" value="2" name="p3" onclick="risposta(3,this)"> Both the &lt;head&gt; section and the &lt;body&gt; section are correct
+						<input type="radio" value="2" name="p3"> Both the &lt;head&gt; section and the &lt;body&gt; section are correct
 					</label>
 					<label>
-						<input type="radio" value="3" name="p3" onclick="risposta(3,this)"> The &lt;body&gt; section
+						<input type="radio" value="3" name="p3"> The &lt;body&gt; section
 					</label>
 				</section>
 
 				<section id="p4">
 					<h3>4 - What is the correct syntax for referring to an external script called "xxx.js"?</h3>
 					<label>
-						<input type="radio" value="1" name="p4" onclick="risposta(4,this)"> &lt;script src = "xxx.js"&gt;
+						<input type="radio" value="1" name="p4"> &lt;script src = "xxx.js"&gt;
 					</label>
 					<label>
-						<input type="radio" value="2" name="p4" onclick="risposta(4,this)"> &lt;script name = "xxx.js"&gt;
+						<input type="radio" value="2" name="p4"> &lt;script name = "xxx.js"&gt;
 					</label>
 					<label>
-						<input type="radio" value="3" name="p4" onclick="risposta(4,this)"> &lt;script href = "xxx.js"&gt;
+						<input type="radio" value="3" name="p4"> &lt;script href = "xxx.js"&gt;
 					</label>
 				</section>
 
 				<section id="p5">
 					<h3>5 - The external javascript must contain script tag</h3>
 					<label>
-						<input type="radio" value="1" name="p5" onclick="risposta(5,this)"> True
+						<input type="radio" value="1" name="p5"> True
 					</label>
 					<label>
-						<input type="radio" value="2" name="p5" onclick="risposta(5,this)"> False
+						<input type="radio" value="2" name="p5"> False
 					</label>
 				</section>
 
 				<section id="p6">
 					<h3>6 - How do you write "Hello World" in an alert box?</h3>
 					<label>
-						<input type="radio" value="1" name="p6" onclick="risposta(6,this)"> msgBox("Hello World")
+						<input type="radio" value="1" name="p6"> msgBox("Hello World")
 					</label>
 					<label>
-						<input type="radio" value="2" name="p6" onclick="risposta(6,this)"> alertBox("Hello World")
+						<input type="radio" value="2" name="p6"> alertBox("Hello World")
 					</label>
 					<label>
-						<input type="radio" value="3" name="p6" onclick="risposta(6,this)"> alert("Hello World")
+						<input type="radio" value="3" name="p6"> alert("Hello World")
 					</label>
 					<label>
-						<input type="radio" value="4" name="p6" onclick="risposta(6,this)"> console.write("Hello World")
+						<input type="radio" value="4" name="p6"> console.write("Hello World")
 					</label>
 				</section>
 
 				<section id="p7">
 					<h3>7 - How do you create a function in JavaScript?</h3>
 					<label>
-						<input type="radio" value="1" name="p7" onclick="risposta(7,this)"> function myfunction;
+						<input type="radio" value="1" name="p7"> function myfunction;
 					</label>
 					<label>
-						<input type="radio" value="2" name="p7" onclick="risposta(7,this)"> function myfunction()
+						<input type="radio" value="2" name="p7"> function myfunction()
 					</label>
 					<label>
-						<input type="radio" value="3" name="p7" onclick="risposta(7,this)"> myfunction()
+						<input type="radio" value="3" name="p7"> myfunction()
 					</label>
 					<label>
-						<input type="radio" value="4" name="p7" onclick="risposta(7,this)"> function = myfunction()
+						<input type="radio" value="4" name="p7"> function = myfunction()
 					</label>
 				</section>
 
+				<!-- TEMP - Domanda a risposta aperta -->
 				<section id="p8">
 					<h3>8 - Speak about hoisting mechanism</h3>
 					<label>
@@ -178,28 +229,124 @@
 					</label>
 				</section>
 
+				<!-- TEMP - Domanda a risposta aperta errata -->
+				<section class="open_wrong_section" id="p8">
+					<h3>8 - Speak about hoisting mechanism</h3>
+					<label class="open_wrong_label">
+						<textarea rows="5" disabled="disabled" placeholder="Here there is the wrong answer"></textarea>
+						<br><br>This answer is wrong because...
+					</label>
+				</section>
+
+				<!-- TEMP - Domanda a risposta aperta corretta -->
+				<section class="open_right_section" id="p8">
+					<h3>8 - Speak about hoisting mechanism</h3>
+					<label class="open_right_label">
+						<textarea rows="5" disabled="disabled" placeholder="Here there is the right answer"></textarea>
+					</label>
+				</section>
+
+				<!-- TEMP - Domanda a risposta multipla -->
+				<section id="p9">
+					<h3>9 - Multiple choice question</h3>
+					<label>
+						<input type="checkbox" value="1" name="p9"> first answer
+					</label>
+					<label>
+						<input type="checkbox" value="2" name="p9"> second answer
+					</label>
+					<label>
+						<input type="checkbox" value="3" name="p9"> third answer
+					</label>
+					<label>
+						<input type="checkbox" value="4" name="p9"> fourth answer
+					</label>
+					<label>
+						<input type="checkbox" value="5" name="p9"> fifth answer
+					</label>
+					<label>
+						<input type="checkbox" value="6" name="p9"> sixth answer
+					</label>
+				</section>
+
+				<!-- TEMP - Domanda a risposta multipla errata -->
+				<section class="wrong_section" id="p9">
+					<h3>9 - Multiple choice question</h3>
+					<label class="right_label">
+						<input type="checkbox" disabled="disabled" value="1" name="p9"> first answer
+					</label>
+					<label class="right_label">
+						<input type="checkbox" disabled="disabled" value="2" name="p9"> second answer
+					</label>
+					<label class="wrong_label">
+						<input type="checkbox" disabled="disabled" value="3" name="p9" checked> third answer
+						<br><br>This answer is wrong because...
+					</label>
+					<label class="neutral_label">
+						<input type="checkbox" disabled="disabled" value="4" name="p9"> fourth answer
+					</label>
+					<label class="neutral_label">
+						<input type="checkbox" disabled="disabled" value="5" name="p9"> fifth answer
+					</label>
+					<label class="wrong_label">
+						<input type="checkbox" disabled="disabled" value="6" name="p9" checked> sixth answer
+						<br><br>This answer is wrong because...
+					</label>
+				</section>
+
+				<!-- TEMP - Domanda a risposta multipla errata (mista) -->
+				<section class="wrong_section" id="p9">
+					<h3>9 - Multiple choice question</h3>
+					<label class="right_label">
+						<input type="checkbox" disabled="disabled" value="1" name="p9"checked> first answer
+					</label>
+					<label class="right_label">
+						<input type="checkbox" disabled="disabled" value="2" name="p9"> second answer
+					</label>
+					<label class="neutral_label">
+						<input type="checkbox" disabled="disabled" value="3" name="p9"> third answer
+					</label>
+					<label class="neutral_label">
+						<input type="checkbox" disabled="disabled" value="4" name="p9"> fourth answer
+					</label>
+					<label class="neutral_label">
+						<input type="checkbox" disabled="disabled" value="5" name="p9"> fifth answer
+					</label>
+					<label class="wrong_label">
+						<input type="checkbox" disabled="disabled" value="6" name="p9" checked> sixth answer
+						<br><br>This answer is wrong because...
+					</label>
+				</section>
+
+				<!-- TEMP - Domanda a risposta multipla corretta -->
+				<section class="right_section" id="p9">
+					<h3>9 - Multiple choice question</h3>
+					<label class="right_label">
+						<input type="checkbox" disabled="disabled" value="1" name="p9" checked> first answer
+					</label>
+					<label class="right_label">
+						<input type="checkbox" disabled="disabled" value="2" name="p9" checked> second answer
+					</label>
+					<label class="neutral_label">
+						<input type="checkbox" disabled="disabled" value="3" name="p9"> third answer
+					</label>
+					<label class="neutral_label">
+						<input type="checkbox" disabled="disabled" value="4" name="p9"> fourth answer
+					</label>
+					<label class="neutral_label">
+						<input type="checkbox" disabled="disabled" value="5" name="p9"> fifth answer
+					</label>
+					<label class="neutral_label">
+						<input type="checkbox" disabled="disabled" value="6" name="p9"> sixth answer
+					</label>
+				</section>
+
 				<button class="send-button">Send</button>
 			</div>
-
 		</div>
 	</div>
 
-	<!-----------------------------------------------------------FOOTER----------------------------------------------------------->
-<footer>
-	<div class="footer-container">
-		<div class="foot">
-			<p>Copyright © 2022<br>Created By PoliSEEP Team<br>All Rights Reserved.</p>
-			<p><img src="../images/icon_/location.png"> Politecnico di Bari, via Edoardo Orabona, 4, 70126 Bari BA
-			</p>
-			<p><img src="../images/icon_/phone.png"> 345 1122333<br><img src="../images/icon_/mail.png">&nbsp;
-				poliseepteam@gmail.com</p>
-		</div>
-	</div>
-</footer>
-
-	<script type="text/javascript" src="../script.js"></script>
-	<script type="text/javascript" src="../script/insert_newQuiz.js"></script>
-
+<script type="text/javascript" src="../script/insert_newQuiz.js"></script>
 
 </body>
 

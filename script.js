@@ -103,8 +103,8 @@ function google() {
 // QUIZ Page
 function quiz_teach(frame) {
 
-  var children = document.getElementById("quiz-container").children; 
-  for (var i = 0, len = children.length ; i < len; i++) 
+  var children = document.getElementById("quiz-container").children;
+  for (var i = 0, len = children.length ; i < len; i++)
   {
     document.getElementById(children[i].id).style='display: none;'
     console.log(children[i].id);
@@ -132,7 +132,7 @@ function quiz_teach(frame) {
   else alert('error');
 }
 
-// QUIZ Page
+// QUIZ Page (OLD)
 function quiz_stud(frame) {
   document.getElementById('f1').style='display: none;';
   document.getElementById('f2').style='display: none;';
@@ -148,7 +148,6 @@ function quiz_stud(frame) {
   else if(frame == 6) document.getElementById('f6').style = 'display: block';
   else alert('error');
 }
-
 
 function startquiz() {
   document.getElementById('title').style = 'display: none;';
@@ -201,7 +200,7 @@ function display(n) {
 //Ricerca chat
 function search(ele) {
   if(event.key === 'Enter') {
-    doSearch(ele.value);        
+    doSearch(ele.value);
   }
 }
 
@@ -239,7 +238,7 @@ frm.submit(function (e) {
   frm_data.append("messaggio", $("input[name=messaggio]").val());
   frm_data.append("idStudenteHidden", $("input[name=idStudenteHidden]").val());
   frm_data.append("type", "DOC");
-   
+
   $.ajax({
     url: "../send_message.php",
     type: "post",
@@ -257,7 +256,7 @@ frm.submit(function (e) {
     },
   });
 
-  /*for (var key of frm_data.entries()) 
+  /*for (var key of frm_data.entries())
     console.log(key[0] + ', ' + key[1]);*/
 
 });
