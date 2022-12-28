@@ -1,5 +1,6 @@
-import {db} from '../firebaseConfig.js';
+import {db, storage} from '../firebaseConfig.js';
 import {ref, child, get, query, equalTo, orderByChild, set} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
+import {uploadBytes, ref as sRef} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js';
 
 const dbRef = ref(db);
 
@@ -13,6 +14,16 @@ async function prova(){
     console.log(prova.val())
 }
 
+// document.getElementById('upload_img_btn').addEventListener("change", function(e) {
+//     let file = e.target.files[0];
+//     console.log(file.name);
+//     const storo = sRef(storage, 'CoursesImages/'+file.name);
+    
+//     uploadBytes(storo, file).then((snapshot) => {
+//         console.log("Uploaded");
+//     })
+// });
+
 function setNameByMail(email) {
     let username=email.split("@")[0].replace(".","");
     
@@ -23,22 +34,49 @@ function setNameByMail(email) {
     });
 }
 
+
 /*-------------------NUOVO CORSO----------------------*/
+let file=null;
+
+function setFile(f) {
+    file=f;
+}
+
+function getFile(){
+    return file;
+}
+
+//Quando clicco su "Choose course image", cambia il riferimento del file
+document.getElementById('upload_img_btn').addEventListener("change", function(e) {
+    file=e.target.files[0];
+    setFile(file);
+});
+
 document.getElementById('form_course').addEventListener("click", function() {
-    
-    /*let course_name=document.getElementById('course_name');
-    let cfu=document.getElementById('cfu');
-    let professor=document.getElementById('professor');
-    let course_goals=document.getElementById('course_goals');
-    let num_ch=document.getElementById('num_ch');
-    let brief_description=document.getElementById('brief_description');
-    let learning_verification=document.getElementById('learning_verification');
-    //let upload_btn=document.getElementById('upload_btn');*/
+    let course_name=document.getElementById('course_name');                     //Mandatory
+    let cfu=document.getElementById('cfu');                                     //Mandatory
+    let professor=document.getElementById('professor');                         //Da prendere da localStorage
+    let course_goals=document.getElementById('course_goals');                   //Optional
+    let num_ch=document.getElementById('num_ch');                               //Optional
+    let brief_description=document.getElementById('brief_description');         //Optional
+    let learning_verification=document.getElementById('learning_verification'); //Optional
+    let f=getFile();                                                            //Mandatory
     let email = localStorage.getItem("email"); 
     let username=email.split("@")[0].replace(".","");
-    let r=ref(db, 'UsersList/'+username+"/prova");
+    
+    const storo = sRef(storage, 'CoursesImages/'+f.name);
+    uploadBytes(storo, f);
+
+    let r=ref(db, 'UsersList/'+username+"/Courses/"+course_name.value);
     let newPostRef=set(r, {
-        bla: "bla"
+        course_name: course_name.value,
+        cfu: cfu.value,
+        professor: professor.value,
+        course_goals: course_goals.value,
+        num_ch: num_ch.value,
+        brief_description: brief_description.value,
+        learning_verification: learning_verification.value,
+        img_url: "CoursesImages/"+f.name
     });
-    console.log(username);
+    toggleModal();
 });

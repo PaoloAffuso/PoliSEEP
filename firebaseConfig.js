@@ -23,6 +23,8 @@ const firebaseConfig = {
   const analytics = getAnalytics(app);
 
   import {getDatabase, ref, set, child, get} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
+  import {getStorage} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js';
 
   const db=getDatabase();
-  export {db};
+  const storage=getStorage();
+  export {db, storage};
