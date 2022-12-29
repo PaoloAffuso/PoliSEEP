@@ -1,6 +1,6 @@
 import {db, storage} from '../firebaseConfig.js';
-import {ref, child, get, query, equalTo, orderByChild, set} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
-import {uploadBytes, ref as sRef, getDownloadURL} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js';
+import {ref, child, get, query, equalTo, orderByChild, set, update} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
+import {uploadBytes, ref as sRef, getDownloadURL, deleteObject, listAll, getMetadata} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js';
 
 const dbRef = ref(db);
 let email = localStorage.getItem("email"); 
@@ -8,6 +8,7 @@ let username=email.split("@")[0].replace(".","");
 
 window.onload = function(){
     setFullname("username", username);
+    updateProfilePic();
     showCourses(username);
     getCountCourses(username);
 };
@@ -63,11 +64,42 @@ async function showCourses(username) {
             </div>
             `;
         });
-    });
-
-    
+    }); 
 }
 
+/*------------------CAMBIO IMMAGINE PROFILO-----------*/
+document.getElementById('file').addEventListener("change", function(e) {
+    let img = e.target.files[0];
+    console.log(img.name);
+    const dirToDelete = sRef(storage, 'Profile/'+username);
+    listAll(dirToDelete).then((res) => {
+        res.items.forEach((itemRef) => {
+                getMetadata(itemRef).then((metadata) => {
+                    let del = sRef(storage, 'Profile/'+username+'/'+metadata.name);
+                    deleteObject(del).then(() => {});
+                })
+            })
+        });
+    const storo = sRef(storage, 'Profile/'+username+"/"+img.name);
+    uploadBytes(storo, img);
+
+    updateProfilePic();
+});
+
+function updateProfilePic() {
+    const dirToUpdate = sRef(storage, 'Profile/'+username);
+    listAll(dirToUpdate).then((res) => {
+        res.items.forEach((itemRef) => {
+            getMetadata(itemRef).then((metadata) => {
+                let img = sRef(storage, 'Profile/'+username+"/"+metadata.name);
+                getDownloadURL(img).then((url) => {
+                    document.getElementById("photo").src=url;
+                    $( "#photo" ).load(window.location.href + " #photo" );
+                })
+            })
+        })
+    })
+}
 
 /*-------------------NUOVO CORSO----------------------*/
 let file=null;
