@@ -99,7 +99,8 @@
 				<div class="overview_container">
 					<div class="overview_sub">
 						<p id="topper_overview">Your courses</p>
-						<p id="number">0</p>
+						<!--La classe di your_courses deve essere unica. Va fatto perché il css è stilizzato in base all'id-->
+						<p id="number" class="your_courses"></p>
 					</div>
 					<div class="overview_sub">
 						<p id="topper_overview">Enrolled students</p>
@@ -155,57 +156,20 @@
 			</div>
 			<div class="nuovo_corso">
 				<!-- Trigger/Open The Modal -->
-				<button onclick="toggleModal()" type="button">Insert a new course</button>
+				<button onclick="toggleModal()" type="button" id="insert_course">Insert a new course</button>
 			</div>
 			<!-- Insieme dei corsi disponibili -->
 			<div class="ccard">
 				<center>
-					<div class="ccardbox">
-						<div class="dcard">
-							<a href="courses_teacher.html">
-								<div class="fpart"><img src="../images/student_/ADS.jpeg"></div>
-								<div class="spart">Algorithms and Data Structures</div>
-							</a>
-						</div>
-						<div class="dcard">
-							<a href="courses_teacher.html">
-								<div class="fpart"><img src="../images/student_/DB.png"></div>
-								<div class="spart">Databases</div>
-							</a>
-						</div>
-						<div class="dcard">
-							<a href="courses_teacher.html">
-								<div class="fpart"><img src="../images/student_/SWE.png"></div>
-								<div class="spart">Software Engineering</div>
-							</a>
-						</div>
-					</div>
-					<div class="ccardbox">
-						<div class="dcard">
-							<a href="courses_teacher.html">
-								<div class="fpart"><img src="../images/student_/OS.jpg"></div>
-								<div class="spart">Operating Systems</div>
-							</a>
-						</div>
-						<div class="dcard">
-							<a href="courses_teacher.html">
-								<div class="fpart"><img src="../images/student_/IoT.jpg"></div>
-								<div class="spart">Internet of Things</div>
-							</a>
-						</div>
-						<div class="dcard">
-							<a href="courses_teacher.html">
-								<div class="fpart"><img src="../images/student_/AIML.jpeg"></div>
-								<div class="spart">Artificial Intelligence and Machine Learning</div>
-							</a>
-						</div>
+					<div class="ccardbox" id="ccardbox">
+						<!--Qui sono contenuti i corsi del docente loggato-->
 					</div>
 				</center>
 			</div>
 
 
 			<!-- The Modal -->
-			<div class="modal-background" onclick="toggleModal()" id="course_modal">
+			<div class="modal-background" onclick="toggleModal()">
 			</div>
 			<!-- Modal content -->
 			<div class="modal">
@@ -214,7 +178,8 @@
 					<!-- FORM CREATE NEW COURSE -->
 
 					<!--<form action="#">-->
-						<div class="form-inner">
+						<div class="form-inner" id="course_modal">
+							<div id="error_div" style="color:red; text-align: center;"></div>
 							<h3>Create a new course</h3>
 							<br>
 							<input type="text" placeholder="Course name" id="course_name">

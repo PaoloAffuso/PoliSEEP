@@ -1,27 +1,71 @@
 import {db, storage} from '../firebaseConfig.js';
 import {ref, child, get, query, equalTo, orderByChild, set} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
-import {uploadBytes, ref as sRef} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js';
+import {uploadBytes, ref as sRef, getDownloadURL} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js';
 
 const dbRef = ref(db);
+let email = localStorage.getItem("email"); 
+let username=email.split("@")[0].replace(".","");
 
 window.onload = function(){
-    let email = localStorage.getItem("email"); 
-    setNameByMail(email);
+    setFullname("username", username);
+    showCourses(username);
+    getCountCourses(username);
 };
 
-async function prova(){
-    const prova=await get(query(ref(db, "UsersList"), orderByChild("fullname"), equalTo("prova")));
-    console.log(prova.val())
+async function setFullname(id, username){
+    const snapshot=await get(query(ref(db, "UsersList"), orderByChild("fullname"), equalTo(username)));
+    let name="";
+    snapshot.forEach(element =>
+        name=element.val().fullname);
+    
+    name=capitalize(name);
+    if(id==="username")
+        document.getElementById(id).innerHTML = name;
+    else if(id==="professor") {
+        document.getElementById(id).disabled = true;
+        document.getElementById(id).value = name;
+    }
 }
 
-function setNameByMail(email) {
-    let username=email.split("@")[0].replace(".","");
-    
-    get(child(dbRef, "UsersList/"+username)).then((snaphot) => {
-        if(snaphot.exists()) {
-            document.getElementById("username").innerHTML = snaphot.val().fullname;
-        }
+function capitalize(str) {
+    let capitalized="";
+    let sliced=str.split(" ");
+
+    sliced.forEach(function(word) {
+        word=word.charAt(0).toUpperCase()+word.slice(1);
+        capitalized+=word+" ";
     });
+
+    return capitalized;
+}
+
+async function getCountCourses(username) {
+    get(child(dbRef, "UsersList/"+username+"/Courses")).then((snapshot) => {
+        let count=0;
+        snapshot.forEach(function() {
+            count++;
+        });
+        //La classe di your_courses deve essere unica. Il 0 sta perchè è univoca. Va fatto perché il css è stilizzato in base all'id
+        document.getElementsByClassName('your_courses')[0].innerHTML = count;
+    });
+}
+
+async function showCourses(username) {
+    const snapshot=await get(query(ref(db, "UsersList/"+username+"/Courses")));
+    snapshot.forEach(element => {
+        getDownloadURL(sRef(storage, element.val().img_url)).then((url) => {
+            document.getElementById("ccardbox").innerHTML += `
+            <div class="dcard">
+                <a href="courses_teacher.html">
+                    <div class="fpart"><img src="`+url+`"></div>
+                    <div class="spart">`+element.val().course_name+`</div>
+                </a>
+            </div>
+            `;
+        });
+    });
+
+    
 }
 
 
@@ -42,17 +86,32 @@ document.getElementById('upload_img_btn').addEventListener("change", function(e)
     setFile(file);
 });
 
+document.getElementById('insert_course').addEventListener("click", function(e) {
+    setFullname("professor", username);
+});
+
 document.getElementById('form_course').addEventListener("click", function() {
-    let course_name=document.getElementById('course_name');                     //Mandatory
-    let cfu=document.getElementById('cfu');                                     //Mandatory
-    let professor=document.getElementById('professor');                         //Da prendere da localStorage
+    let course_name=document.getElementById('course_name');                     
+    let cfu=document.getElementById('cfu');                               
     let course_goals=document.getElementById('course_goals');                   //Optional
     let num_ch=document.getElementById('num_ch');                               //Optional
     let brief_description=document.getElementById('brief_description');         //Optional
     let learning_verification=document.getElementById('learning_verification'); //Optional
-    let f=getFile();                                                            //Mandatory
+    let f=getFile();                                                            
     let email = localStorage.getItem("email"); 
     let username=email.split("@")[0].replace(".","");
+
+    if(!validateCourse(course_name, cfu, f)) {
+        document.getElementById("error_div").innerHTML = "Check required fields."
+        
+        if(course_name.value=="")
+            document.getElementById('course_name').style.background="#FFCCCB";
+        if(cfu.value=="")
+            document.getElementById('cfu').style.background="#FFCCCB";
+        if(isEmpty(f))
+            alert("Image file is mandatory.")
+        return;
+    }
     
     const storo = sRef(storage, 'CoursesImages/'+f.name);
     uploadBytes(storo, f);
@@ -69,4 +128,19 @@ document.getElementById('form_course').addEventListener("click", function() {
         img_url: "CoursesImages/"+f.name
     });
     toggleModal();
+    $( "#course_modal" ).load(window.location.href + " #course_modal" );
 });
+
+function isEmpty(str) {
+    return str===null;
+}
+
+function validateCourse(course_name, cfu, f) {
+    if(isEmpty(course_name)
+        ||isEmpty(cfu)
+        ||isEmpty(f)) {
+            return false;
+    } else {
+        return true;
+    }
+}
