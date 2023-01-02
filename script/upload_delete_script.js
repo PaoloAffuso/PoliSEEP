@@ -83,12 +83,13 @@ document.getElementById('uploadFile').addEventListener('change', function(e){
 
 document.getElementById("del_btn").addEventListener("click", function() {
     var checkedBoxes = document.querySelectorAll('input[name=checkbox]:checked');
+    let course_name = getCourseName(get_str);
     checkedBoxes.forEach(function(checkbox) {
         let option_id=checkbox.getAttribute("option_id");
-        const dirToDelete = sRef(storage, 'Document/'+username+"/"+option_id);
+        const dirToDelete = sRef(storage, 'Courses/'+username+"/"+course_name+"/"+option_id);
 
         deleteObject(dirToDelete).then(() => {
-            let r=ref(db, 'UsersList/'+username+"/Documents/"+option_id);
+            let r=ref(db, "UsersList/"+username+"/Courses/"+course_name+"/Documents/"+option_id);
             update(r, {
                 path: ""
             })
