@@ -18,6 +18,7 @@ window.onload = function(){
 
     document.getElementById("href_file").href+="?"+get_str;
     printData(username, getCourseName(get_str));
+    updatePic();
 };
 
 async function printData(username, course_name) {
@@ -44,6 +45,33 @@ async function printData(username, course_name) {
         else
             document.getElementById("learning_verification").innerHTML = snapshot.val().learning_verification;
         
+    });
+}
+
+/*------------------CAMBIO IMMAGINE PROFILO-----------*/
+document.getElementById('file').addEventListener("change", function(e) {
+    let img = e.target.files[0];
+    const storo = sRef(storage, 'Profile/'+username+"/"+img.name); 
+
+    uploadBytes(storo, img).then(() => {
+        let r=ref(db, 'UsersList/'+username);
+        update(r, {
+            profile_pic: 'Profile/'+username+"/"+img.name
+        });
+    });
+});
+
+async function updatePic() {
+    const snapshot=await get(query(ref(db, "UsersList"), orderByChild("email"), equalTo(email)));
+    let path="";
+    snapshot.forEach(element => {
+        path=element.val().profile_pic;
+    });
+
+    let img = sRef(storage, path);
+    getDownloadURL(img).then((url) => {
+        document.getElementById("photo").src=url;
+        $( "#photo" ).load(window.location.href + " #photo" );
     });
 }
 
