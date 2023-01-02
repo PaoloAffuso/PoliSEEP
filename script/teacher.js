@@ -11,6 +11,8 @@ let email = localStorage.getItem("email");
 let username=email.split("@")[0].replace(".","");
 
 window.onload = function(){
+    let type = getLoggedType(username);
+    if(type==="STU") window.location.href = "/poliseep/student/student.html"; //Pagina student ancora da fare
 
     setFullname("username", email);
     updatePic();
@@ -33,15 +35,15 @@ async function setFullname(id, username){
     }
 }
 
-function capitalize(str) {
-    let capitalized="";
-    let sliced=str.split(" ");
 
-    sliced.forEach(function(word) {
-        word=word.charAt(0).toUpperCase()+word.slice(1);
-        capitalized+=word+" ";
+
+async function getLoggedType(username) {
+    const snapshot=await get(query(ref(db, "UsersList"), orderByChild("email"), equalTo(email)));
+    let type="";
+    snapshot.forEach(element => {
+        type=element.val().tipo;
     });
-    return capitalized;
+    return type;
 }
 
 async function getCountCourses(username) {
@@ -61,7 +63,7 @@ async function showCourses(username) {
         getDownloadURL(sRef(storage, element.val().img_url)).then((url) => {
             document.getElementById("ccardbox").innerHTML += `
             <div class="dcard">
-                <a href="courses_teacher.html">
+                <a href="courses_teacher.html?course_name=`+element.val().course_name+`">
                     <div class="fpart"><img src="`+url+`"></div>
                     <div class="spart">`+element.val().course_name+`</div>
                 </a>
