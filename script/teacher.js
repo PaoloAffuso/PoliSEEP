@@ -2,11 +2,16 @@ import {db, storage} from '../firebaseConfig.js';
 import {ref, child, get, query, equalTo, orderByChild, set, update} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
 import {uploadBytes, ref as sRef, getDownloadURL, deleteObject, listAll, getMetadata} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js';
 
+if (localStorage.getItem("email") === null) {
+    window.location.href = "/poliseep";
+}
+
 const dbRef = ref(db);
 let email = localStorage.getItem("email"); 
 let username=email.split("@")[0].replace(".","");
 
 window.onload = function(){
+
     setFullname("username", email);
     updateProfilePic();
     showCourses(username);
