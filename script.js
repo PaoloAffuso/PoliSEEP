@@ -192,4 +192,13 @@ function logout() {
   window.location.href = "/poliseep";
 }
 
+function capitalize(str) {
+  let capitalized="";
+  let sliced=str.split(" ");
 
+  sliced.forEach(function(word) {
+      word=word.charAt(0).toUpperCase()+word.slice(1);
+      capitalized+=word+" ";
+  });
+  return capitalized;
+}
