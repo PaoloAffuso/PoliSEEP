@@ -15,8 +15,8 @@ window.onload = function(){
     if(type==="STU") window.location.href = "/poliseep/student/student.html"; //Pagina student ancora da fare
 
     let get_str = window.location.search.substring(1);
-    console.log(getCourseName(get_str));
 
+    document.getElementById("href_file").href+="?"+get_str;
     printData(username, getCourseName(get_str));
 };
 

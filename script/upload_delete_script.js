@@ -10,13 +10,20 @@ const dbRef = ref(db);
 let email = localStorage.getItem("email"); 
 let username=email.split("@")[0].replace(".","");
 let currentDate = new Date();
+let get_str = window.location.search.substring(1);
 
 window.onload = function(){
     let type = getLoggedType(username);
     if(type==="STU") window.location.href = "/poliseep/student/student.html"; //Pagina student ancora da fare
 
+    
+    document.getElementById("href_info").href+="?"+get_str;
     showFiles(username);
 };
+
+function getCourseName(str) {
+    return str.split("=")[1];
+}
 
 async function getLoggedType(username) {
     const snapshot=await get(query(ref(db, "UsersList"), orderByChild("email"), equalTo(email)));
@@ -28,7 +35,8 @@ async function getLoggedType(username) {
 }
 
 async function showFiles(username) {
-    const snapshot=await get(query(ref(db, "UsersList/"+username+"/Documents")));
+    let course_name = getCourseName(get_str);
+    const snapshot=await get(query(ref(db, "UsersList/"+username+"/Courses/"+course_name+"/Documents")));
     snapshot.forEach(element => {
         if(element.val().path!=="") {
             getDownloadURL(sRef(storage, element.val().path)).then((url) => {
@@ -48,22 +56,23 @@ async function showFiles(username) {
 document.getElementById('uploadFile').addEventListener('change', function(e){
     let doc = e.target.files[0];
     let id=0;
-    get(child(dbRef, "UsersList/"+username+"/Documents")).then((snapshot) => {
+    let course_name = getCourseName(get_str);
+    get(child(dbRef, "UsersList/"+username+"/Courses/"+course_name+"/Documents")).then((snapshot) => {
         snapshot.forEach(function(element) {
             if(element.val().id>id) id=element.val().id;
         });
         id++;
 
-        const storo = sRef(storage, 'Document/'+username+"/"+id); 
+        const storo = sRef(storage, 'Courses/'+username+"/"+course_name+"/"+id); 
 
         uploadBytes(storo, doc).then(() => {
-            let r=ref(db, 'UsersList/'+username+"/Documents/"+id);
+            let r=ref(db, "UsersList/"+username+"/Courses/"+course_name+"/Documents/"+id);
             set(r, {
                 id: id,
                 doc_name: doc.name,
                 upload_date: oggi(),
                 weight: doc.size/1024,
-                path: 'Document/'+username+"/"+id
+                path: 'Courses/'+username+"/"+course_name+"/"+id
             });
 
             location.reload();
