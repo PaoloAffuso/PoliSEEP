@@ -1,0 +1,108 @@
+import {db, storage} from '../firebaseConfig.js';
+import {ref, child, get, query, equalTo, orderByChild, set, update} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
+import {uploadBytes, ref as sRef, getDownloadURL, deleteObject, listAll, getMetadata} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js';
+
+if (localStorage.getItem("email") === null) {
+    window.location.href = "/poliseep";
+}
+
+const dbRef = ref(db);
+let email = localStorage.getItem("email"); 
+let username=email.split("@")[0].replace(".","");
+let currentDate = new Date();
+
+window.onload = function(){
+    let type = getLoggedType(username);
+    if(type==="STU") window.location.href = "/poliseep/student/student.html"; //Pagina student ancora da fare
+
+    showFiles(username);
+};
+
+async function getLoggedType(username) {
+    const snapshot=await get(query(ref(db, "UsersList"), orderByChild("email"), equalTo(email)));
+    let type="";
+    snapshot.forEach(element => {
+        type=element.val().tipo;
+    });
+    return type;
+}
+
+async function showFiles(username) {
+    const snapshot=await get(query(ref(db, "UsersList/"+username+"/Documents")));
+    snapshot.forEach(element => {
+        if(element.val().path!=="") {
+            getDownloadURL(sRef(storage, element.val().path)).then((url) => {
+                document.getElementById("file_table").innerHTML += `
+                <tr>
+                    <td><input type='checkbox' name='checkbox' class='item_id' option_id='`+element.val().id+`'> </td>
+                    <td>`+element.val().doc_name+`</td>
+                    <td>`+element.val().upload_date+`</td>
+                    <td>`+element.val().weight+" kB"+`</td>
+                </tr>
+                `;
+            });
+        }
+    }); 
+}
+
+document.getElementById('uploadFile').addEventListener('change', function(e){
+    let doc = e.target.files[0];
+    let id=0;
+    get(child(dbRef, "UsersList/"+username+"/Documents")).then((snapshot) => {
+        snapshot.forEach(function(element) {
+            if(element.val().id>id) id=element.val().id;
+        });
+        id++;
+
+        const storo = sRef(storage, 'Document/'+username+"/"+id); 
+
+        uploadBytes(storo, doc).then(() => {
+            let r=ref(db, 'UsersList/'+username+"/Documents/"+id);
+            set(r, {
+                id: id,
+                doc_name: doc.name,
+                upload_date: oggi(),
+                weight: doc.size/1024,
+                path: 'Document/'+username+"/"+id
+            });
+
+            location.reload();
+        });
+    });
+    
+});
+
+document.getElementById("del_btn").addEventListener("click", function() {
+    var checkedBoxes = document.querySelectorAll('input[name=checkbox]:checked');
+    checkedBoxes.forEach(function(checkbox) {
+        let option_id=checkbox.getAttribute("option_id");
+        const dirToDelete = sRef(storage, 'Document/'+username+"/"+option_id);
+
+        deleteObject(dirToDelete).then(() => {
+            let r=ref(db, 'UsersList/'+username+"/Documents/"+option_id);
+            update(r, {
+                path: ""
+            })
+
+            location.reload();
+        })
+    });
+});
+
+function oggi() {
+    let gg=currentDate.getDate();
+    if(gg<10) gg="0"+gg;
+    
+    let mm=currentDate.getMonth()+1;
+    if(mm<10) mm="0"+mm;
+  
+    let yyyy=currentDate.getFullYear();
+  
+    let hh=currentDate.getHours();
+    if(hh<10) hh="0"+hh;
+  
+    let minutes=currentDate.getMinutes();
+    if(minutes<10) minutes="0"+minutes;
+  
+    return gg+"/"+mm+"/"+yyyy+" "+hh+":"+minutes;
+  }
