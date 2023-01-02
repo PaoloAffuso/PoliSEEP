@@ -58,7 +58,7 @@
 					<li><a href="quiz_student.php">Quiz</a></li>
 					<li><a href="chat_student.html">Chat</a></li>
 				</ul>
-				<a class="logout" href="../login/logout.php">Logout</a>
+				<a class="logout" onclick="logout()">Logout</a>
 				<img src="../images/icon_/menu.png" class="menu" onclick="sideMenu(0)" alt="menu">
 				<!--menu a scomparsa-->
 			</nav>
