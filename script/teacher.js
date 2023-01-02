@@ -13,7 +13,7 @@ let username=email.split("@")[0].replace(".","");
 window.onload = function(){
 
     setFullname("username", email);
-    updateProfilePic();
+    updatePic();
     showCourses(username);
     getCountCourses(username);
 };
@@ -23,7 +23,6 @@ async function setFullname(id, username){
     let name="";
     snapshot.forEach(element => {
         name=element.val().fullname;
-        console.log(name);
     });
     name=capitalize(name);
     if(id==="username")
@@ -75,26 +74,32 @@ async function showCourses(username) {
 /*------------------CAMBIO IMMAGINE PROFILO-----------*/
 document.getElementById('file').addEventListener("change", function(e) {
     let img = e.target.files[0];
-    console.log(img.name);
-    const dirToDelete = sRef(storage, 'Profile/'+username);
-    listAll(dirToDelete).then((res) => {
-        res.items.forEach((itemRef) => {
-                getMetadata(itemRef).then((metadata) => {
-                    let del = sRef(storage, 'Profile/'+username+'/'+metadata.name);
-                    deleteObject(del).then(() => {});
-                })
-            })
+    const storo = sRef(storage, 'Profile/'+username+"/"+img.name); 
+
+    uploadBytes(storo, img).then(() => {
+        let r=ref(db, 'UsersList/'+username);
+        update(r, {
+            profile_pic: 'Profile/'+username+"/"+img.name
         });
-    const storo = sRef(storage, 'Profile/'+username+"/"+img.name);
-    uploadBytes(storo, img);
-    let r=ref(db, 'UsersList/'+username);
-    update(r, {
-        profile_pic: course_name.value
     });
-    updateProfilePic();
 });
 
-function updateProfilePic() {
+async function updatePic() {
+    const snapshot=await get(query(ref(db, "UsersList"), orderByChild("email"), equalTo(email)));
+    let path="";
+    snapshot.forEach(element => {
+        path=element.val().profile_pic;
+    });
+
+    let img = sRef(storage, path);
+    getDownloadURL(img).then((url) => {
+        document.getElementById("photo").src=url;
+        $( "#photo" ).load(window.location.href + " #photo" );
+    });
+}
+
+//Funzione da conservare per query rimozione
+/*function updateProfilePic() {
     const dirToUpdate = sRef(storage, 'Profile/'+username);
     listAll(dirToUpdate).then((res) => {
         res.items.forEach((itemRef) => {
@@ -107,7 +112,7 @@ function updateProfilePic() {
             })
         })
     })
-}
+}*/
 
 /*-------------------NUOVO CORSO----------------------*/
 let file=null;
