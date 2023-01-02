@@ -7,18 +7,19 @@ let email = localStorage.getItem("email");
 let username=email.split("@")[0].replace(".","");
 
 window.onload = function(){
-    setFullname("username", username);
+    setFullname("username", email);
     updateProfilePic();
     showCourses(username);
     getCountCourses(username);
 };
 
 async function setFullname(id, username){
-    const snapshot=await get(query(ref(db, "UsersList"), orderByChild("fullname"), equalTo(username)));
+    const snapshot=await get(query(ref(db, "UsersList"), orderByChild("email"), equalTo(email)));
     let name="";
-    snapshot.forEach(element =>
-        name=element.val().fullname);
-    
+    snapshot.forEach(element => {
+        name=element.val().fullname;
+        console.log(name);
+    });
     name=capitalize(name);
     if(id==="username")
         document.getElementById(id).innerHTML = name;
@@ -36,7 +37,6 @@ function capitalize(str) {
         word=word.charAt(0).toUpperCase()+word.slice(1);
         capitalized+=word+" ";
     });
-
     return capitalized;
 }
 
@@ -82,7 +82,10 @@ document.getElementById('file').addEventListener("change", function(e) {
         });
     const storo = sRef(storage, 'Profile/'+username+"/"+img.name);
     uploadBytes(storo, img);
-
+    let r=ref(db, 'UsersList/'+username);
+    update(r, {
+        profile_pic: course_name.value
+    });
     updateProfilePic();
 });
 
@@ -146,21 +149,21 @@ document.getElementById('form_course').addEventListener("click", function() {
     }
     
     const storo = sRef(storage, 'CoursesImages/'+f.name);
-    uploadBytes(storo, f);
+    uploadBytes(storo, f).then(() => {
+        let r=ref(db, 'UsersList/'+username+"/Courses/"+course_name.value);
+        let newPostRef=set(r, {
+            course_name: course_name.value,
+            cfu: cfu.value,
+            professor: professor.value,
+            course_goals: course_goals.value,
+            num_ch: num_ch.value,
+            brief_description: brief_description.value,
+            learning_verification: learning_verification.value,
+            img_url: "CoursesImages/"+f.name
+        });
 
-    let r=ref(db, 'UsersList/'+username+"/Courses/"+course_name.value);
-    let newPostRef=set(r, {
-        course_name: course_name.value,
-        cfu: cfu.value,
-        professor: professor.value,
-        course_goals: course_goals.value,
-        num_ch: num_ch.value,
-        brief_description: brief_description.value,
-        learning_verification: learning_verification.value,
-        img_url: "CoursesImages/"+f.name
+        location.reload();
     });
-    toggleModal();
-    $( "#course_modal" ).load(window.location.href + " #course_modal" );
 });
 
 function isEmpty(str) {
