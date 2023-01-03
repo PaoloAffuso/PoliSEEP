@@ -87,3 +87,52 @@ async function getLoggedType(username) {
 function getCourseName(str) {
     return str.split("=")[1];
 }
+
+/*-------------EDIT COURSE INFO------------------*/
+let file=null;
+
+function setFile(f) {
+    file=f;
+}
+
+function getFile(){
+    return file;
+}
+
+//Quando clicco su "Choose course image", cambia il riferimento del file
+document.getElementById('upload_img_btn').addEventListener("change", function(e) {
+    file=e.target.files[0];
+    setFile(file);
+});
+
+document.getElementById("form_course").addEventListener("click", function() {
+    let get_str = window.location.search.substring(1);
+    let f=getFile();  
+    let r=ref(db, 'UsersList/'+username+"/Courses/"+getCourseName(get_str));
+
+    if(document.getElementById("obiettivoCorso").value!=='') {
+        update(r, {
+            course_goals: document.getElementById("obiettivoCorso").value
+        });
+    }
+    if(document.getElementById("descrizioneCorso").value!=='') {
+        update(r, {
+            brief_description: document.getElementById("descrizioneCorso").value
+        });
+    }
+    if(document.getElementById("verificaCorso").value!=='') {
+        update(r, {
+            learning_verification: document.getElementById("verificaCorso").value
+        });
+    }
+    if(f!==null) {
+        const storo = sRef(storage, 'CoursesImages/'+f.name);
+        uploadBytes(storo, f).then(() => {
+            update(r, {
+                img_url: "CoursesImages/"+f.name
+            }).then(() => {
+                location.reload();
+            });
+        });
+    } else location.reload();
+});

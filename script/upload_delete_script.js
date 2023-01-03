@@ -1,5 +1,5 @@
 import {db, storage} from '../firebaseConfig.js';
-import {ref, child, get, query, equalTo, orderByChild, set, update} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
+import {ref, child, get, query, equalTo, orderByChild, set, update, remove} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
 import {uploadBytes, ref as sRef, getDownloadURL, deleteObject, listAll, getMetadata} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js';
 
 if (localStorage.getItem("email") === null) {
@@ -38,18 +38,16 @@ async function showFiles(username) {
     let course_name = getCourseName(get_str);
     const snapshot=await get(query(ref(db, "UsersList/"+username+"/Courses/"+course_name+"/Documents")));
     snapshot.forEach(element => {
-        if(element.val().path!=="") {
-            getDownloadURL(sRef(storage, element.val().path)).then((url) => {
-                document.getElementById("file_table").innerHTML += `
-                <tr>
-                    <td><input type='checkbox' name='checkbox' class='item_id' option_id='`+element.val().id+`'> </td>
-                    <td>`+element.val().doc_name+`</td>
-                    <td>`+element.val().upload_date+`</td>
-                    <td>`+element.val().weight+" kB"+`</td>
-                </tr>
-                `;
-            });
-        }
+        getDownloadURL(sRef(storage, element.val().path)).then((url) => {
+            document.getElementById("file_table").innerHTML += `
+            <tr>
+                <td><input type='checkbox' name='checkbox' class='item_id' option_id='`+element.val().id+`'> </td>
+                <td>`+element.val().doc_name+`</td>
+                <td>`+element.val().upload_date+`</td>
+                <td>`+element.val().weight+" kB"+`</td>
+            </tr>
+            `;
+        });
     }); 
 }
 
@@ -90,9 +88,7 @@ document.getElementById("del_btn").addEventListener("click", function() {
 
         deleteObject(dirToDelete).then(() => {
             let r=ref(db, "UsersList/"+username+"/Courses/"+course_name+"/Documents/"+option_id);
-            update(r, {
-                path: ""
-            })
+            remove(r);
 
             location.reload();
         })
