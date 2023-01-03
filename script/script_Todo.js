@@ -43,9 +43,9 @@ inputField.addEventListener("keyup", (e) => {
       task_name: inputVal,
       checked: "false"
     }).then(() => {
-      let liTag = ` <li class="list pending">
-          <input type="checkbox" />
-          <span class="task" onclick="handleStatus(this)" val="${inputVal}">${inputVal}</span>
+      let liTag = ` <li class="list pending" id="li-${inputVal}" val="${inputVal}">
+          <input id="${inputVal}" val="${inputVal}" type="checkbox"/>
+          <span class="task" onclick="handleStatus(getElementById('${inputVal}'))">${inputVal}</span>
           <i class="uil uil-trash" onclick="deleteTask(this)" val="${inputVal}"></i>
         </li>`;
 
@@ -57,18 +57,19 @@ inputField.addEventListener("keyup", (e) => {
 });
 
 // Seleziona e deseleziona la checkbox mentre si fa clic sul task
-function handleStatus(e) {
-  const checkbox = e.querySelector("input"); // Recupera la checkbox
+function handleStatus(checkbox) {
   checkbox.checked = checkbox.checked ? false : true;
-  let r=ref(db, "UsersList/"+username+"/Tasks/"+e.getAttribute('val'));
+  let r=ref(db, "UsersList/"+username+"/Tasks/"+checkbox.getAttribute('val'));
   update(r, {checked: checkbox.checked.toString()}).then(() => {
-    e.classList.toggle("pending");
+    document.getElementById("li-"+checkbox.getAttribute('val')).classList.toggle("pending");
     allTasks();
+    //location.reload();
   });
 }
 
 // Elimina il task mentre si fa clic sull'icona di eliminazione
 function deleteTask(e) {
+  console.log("Hello")
   let r=ref(db, "UsersList/"+username+"/Tasks/"+e.getAttribute('val'));
   remove(r).then(() => {
     e.parentElement.remove(); // Ottiene l'elemento e lo rimuove

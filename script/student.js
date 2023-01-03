@@ -17,6 +17,7 @@ window.onload = function(){
     setFullname("username", email);
     getTasks(username);
     pendingNum(username);
+    getCountCourses();
     showCourses();
 };
 
@@ -49,9 +50,10 @@ async function getTasks(username) {
     const snapshot=await get(query(ref(db, "UsersList/"+username+"/Tasks")));
     snapshot.forEach(element => {
         let chk = element.val().checked==="true"?"checked":"";
-        let liTag = ` <li class="list pending">
-          <input type="checkbox" `+chk+`/>
-          <span class="task" onclick="handleStatus(this)" val="`+element.val().task_name+`">`+element.val().task_name+`</span>
+        let pend = element.val().checked==="true"?"":"pending";
+        let liTag = ` <li class="list `+pend+`" id="li-`+element.val().task_name+`" val="`+element.val().task_name+`">
+          <input id="`+element.val().task_name+`" val="`+element.val().task_name+`" type="checkbox" `+chk+`/>
+          <span class="task" onclick="handleStatus(getElementById('`+element.val().task_name+`'))">`+element.val().task_name+`</span>
           <i class="uil uil-trash" onclick="deleteTask(this)" val="`+element.val().task_name+`"></i>
         </li>`;
 
@@ -83,4 +85,15 @@ async function showCourses() {
             `;
         });
     }); 
+}
+
+async function getCountCourses() {
+    get(child(dbRef, "Courses")).then((snapshot) => {
+        let count=0;
+        snapshot.forEach(function() {
+            count++;
+        });
+        //La classe di your_courses deve essere unica. Il 0 sta perchè è univoca. Va fatto perché il css è stilizzato in base all'id
+        document.getElementById("available_courses").innerHTML = count;
+    });
 }
