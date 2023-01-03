@@ -174,6 +174,18 @@ document.getElementById('form_course').addEventListener("click", function() {
             img_url: "CoursesImages/"+f.name
         });
 
+        r=ref(db, 'Courses/'+course_name.value);
+        set(r, {
+            course_name: course_name.value,
+            cfu: cfu.value,
+            professor: professor.value,
+            course_goals: course_goals.value,
+            num_ch: num_ch.value,
+            brief_description: brief_description.value,
+            learning_verification: learning_verification.value,
+            img_url: "CoursesImages/"+f.name
+        })
+
         location.reload();
     });
 });

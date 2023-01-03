@@ -17,6 +17,7 @@ window.onload = function(){
     setFullname("username", email);
     getTasks(username);
     pendingNum(username);
+    showCourses();
 };
 
 async function setFullname(id, username){
@@ -68,4 +69,18 @@ async function pendingNum(username) {
         });
         pending.textContent = count === 0 ? "no" : count;
     });
+}
+
+async function showCourses() {
+    const snapshot=await get(query(ref(db, "Courses")));
+    snapshot.forEach(element => {
+        getDownloadURL(sRef(storage, element.val().img_url)).then((url) => {
+            document.getElementById("ccardbox").innerHTML += `
+            <div class="dcard" onclick="toggleModal()" type="button">
+                    <div class="fpart"><img src="`+url+`"></div>
+                    <a><div class="spart">`+element.val().course_name+`</div></a>
+            </div>
+            `;
+        });
+    }); 
 }
