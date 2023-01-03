@@ -1,3 +1,14 @@
+import {db, storage} from '../firebaseConfig.js';
+import {ref, child, get, query, equalTo, orderByChild, set, update, remove} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
+
+//Le funzioni onclick devono essere visibili globalmente
+window.deleteTask= deleteTask;
+window.handleStatus = handleStatus;
+
+const dbRef = ref(db);
+let email = localStorage.getItem("email"); 
+let username=email.split("@")[0].replace(".","");
+
 // Import di tutti gli elementi richiesti
 const inputField = document.querySelector(".input-field textarea"),
   todoLists = document.querySelector(".todoLists"),
@@ -27,15 +38,21 @@ inputField.addEventListener("keyup", (e) => {
 
   // Se si fa clic sul pulsante Invio e la lunghezza del valore assegnato è maggiore di 0
   if (e.key === "Enter" && inputVal.length > 0) {
-    let liTag = ` <li class="list pending" onclick="handleStatus(this)">
+    let r=ref(db, 'UsersList/'+username+"/Tasks/"+inputVal);
+    set(r, {
+      task_name: inputVal,
+      checked: "false"
+    }).then(() => {
+      let liTag = ` <li class="list pending">
           <input type="checkbox" />
-          <span class="task">${inputVal}</span>
-          <i class="uil uil-trash" onclick="deleteTask(this)"></i>
+          <span class="task" onclick="handleStatus(this)" val="${inputVal}">${inputVal}</span>
+          <i class="uil uil-trash" onclick="deleteTask(this)" val="${inputVal}"></i>
         </li>`;
 
-    todoLists.insertAdjacentHTML("beforeend", liTag); // Inserimento del tag li all'interno del div todolist
-    inputField.value = ""; // Rimuove il valore dal campo di input
-    allTasks();
+        todoLists.insertAdjacentHTML("beforeend", liTag); // Inserimento del tag li all'interno del div todolist
+        inputField.value = ""; // Rimuove il valore dal campo di input
+        allTasks();
+    });
   }
 });
 
@@ -43,18 +60,27 @@ inputField.addEventListener("keyup", (e) => {
 function handleStatus(e) {
   const checkbox = e.querySelector("input"); // Recupera la checkbox
   checkbox.checked = checkbox.checked ? false : true;
-  e.classList.toggle("pending");
-  allTasks();
+  let r=ref(db, "UsersList/"+username+"/Tasks/"+e.getAttribute('val'));
+  update(r, {checked: checkbox.checked.toString()}).then(() => {
+    e.classList.toggle("pending");
+    allTasks();
+  });
 }
 
 // Elimina il task mentre si fa clic sull'icona di eliminazione
 function deleteTask(e) {
-  e.parentElement.remove(); // Ottiene l'elemento e lo rimuove
-  allTasks();
+  let r=ref(db, "UsersList/"+username+"/Tasks/"+e.getAttribute('val'));
+  remove(r).then(() => {
+    e.parentElement.remove(); // Ottiene l'elemento e lo rimuove
+    allTasks();
+  });
 }
 
 // Cancella tutti i task mentre si fa clic sul pulsante clear.
 clearButton.addEventListener("click", () => {
-  todoLists.innerHTML = "";
-  allTasks();
+  let r=ref(db, "UsersList/"+username+"/Tasks");
+  remove(r).then(() => {
+    todoLists.innerHTML = "";
+    allTasks();
+  })
 });

@@ -13,7 +13,11 @@
 		<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"/>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 
+		<script type="module" src="../firebaseConfig.js"></script>
 		<script type="text/javascript" src="../script.js"></script>
+		<script type="module" src="../script/student.js"></script>
+		<script type="module" src="../script/script_Todo.js"></script> <!-- Script per la To-Do List -->
+
 		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 
 		<script> // script per la gestione dell'ombra nera della navbar
@@ -45,7 +49,7 @@
 
 			<!-- Title -->
 			<div class="title" id="dash">
-				<span>Welcome back Username</span>
+				<span>Welcome back <span id="username"></span></span>
 				<div class="shortdesc">
 					<p>Here you find everything you need</p>
 				</div>
@@ -111,21 +115,17 @@
 			<!-- To-Do List -->
 			<div class="container">
 				<div class="input-field">
-				  <textarea placeholder="Enter your new task"></textarea>
+				  <textarea id="task_area" placeholder="Enter your new task"></textarea>
 				  <i class="uil uil-notes note-icon"></i>
 				</div>
 
 				<ul class="todoLists"></ul>
 
 				<div class="pending-tasks">
-				  <span
-					>You have <span class="pending-num"> no </span> tasks pending</span>
+				  <span>You have <span class="pending-num"> no </span> tasks pending</span>
 				  <button class="clear-button">Clear All</button>
 				</div>
 			</div>
-			<script src="../script/script_Todo.js"></script> <!-- Script per la To-Do List -->
-
-
 
 		</main>
 
