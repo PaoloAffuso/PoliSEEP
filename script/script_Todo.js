@@ -38,20 +38,27 @@ inputField.addEventListener("keyup", (e) => {
 
   // Se si fa clic sul pulsante Invio e la lunghezza del valore assegnato è maggiore di 0
   if (e.key === "Enter" && inputVal.length > 0) {
-    let r=ref(db, 'UsersList/'+username+"/Tasks/"+inputVal);
-    set(r, {
-      task_name: inputVal,
-      checked: "false"
-    }).then(() => {
-      let liTag = ` <li class="list pending" id="li-${inputVal}" val="${inputVal}">
-          <input id="${inputVal}" val="${inputVal}" type="checkbox"/>
-          <span class="task" onclick="handleStatus(getElementById('${inputVal}'))">${inputVal}</span>
-          <i class="uil uil-trash" onclick="deleteTask(this)" val="${inputVal}"></i>
-        </li>`;
-
-        todoLists.insertAdjacentHTML("beforeend", liTag); // Inserimento del tag li all'interno del div todolist
-        inputField.value = ""; // Rimuove il valore dal campo di input
-        allTasks();
+    
+    get(child(dbRef, 'UsersList/'+username+"/Tasks/"+inputVal)).then((snaphot) => {
+      //Se il corso esiste già, non lo aggiungo nell'elenco corsi
+      if(!snaphot.exists()) {
+          let r=ref(db, 'UsersList/'+username+"/Tasks/"+inputVal);
+          set(r, {
+            task_name: inputVal,
+            checked: "false"
+          }).then(() => {
+            let liTag = ` <li class="list pending" id="li-${inputVal}" val="${inputVal}">
+                <input id="${inputVal}" val="${inputVal}" type="checkbox"/>
+                <span class="task" onclick="handleStatus(getElementById('${inputVal}'))">${inputVal}</span>
+                <i class="uil uil-trash" onclick="deleteTask(this)" val="${inputVal}"></i>
+              </li>`;
+      
+              todoLists.insertAdjacentHTML("beforeend", liTag); // Inserimento del tag li all'interno del div todolist
+              inputField.value = ""; // Rimuove il valore dal campo di input
+              allTasks();
+          });
+      }
+      else document.getElementById("task_area").value = "";
     });
   }
 });
