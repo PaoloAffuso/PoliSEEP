@@ -1,6 +1,6 @@
 /*-----------------------------REGISTRAZIONE-----------------------*/
 import {db} from '../../firebaseConfig.js';
-import {ref, child, get, set} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
+import {ref, child, get, set, query, orderByChild, equalTo} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
 
 document.getElementById('btn_submit_signup').addEventListener("click", function() {
     let nome=document.getElementById('nome');
@@ -87,28 +87,30 @@ document.getElementById('btn_submit').addEventListener("click", function() {
     authenticate(email, pass);
 });
 
-function authenticate(email, password) {
+async function authenticate(email, password) {
     const dbRef=ref(db);
     var username=getUsername(email);
-
-    get(child(dbRef, "UsersList/"+username)).then((snaphot) => {
-        //snaphot=risultato ricerca. Se l'email esiste gia' nel db, l'utente esiste
-        if(snaphot.exists()) {
-            let dbPass=decPass(snaphot.val().password, password);
-            if(dbPass==password.value) {
-                localStorage.setItem("email", email.value); 
-                let domain=checkDomain(email);
-                if(domain==="STU") location.href = '../student/student.html';
-                else location.href = '../teacher/teacher.html';
-            }
-            else {
-                alert("Password incorrect");
-            }
-        }
-        else {
-            alert("No user found with that mail.");
-        }
-    });
+    
+    const snapshot=await get(query(ref(db, "UsersList"), orderByChild("email"), equalTo(email.value)));
+    if(snapshot.exists()){
+        snapshot.forEach(element => {
+            //significa che ha trovato la mail
+     
+             let dbPass=decPass(element.val().password, password);
+             if(dbPass==password.value) {
+                 localStorage.setItem("email", email.value); 
+                 let domain=checkDomain(email);
+                 if(domain==="STU") location.href = '../student/student.html';
+                 else location.href = '../teacher/teacher.html';
+             }
+             else {
+                 alert("Password incorrect");
+             }
+     
+         });
+    }else{
+        alert("No user found with that mail.");
+    }
 }
 
 /*---------------------COMUNI---------------------*/
