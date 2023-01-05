@@ -22,8 +22,10 @@ window.onload = function(){
 };
 
 function getCourseName(str) {
-    //Se il nome del corso contiene spazi, nell'url gli spazi saranno convertiti in %20
-    return str.split("=")[1].replace(new RegExp("%20", "g"), ' ');
+    //Se il nome del corso contiene spazi, nell'url gli spazi saranno convertiti in %20 e gli ' con %27
+    str=str.split("=")[1].replace(new RegExp("%20", "g"), ' ');
+    str=str.replace(new RegExp("%27", "g"), "'");
+    return str;
 }
 
 async function getLoggedType(username) {

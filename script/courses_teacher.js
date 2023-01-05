@@ -15,7 +15,7 @@ window.onload = function(){
     if(type==="STU") window.location.href = "/poliseep/student/student.html"; //Pagina student ancora da fare
 
     let get_str = window.location.search.substring(1);
-
+    console.log(getCourseName(get_str));
     document.getElementById("href_file").href+="?"+get_str;
     printData(username, getCourseName(get_str));
     updatePic();
@@ -85,8 +85,10 @@ async function getLoggedType(username) {
 }
 
 function getCourseName(str) {
-    //Se il nome del corso contiene spazi, nell'url gli spazi saranno convertiti in %20
-    return str.split("=")[1].replace(new RegExp("%20", "g"), ' ');
+    //Se il nome del corso contiene spazi, nell'url gli spazi saranno convertiti in %20 e gli ' con %27
+    str=str.split("=")[1].replace(new RegExp("%20", "g"), ' ');
+    str=str.replace(new RegExp("%27", "g"), "'");
+    return str;
 }
 
 /*-------------EDIT COURSE INFO------------------*/
