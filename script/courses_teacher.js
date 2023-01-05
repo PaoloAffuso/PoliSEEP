@@ -85,7 +85,8 @@ async function getLoggedType(username) {
 }
 
 function getCourseName(str) {
-    return str.split("=")[1];
+    //Se il nome del corso contiene spazi, nell'url gli spazi saranno convertiti in %20
+    return str.split("=")[1].replace(new RegExp("%20", "g"), ' ');
 }
 
 /*-------------EDIT COURSE INFO------------------*/

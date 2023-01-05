@@ -1,5 +1,5 @@
 import {db, storage} from '../firebaseConfig.js';
-import {ref, child, get, query, equalTo, orderByChild, set, update} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
+import {ref, child, get, query, equalTo, orderByChild, set, update, push} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
 import {uploadBytes, ref as sRef, getDownloadURL, deleteObject, listAll, getMetadata} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js';
 
 if (localStorage.getItem("email") === null) {
@@ -162,31 +162,51 @@ document.getElementById('form_course').addEventListener("click", function() {
     
     const storo = sRef(storage, 'CoursesImages/'+f.name);
     uploadBytes(storo, f).then(() => {
-        let r=ref(db, 'UsersList/'+username+"/Courses/"+course_name.value);
-        let newPostRef=set(r, {
-            course_name: course_name.value,
-            cfu: cfu.value,
-            professor: professor.value,
-            course_goals: course_goals.value,
-            num_ch: num_ch.value,
-            brief_description: brief_description.value,
-            learning_verification: learning_verification.value,
-            img_url: "CoursesImages/"+f.name
+
+        get(child(dbRef, 'UsersList/'+username+"/Courses/"+course_name.value)).then((snaphot) => {
+            //Se il corso esiste già, non lo aggiungo nell'elenco corsi
+            if(!snaphot.exists()) {
+                let r=ref(db, 'UsersList/'+username+"/Courses/"+course_name.value);
+                let newPostRef=set(r, {
+                    course_name: course_name.value,
+                    cfu: cfu.value,
+                    professor: professor.value,
+                    course_goals: course_goals.value,
+                    num_ch: num_ch.value,
+                    brief_description: brief_description.value,
+                    learning_verification: learning_verification.value,
+                    img_url: "CoursesImages/"+f.name
+                }).then(() => {
+                    
+                    get(child(dbRef, "Courses/"+course_name.value)).then((snaphot) => {
+                        //Se il corso esiste già, non lo aggiungo nell'elenco corsi
+                        if(!snaphot.exists()) {
+                            r=ref(db, 'Courses/'+course_name.value);
+                            set(r, {
+                                course_name: course_name.value,
+                                img_url: "CoursesImages/"+f.name
+                            });
+                            r=ref(db, 'Courses/'+course_name.value+'/Professor/'+professor.value);
+                            set(r, {
+                                professor: professor.value,
+                                email: email
+                            });
+                        }
+                        else {
+                            r=ref(db, 'Courses/'+course_name.value+'/Professor/'+professor.value);
+                            set(r, {
+                                professor: professor.value,
+                                email: email
+                            });
+                        }
+                        location.reload();
+                    });
+                });
+            }
+            else {
+                alert("This course is already existing.");
+            }
         });
-
-        r=ref(db, 'Courses/'+course_name.value);
-        set(r, {
-            course_name: course_name.value,
-            cfu: cfu.value,
-            professor: professor.value,
-            course_goals: course_goals.value,
-            num_ch: num_ch.value,
-            brief_description: brief_description.value,
-            learning_verification: learning_verification.value,
-            img_url: "CoursesImages/"+f.name
-        })
-
-        location.reload();
     });
 });
 

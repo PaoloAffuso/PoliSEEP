@@ -2,6 +2,8 @@ import {db, storage} from '../firebaseConfig.js';
 import {ref, child, get, query, equalTo, orderByChild, set, update} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
 import {uploadBytes, ref as sRef, getDownloadURL, deleteObject, listAll, getMetadata} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js';
 
+window.openCourseModal=openCourseModal;
+
 if (localStorage.getItem("email") === null) {
     window.location.href = "/poliseep";
 }
@@ -77,8 +79,10 @@ async function showCourses() {
     const snapshot=await get(query(ref(db, "Courses")));
     snapshot.forEach(element => {
         getDownloadURL(sRef(storage, element.val().img_url)).then((url) => {
+            //All'interno della onclick non posso passare gli ' perche' riconosciuti come fine funzione onclick. Ex. onclick('l'altro giorno') -> ci sono 3 '
+            let course_name = element.val().course_name.replace(new RegExp("'", "g"), "-");
             document.getElementById("ccardbox").innerHTML += `
-            <div class="dcard" onclick="toggleModal()" type="button">
+            <div class="dcard" onclick="openCourseModal('`+course_name+`')" type="button">
                     <div class="fpart"><img src="`+url+`"></div>
                     <a><div class="spart">`+element.val().course_name+`</div></a>
             </div>
@@ -96,4 +100,21 @@ async function getCountCourses() {
         //La classe di your_courses deve essere unica. Il 0 sta perchè è univoca. Va fatto perché il css è stilizzato in base all'id
         document.getElementById("available_courses").innerHTML = count;
     });
+}
+
+async function openCourseModal(course_name) {
+    toggleModal();
+    //Riconverto il nome del corso sostituendo i - con '
+    course_name = course_name.replace(new RegExp("-", "g"), "'");
+    let i=1; //Importante per la selezione della checkbox
+    const snapshot=await get(query(ref(db, "Courses/"+course_name+"/Professor")));
+    snapshot.forEach(element => {
+        let prof = element.val().professor;
+        //console.log(element.val().professor);
+        document.getElementById("listprof").innerHTML += `
+            <input class = "cb" type="checkbox" id="prof${i}" name="prof${i}" value="${prof}" onchange="cbChange(this)">
+            <label for="prof${i}"> ${prof}</label>
+            `;
+        i++;
+    }); 
 }

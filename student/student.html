@@ -155,17 +155,10 @@
 			<!-- Modal content -->
 			<div class="modal">
 				<h3>Select one of the available teachers teaching this course:</h3>
-				<form class="listprof">
-					<input class = "cb" type="checkbox" id="prof1" name="prof1" value="Nicola Giaquinto" onchange="cbChange(this)">
-					<label for="prof1"> Nicola Giaquinto</label>
-					<input class = "cb" type="checkbox" id="prof2" name="prof2" value="Gennaro Boggia" onchange="cbChange(this)">
-					<label for="prof2"> Gennaro Boggia</label>
-					<input class = "cb" type="checkbox" id="prof3" name="prof3" value="Luigi Alfredo Grieco" onchange="cbChange(this)">
-					<label for="prof3"> Luigi Alfredo Grieco</label>
-					<input class = "cb" type="checkbox" id="prof4" name="prof4" value="Marina Mongiello" onchange="cbChange(this)">
-					<label for="prof4"> Marina Mongiello</label>
+				<form class="listprof" id="listprof">
+					<!--Qui c'e' l'elenco dei prof per il corso selezionato-->
 				</form>
-				<button class="send-button">Send request</button>
+				<button class="send-button" type="button">Send request</button>
 			</div>
 			<script type="text/javascript" src="../script/modale.js"></script>
 
