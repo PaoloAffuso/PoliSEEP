@@ -17,6 +17,7 @@ window.onload = function(){
     if(type==="DOC") window.location.href = "/poliseep/teacher/teacher.html";
 
     setFullname("username", email);
+    updatePic();
     getTasks(username);
     pendingNum(username);
     getCountCourses();
@@ -117,4 +118,31 @@ async function openCourseModal(course_name) {
             `;
         i++;
     }); 
+}
+
+/*------------------CAMBIO IMMAGINE PROFILO-----------*/
+document.getElementById('file').addEventListener("change", function(e) {
+    let img = e.target.files[0];
+    const storo = sRef(storage, 'Profile/'+username+"/"+img.name); 
+
+    uploadBytes(storo, img).then(() => {
+        let r=ref(db, 'UsersList/'+username);
+        update(r, {
+            profile_pic: 'Profile/'+username+"/"+img.name
+        });
+    });
+});
+
+async function updatePic() {
+    const snapshot=await get(query(ref(db, "UsersList"), orderByChild("email"), equalTo(email)));
+    let path="";
+    snapshot.forEach(element => {
+        path=element.val().profile_pic;
+    });
+
+    let img = sRef(storage, path);
+    getDownloadURL(img).then((url) => {
+        document.getElementById("photo").src=url;
+        $( "#photo" ).load(window.location.href + " #photo" );
+    });
 }
