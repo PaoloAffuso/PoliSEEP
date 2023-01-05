@@ -77,17 +77,24 @@ async function pendingNum(username) {
 }
 
 async function showCourses() {
+
+    
+
     const snapshot=await get(query(ref(db, "Courses")));
     snapshot.forEach(element => {
-        getDownloadURL(sRef(storage, element.val().img_url)).then((url) => {
-            //All'interno della onclick non posso passare gli ' perche' riconosciuti come fine funzione onclick. Ex. onclick('l'altro giorno') -> ci sono 3 '
-            let course_name = element.val().course_name.replace(new RegExp("'", "g"), "-");
-            document.getElementById("ccardbox").innerHTML += `
-            <div class="dcard" onclick="openCourseModal('`+course_name+`')" type="button">
-                    <div class="fpart"><img src="`+url+`"></div>
-                    <a><div class="spart">`+element.val().course_name+`</div></a>
-            </div>
-            `;
+        get(child(dbRef, "Courses/"+element.val().course_name+"/Student/"+username)).then((snapshot) => {
+            if(!snapshot.exists()){
+                getDownloadURL(sRef(storage, element.val().img_url)).then((url) => {
+                    //All'interno della onclick non posso passare gli ' perche' riconosciuti come fine funzione onclick. Ex. onclick('l'altro giorno') -> ci sono 3 '
+                    let course_name = element.val().course_name.replace(new RegExp("'", "g"), "-");
+                    document.getElementById("ccardbox").innerHTML += `
+                    <div class="dcard" onclick="openCourseModal('`+course_name+`')" type="button">
+                            <div class="fpart"><img src="`+url+`"></div>
+                            <a><div class="spart">`+element.val().course_name+`</div></a>
+                    </div>
+                    `;
+                });
+            }
         });
     }); 
 }
@@ -104,6 +111,7 @@ async function getCountCourses() {
 }
 
 async function openCourseModal(course_name) {
+    document.getElementById("listprof").innerHTML = '';
     toggleModal();
     //Riconverto il nome del corso sostituendo i - con '
     course_name = course_name.replace(new RegExp("-", "g"), "'");
@@ -113,12 +121,34 @@ async function openCourseModal(course_name) {
         let prof = element.val().professor;
         //console.log(element.val().professor);
         document.getElementById("listprof").innerHTML += `
-            <input class = "cb" type="checkbox" id="prof${i}" name="prof${i}" value="${prof}" onchange="cbChange(this)">
+            <input class = "cb" courseName="${course_name}" listProf="checkbox" type="checkbox" id="prof${i}" name="prof${i}" value="${prof}" email="${element.val().email}" onchange="cbChange(this)">
             <label for="prof${i}"> ${prof}</label>
             `;
         i++;
     }); 
 }
+
+/*--*/
+document.getElementById('btnSendRequest').addEventListener("click", function(){
+    var checkedBoxes = document.querySelectorAll('input[listProf=checkbox]:checked');
+    let teacher=checkedBoxes[0].getAttribute("email").split("@")[0].replace(".","");
+    let r=ref(db, 'UsersList/'+teacher+"/Courses/"+checkedBoxes[0].getAttribute("courseName")+"/Pending/"+username);
+
+    set(r, {
+        student: username,
+        email: email
+    });/*.then(()=>{
+        r=ref(db, 'Courses/'+checkedBoxes[0].getAttribute("courseName")+'/Student/'+username);
+        set(r, {
+            student: username,
+            email: email
+        });
+    });*/
+
+    alert("Request sent.");
+
+    toggleModal();
+});
 
 /*------------------CAMBIO IMMAGINE PROFILO-----------*/
 document.getElementById('file').addEventListener("change", function(e) {
