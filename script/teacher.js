@@ -18,6 +18,7 @@ window.onload = function(){
     updatePic();
     showCourses(username);
     getCountCourses(username);
+    getEnrolletStudents(username);
 };
 
 async function setFullname(id, username){
@@ -34,8 +35,6 @@ async function setFullname(id, username){
         document.getElementById(id).value = name;
     }
 }
-
-
 
 async function getLoggedType(username) {
     const snapshot=await get(query(ref(db, "UsersList"), orderByChild("email"), equalTo(email)));
@@ -54,6 +53,25 @@ async function getCountCourses(username) {
         });
         //La classe di your_courses deve essere unica. Il 0 sta perchè è univoca. Va fatto perché il css è stilizzato in base all'id
         document.getElementsByClassName('your_courses')[0].innerHTML = count;
+    });
+}
+
+async function getEnrolletStudents(username) {
+    get(child(dbRef, "Courses")).then((snapshot) => {
+        snapshot.forEach(function(e) {
+            console.log(e.val().Professor);
+            /*for(let t in e.val().Professor) {
+                get(child(dbRef, "Courses/"+username+"/Courses")).then((snapshot) => {
+                    let count=0;
+                    snapshot.forEach(function() {
+                        count++;
+                    });
+                    //La classe di your_courses deve essere unica. Il 0 sta perchè è univoca. Va fatto perché il css è stilizzato in base all'id
+                    document.getElementsByClassName('your_courses')[0].innerHTML = count;
+                });
+            }*/
+            //console.log(e.val());
+        });
     });
 }
 
