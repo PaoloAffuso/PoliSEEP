@@ -61,7 +61,7 @@
 					<p>10</p>
 				</div>
 				<!-- Trigger/Open The Modal -->
-				<button id='btn' class='mng-isc' onclick='toggleModal()' type='button'>Manage pending requests</button>
+				<button id='btn' class='mng-isc' onclick='managePending()' type='button'>Manage pending requests</button>
 				<button id='btn1' class='mng-txt' onclick='toggleModal1()' type='button'>Edit course info</button>
 			</div>
 			<!-- The Modal: manage pending requests -->
@@ -77,9 +77,8 @@
 						<input type="checkbox" id="select-all">
 						<label for="select-all"><i>Select all</i></label>
 					</div>
-					<div class='form-group'>
-						<input class = 'cb' type='checkbox' id='stud1' name='stud1'>
-						<label for='stud1'>stud1</label>
+					<div class='form-group' id="liststu">
+						<!--qui ci sara' la stampa degli studenti in stato pending per il corso selezionato-->
 					</div>
 				<button class="accept-button" id="acceptBTN">Accept</button>
 				<button class="decline-button" id="declineBTN">Decline</button>

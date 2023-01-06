@@ -2,6 +2,8 @@ import {db, storage} from '../firebaseConfig.js';
 import {ref, child, get, query, equalTo, orderByChild, set, update} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
 import {uploadBytes, ref as sRef, getDownloadURL} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js';
 
+window.managePending=managePending;
+
 if (localStorage.getItem("email") === null) {
     window.location.href = "/poliseep";
 }
@@ -139,3 +141,29 @@ document.getElementById("form_course").addEventListener("click", function() {
         });
     } else location.reload();
 });
+
+/*MOSTRA ISCRIZIONE AL CORSO IN STATO PENDING DEGLI STUDENTI*/
+
+async function managePending() {
+    toggleModal();
+    document.getElementById("liststu").innerHTML = '';
+    let get_str = window.location.search.substring(1);
+    let course_name = getCourseName(get_str);
+    let i=1; //Importante per la selezione della checkbox
+    //Riconverto il nome del corso sostituendo i - con '
+    const snapshot=await get(query(ref(db, "UsersList/"+username+"/Courses/"+course_name+"/Pending")));
+
+    snapshot.forEach(element => {
+        console.log(element.val().student);
+       
+        get(child(dbRef, "UsersList/"+element.val().student)).then((snap) => {
+            //snaphot=risultato ricerca. Se l'email esiste gia' nel db, l'utente esiste
+            if(snap.exists()) {
+                document.getElementById("liststu").innerHTML += `
+                    <input class = 'cb' type='checkbox' id='stud${i}' name='stud${i}'>
+                    <label for='stud${i}'>${snap.val().fullname}</label>`;
+                i++;
+            }
+        });
+    }); 
+}
