@@ -18,7 +18,7 @@ window.onload = function(){
     updatePic();
     showCourses(username);
     getCountCourses(username);
-    getEnrolletStudents(username);
+    getEnrolledStudents(username);
 };
 
 async function setFullname(id, username){
@@ -56,21 +56,25 @@ async function getCountCourses(username) {
     });
 }
 
-async function getEnrolletStudents(username) {
-    get(child(dbRef, "Courses")).then((snapshot) => {
-        snapshot.forEach(function(e) {
-            console.log(e.val().Professor);
-            /*for(let t in e.val().Professor) {
-                get(child(dbRef, "Courses/"+username+"/Courses")).then((snapshot) => {
-                    let count=0;
-                    snapshot.forEach(function() {
-                        count++;
-                    });
-                    //La classe di your_courses deve essere unica. Il 0 sta perchè è univoca. Va fatto perché il css è stilizzato in base all'id
-                    document.getElementsByClassName('your_courses')[0].innerHTML = count;
+async function getEnrolledStudents(username) {
+    let count=0;
+    let name = get(child(dbRef, "UsersList/"+username)).then((snapshot) => {
+        name=snapshot.val().fullname+" "; //Viene inserito uno spazio a fine chiave
+    }).then(()=> {
+        get(child(dbRef, "Courses")).then((snapshot) => {
+            for(let course in snapshot.val()) {
+                get(child(dbRef, "Courses/"+course+"/Professor/"+name)).then((s) => {
+                    if(s.exists()) {
+                        get(child(dbRef, "Courses/"+course+"/Student")).then((snap) => {
+                            snap.forEach(function() {
+                                count++;
+                                //La classe di your_courses deve essere unica. Il 0 sta perchè è univoca. Va fatto perché il css è stilizzato in base all'id
+                                document.getElementsByClassName('enrolled_students')[0].innerHTML = count;
+                            });
+                        });
+                    }
                 });
-            }*/
-            //console.log(e.val());
+            }
         });
     });
 }
