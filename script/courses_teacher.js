@@ -1,5 +1,5 @@
 import {db, storage} from '../firebaseConfig.js';
-import {ref, child, get, query, equalTo, orderByChild, set, update} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
+import {ref, child, get, query, equalTo, orderByChild, set, update, remove} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
 import {uploadBytes, ref as sRef, getDownloadURL} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js';
 
 window.managePending=managePending;
@@ -154,16 +154,57 @@ async function managePending() {
     const snapshot=await get(query(ref(db, "UsersList/"+username+"/Courses/"+course_name+"/Pending")));
 
     snapshot.forEach(element => {
-        console.log(element.val().student);
+      //  console.log(element.val().student);
        
         get(child(dbRef, "UsersList/"+element.val().student)).then((snap) => {
             //snaphot=risultato ricerca. Se l'email esiste gia' nel db, l'utente esiste
             if(snap.exists()) {
                 document.getElementById("liststu").innerHTML += `
-                    <input class = 'cb' type='checkbox' id='stud${i}' name='stud${i}'>
+                    <input class = 'cb' username='${element.val().student}' email='${element.val().email}' chkPending='checkbox' type='checkbox' id='stud${i}' name='stud${i}'>
                     <label for='stud${i}'>${snap.val().fullname}</label>`;
                 i++;
             }
         });
     }); 
 }
+
+/*ACCETTA STUDENTI AL CORSO*/
+document.getElementById("acceptBTN").addEventListener("click", ()=>{
+    let get_str = window.location.search.substring(1);
+    let course_name = getCourseName(get_str);
+    let checkedBoxes = document.querySelectorAll('input[chkPending=checkbox]:checked');
+    //console.log(checkedBoxes);
+    checkedBoxes.forEach(function(elem){
+        let student = elem.getAttribute("username");
+        let student_mail = elem.getAttribute("email");
+        let r=ref(db, "Courses/"+course_name+"/Student/"+student);
+        set(r, {
+            username: student,
+            email: student_mail
+        }).then(()=>{
+            r=ref(db, "UsersList/"+username+"/Courses/"+course_name+"/Pending/"+student);
+            remove(r).then(()=>{
+                alert("Student(s) request accepted. ");
+                toggleModal();
+            });
+        });
+    })
+})
+
+/*RIFIUTA STUDENTI AL CORSO*/
+document.getElementById("declineBTN").addEventListener("click", ()=>{
+    let get_str = window.location.search.substring(1);
+    let course_name = getCourseName(get_str);
+    let checkedBoxes = document.querySelectorAll('input[chkPending=checkbox]:checked');
+    //console.log(checkedBoxes);
+    checkedBoxes.forEach(function(elem){
+        let student = elem.getAttribute("username");
+        let student_mail = elem.getAttribute("email");
+        let r=ref(db, "UsersList/"+username+"/Courses/"+course_name+"/Pending/"+student);
+        remove(r).then(()=>{
+            alert("Student(s) request declined. ");
+            toggleModal();
+        });
+    });
+})
+
