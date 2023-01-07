@@ -99,26 +99,9 @@ async function showCourses() {
 
 async function showYourCourses(username) {
     const snapshot=await get(query(ref(db, "UsersList/"+username+"/Courses")));
-
-    console.log(username);
-    console.log(snapshot);
-
     snapshot.forEach(element => {
-
-        console.log(element.val().course_name);
-
-        document.getElementById("ccardbox1").innerHTML += `
-            <div class="dcard">
-                <a href="courses_student.html?course_name=`+element.val().course_name+`">
-                    <div class="fpart"><img src=""></div>
-                    <div class="spart">`+element.val().course_name+`</div>
-                </a>
-            </div>
-            `;
-
-        /*
+        console.log(element.val());
         getDownloadURL(sRef(storage, element.val().img_url)).then((url) => {
-           
             document.getElementById("ccardbox1").innerHTML += `
             <div class="dcard">
                 <a href="courses_student.html?course_name=`+element.val().course_name+`">
@@ -128,18 +111,26 @@ async function showYourCourses(username) {
             </div>
             `;
         });
-        */
     }); 
 }
 
 async function getCountCourses() {
-    get(child(dbRef, "Courses")).then((snapshot) => {
+    get(child(dbRef, "UsersList/"+username+"/Courses")).then((snapshot) => {
         let count=0;
         snapshot.forEach(function() {
             count++;
         });
         //La classe di your_courses deve essere unica. Il 0 sta perchè è univoca. Va fatto perché il css è stilizzato in base all'id
-        document.getElementById("available_courses").innerHTML = count;
+        document.getElementById("enrolled_courses").innerHTML = count;
+
+        get(child(dbRef, "Courses")).then((snapshot1) => {
+            let tot=0;
+            snapshot1.forEach(function() {
+                tot++;
+            });
+            //La classe di your_courses deve essere unica. Il 0 sta perchè è univoca. Va fatto perché il css è stilizzato in base all'id
+            document.getElementById("available_courses").innerHTML = tot - count;   
+        });
     });
 }
 

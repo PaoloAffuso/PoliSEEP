@@ -186,13 +186,23 @@ document.getElementById("acceptBTN").addEventListener("click", ()=>{
         }).then(()=>{
             r=ref(db, "UsersList/"+username+"/Courses/"+course_name+"/Pending/"+student);
             remove(r).then(()=>{
-                r=ref(db, 'UsersList/'+student+"/Courses/"+course_name);
-                set(r, {
-                    course_name: course_name
+                let imgPath = "";
+                get(child(dbRef, "Courses/"+course_name)).then((snap) => {
+                    //snaphot=risultato ricerca. Se l'email esiste gia' nel db, l'utente esiste
+                    if(snap.exists()) {
+                        imgPath = snap.val().img_url;
+                        console.log(imgPath);
+                    }
                 }).then(()=>{
-                    alert("Student(s) request accepted. ");
-                    toggleModal();
-            })
+                    r=ref(db, 'UsersList/'+student+"/Courses/"+course_name);
+                    set(r, {
+                        course_name: course_name,
+                        img_url: imgPath
+                    }).then(()=>{
+                        alert("Student(s) request accepted. ");
+                        toggleModal();
+                    });
+                });
             });
         });
     })
