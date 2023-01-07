@@ -22,6 +22,7 @@ window.onload = function(){
     pendingNum(username);
     getCountCourses();
     showCourses();
+    showYourCourses(username);
 };
 
 async function setFullname(id, username){
@@ -96,23 +97,38 @@ async function showCourses() {
     }); 
 }
 
-async function showYourCourses() {
-    const snapshot=await get(query(ref(db, "Courses")));
+async function showYourCourses(username) {
+    const snapshot=await get(query(ref(db, "UsersList/"+username+"/Courses")));
+
+    console.log(username);
+    console.log(snapshot);
+
     snapshot.forEach(element => {
-        get(child(dbRef, "Courses/"+element.val().course_name+"/Student/"+username)).then((snapshot) => {
-            if(snapshot.exists()){
-                getDownloadURL(sRef(storage, element.val().img_url)).then((url) => {
-                    //All'interno della onclick non posso passare gli ' perche' riconosciuti come fine funzione onclick. Ex. onclick('l'altro giorno') -> ci sono 3 '
-                    let course_name = element.val().course_name.replace(new RegExp("'", "g"), "-");
-                    document.getElementById("ccardbox").innerHTML += `
-                    <div class="dcard" onclick="openCourseModal('`+course_name+`')" type="button">
-                            <div class="fpart"><img src="`+url+`"></div>
-                            <a><div class="spart">`+element.val().course_name+`</div></a>
-                    </div>
-                    `;
-                });
-            }
+
+        console.log(element.val().course_name);
+
+        document.getElementById("ccardbox1").innerHTML += `
+            <div class="dcard">
+                <a href="courses_student.html?course_name=`+element.val().course_name+`">
+                    <div class="fpart"><img src=""></div>
+                    <div class="spart">`+element.val().course_name+`</div>
+                </a>
+            </div>
+            `;
+
+        /*
+        getDownloadURL(sRef(storage, element.val().img_url)).then((url) => {
+           
+            document.getElementById("ccardbox1").innerHTML += `
+            <div class="dcard">
+                <a href="courses_student.html?course_name=`+element.val().course_name+`">
+                    <div class="fpart"><img src="`+url+`"></div>
+                    <div class="spart">`+element.val().course_name+`</div>
+                </a>
+            </div>
+            `;
         });
+        */
     }); 
 }
 
