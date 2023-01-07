@@ -77,13 +77,30 @@ async function pendingNum(username) {
 }
 
 async function showCourses() {
-
-    
-
     const snapshot=await get(query(ref(db, "Courses")));
     snapshot.forEach(element => {
         get(child(dbRef, "Courses/"+element.val().course_name+"/Student/"+username)).then((snapshot) => {
             if(!snapshot.exists()){
+                getDownloadURL(sRef(storage, element.val().img_url)).then((url) => {
+                    //All'interno della onclick non posso passare gli ' perche' riconosciuti come fine funzione onclick. Ex. onclick('l'altro giorno') -> ci sono 3 '
+                    let course_name = element.val().course_name.replace(new RegExp("'", "g"), "-");
+                    document.getElementById("ccardbox").innerHTML += `
+                    <div class="dcard" onclick="openCourseModal('`+course_name+`')" type="button">
+                            <div class="fpart"><img src="`+url+`"></div>
+                            <a><div class="spart">`+element.val().course_name+`</div></a>
+                    </div>
+                    `;
+                });
+            }
+        });
+    }); 
+}
+
+async function showYourCourses() {
+    const snapshot=await get(query(ref(db, "Courses")));
+    snapshot.forEach(element => {
+        get(child(dbRef, "Courses/"+element.val().course_name+"/Student/"+username)).then((snapshot) => {
+            if(snapshot.exists()){
                 getDownloadURL(sRef(storage, element.val().img_url)).then((url) => {
                     //All'interno della onclick non posso passare gli ' perche' riconosciuti come fine funzione onclick. Ex. onclick('l'altro giorno') -> ci sono 3 '
                     let course_name = element.val().course_name.replace(new RegExp("'", "g"), "-");

@@ -168,6 +168,8 @@ async function managePending() {
     }); 
 }
 
+
+
 /*ACCETTA STUDENTI AL CORSO*/
 document.getElementById("acceptBTN").addEventListener("click", ()=>{
     let get_str = window.location.search.substring(1);
@@ -177,15 +179,20 @@ document.getElementById("acceptBTN").addEventListener("click", ()=>{
     checkedBoxes.forEach(function(elem){
         let student = elem.getAttribute("username");
         let student_mail = elem.getAttribute("email");
-        let r=ref(db, "Courses/"+course_name+"/Student/"+student);
+        let r=ref(db, "Courses/"+course_name+"/Student/"+student);   
         set(r, {
             username: student,
             email: student_mail
         }).then(()=>{
             r=ref(db, "UsersList/"+username+"/Courses/"+course_name+"/Pending/"+student);
             remove(r).then(()=>{
-                alert("Student(s) request accepted. ");
-                toggleModal();
+                r=ref(db, 'UsersList/'+student+"/Courses/"+course_name);
+                set(r, {
+                    course_name: course_name
+                }).then(()=>{
+                    alert("Student(s) request accepted. ");
+                    toggleModal();
+            })
             });
         });
     })
