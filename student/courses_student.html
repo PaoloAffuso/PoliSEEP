@@ -14,7 +14,7 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
 		<script type="text/javascript" src="../script.js"></script>
-		<script type="text/javascript" src="../script/courses_student.js"></script>
+		<script type="module" src="../script/courses_student.js"></script>
 		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 
 		<script> // script per la gestione dell'ombra nera della navbar
@@ -50,12 +50,12 @@
 			<!-- Title -->
 
 			<div class='title' id='info'>
-						<span>".$nome_corso."</span>
+						<span id="course_name"></span>
 						<div class='shortdesc' id='sub-info'>
 							<h4>CFU: </h4>
-							<p>".$cfu_corso."</p><br><br>
+							<p id="cfu"></p><br><br>
 							<h4>Professor: </h4>
-							<p>".$nome_doc."</p>
+							<p id="professor"></p>
 						</div>
 					</div>
 			
@@ -90,7 +90,7 @@
 			<div class="inbt">
 				<span>Course Goals</span>
 				<div class='shortdesc2'>
-							<p>".$obiettivi_corso."</p><br>
+							<p id="course_goals"></p><br>
 						</div>
 			</div>
 
@@ -99,14 +99,14 @@
 				<div class="inbt">
 					<span>Brief description of the course</span>
 					<div class='shortdesc2'>
-							<p>".$descrizione_corso."</p><br>
+							<p id="course_desc"></p><br>
 					</div>
 				</div>
 
 				<!--immagine-->
 
 				<div class='container'>
-					<img src='data:image/gif;base64," .base64_encode($copertina). "' alt='svg'>
+					<img id="img_url" src='' alt='svg'>
 				</div>
 			</div>
 
@@ -115,7 +115,7 @@
 			<div class="inbt_end">
 				<span>Learning Verification</span>
 				<div class='shortdesc2'>
-						<p>".$verifica."</p>
+						<p id="learning_verification"></p>
 					</div>
 			</div>
 

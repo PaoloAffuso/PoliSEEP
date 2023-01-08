@@ -13,33 +13,54 @@ let username=email.split("@")[0].replace(".","");
 window.onload = function(){
     let type = getLoggedType(username);
     if(type==="DOC") window.location.href = "/poliseep/teacher/teacher.html";
-
+    let get_str = window.location.search.substring(1);
     printData(username, getCourseName(get_str));
 };
 
+function getCourseName(str) {
+    //Se il nome del corso contiene spazi, nell'url gli spazi saranno convertiti in %20 e gli ' con %27
+    str=str.split("=")[1].replace(new RegExp("%20", "g"), ' ');
+    str=str.replace(new RegExp("%27", "g"), "'");
+    return str;
+}
+
 async function printData(username, course_name) {
+    let teacher = "";
     get(child(dbRef, "UsersList/"+username+"/Courses/"+course_name)).then((snapshot) => {
-        document.getElementById("course_name").innerHTML = capitalize(snapshot.val().course_name);
-        document.getElementById("cfu").innerHTML = snapshot.val().cfu;
-        document.getElementById("professor").innerHTML = capitalize(snapshot.val().professor);
-        if(snapshot.val().course_goals==="")
-            document.getElementById("course_goals").innerHTML = "Course goals for this course are still not available.";
-        else
-            document.getElementById("course_goals").innerHTML = snapshot.val().course_goals;
+        teacher = snapshot.val().teacher;
+    }).then(()=>{
+        get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name)).then((snapshot) => {
+            document.getElementById("course_name").innerHTML = capitalize(snapshot.val().course_name);
+            document.getElementById("cfu").innerHTML = snapshot.val().cfu;
+            document.getElementById("professor").innerHTML = capitalize(snapshot.val().professor);
+            
+            if(snapshot.val().course_goals==="")
+                document.getElementById("course_goals").innerHTML = "Course goals for this course are still not available.";
+            else
+                document.getElementById("course_goals").innerHTML = snapshot.val().course_goals;
         
-        if(snapshot.val().brief_description==="")
-            document.getElementById("course_desc").innerHTML = "Description for this course is still not available.";
-        else
-            document.getElementById("course_desc").innerHTML = snapshot.val().brief_description;
+            if(snapshot.val().brief_description==="")
+                document.getElementById("course_desc").innerHTML = "Description for this course is still not available.";
+            else
+                document.getElementById("course_desc").innerHTML = snapshot.val().brief_description;
 
-        getDownloadURL(sRef(storage, snapshot.val().img_url)).then((url) => {
-            document.getElementById("img_url").src = url;
-        });    
+            if(snapshot.val().learning_verification==="")
+                document.getElementById("learning_verification").innerHTML = "Learning verification for this course is still not available.";
+            else
+                document.getElementById("learning_verification").innerHTML = snapshot.val().learning_verification;
 
-        if(snapshot.val().learning_verification==="")
-            document.getElementById("learning_verification").innerHTML = "Learning verification for this course is still not available.";
-        else
-            document.getElementById("learning_verification").innerHTML = snapshot.val().learning_verification;
-        
+            getDownloadURL(sRef(storage, snapshot.val().img_url)).then((url) => {
+                document.getElementById("img_url").src = url;
+            }); 
+        })
     });
+}
+
+async function getLoggedType(username) {
+    const snapshot=await get(query(ref(db, "UsersList"), orderByChild("email"), equalTo(email)));
+    let type="";
+    snapshot.forEach(element => {
+        type=element.val().tipo;
+    });
+    return type;
 }

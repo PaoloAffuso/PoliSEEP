@@ -197,7 +197,8 @@ document.getElementById("acceptBTN").addEventListener("click", ()=>{
                     r=ref(db, 'UsersList/'+student+"/Courses/"+course_name);
                     set(r, {
                         course_name: course_name,
-                        img_url: imgPath
+                        img_url: imgPath,
+                        teacher: username
                     }).then(()=>{
                         alert("Student(s) request accepted. ");
                         toggleModal();
