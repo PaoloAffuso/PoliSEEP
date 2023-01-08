@@ -29,6 +29,7 @@ async function printData(username, course_name) {
     let teacher = "";
     get(child(dbRef, "UsersList/"+username+"/Courses/"+course_name)).then((snapshot) => {
         teacher = snapshot.val().teacher;
+        localStorage.setItem("teacher", teacher);
     }).then(()=>{
         get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name)).then((snapshot) => {
             document.getElementById("course_name").innerHTML = capitalize(snapshot.val().course_name);

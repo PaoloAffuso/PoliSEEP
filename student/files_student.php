@@ -123,7 +123,7 @@
 					echo "
 						<tr>
 							<td style='font-family:Montserrat, sans-serif;'><b>Select<br> <input type='checkbox' class='select_all_items'></td>
-							<td style='font-family:Montserrat, sans-serif;'><b>Pdf Name </td>
+							<td style='font-family:Montserrat, sans-serif;'><b>File name </td>
 							<td style='font-family:Montserrat, sans-serif;'><b>Upload Date</td>
 							<td style='font-family:Montserrat, sans-serif;'><b>Weight</td>
 						</tr>";

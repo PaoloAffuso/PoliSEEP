@@ -16,6 +16,7 @@
 
 	<script type="text/javascript" src="../script.js"></script>
 	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+	<script type="module" src="../script/download_files.js"></script>
 
 	<script> // script per la gestione dell'ombra nera della navbar
 		$(window).on('scroll', function () {
@@ -97,25 +98,20 @@
  	<div class="container" style="padding-top:50px;">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 
- 		<div class="btn btn-primary btn_delete_val downloadChecked">Download Files</div>
+ 		<div class="btn btn-primary btn_delete_val downloadChecked" id="btnDownload">Download Files</div>
  		<div style="padding:21px;"></div>
 
 		<table class="table">
-			<tbody>
+			<tbody id="file_table">
 				<tr>
 					<td style="font-family:Montserrat, sans-serif;"><b>Select<br> <input type="checkbox" class="select_all_items"></td>
-					<td style="font-family:Montserrat, sans-serif;"><b>Pdf Name </td>
+					<td style="font-family:Montserrat, sans-serif;"><b>File name </td>
 					<td style="font-family:Montserrat, sans-serif;"><b>Upload Date</td>
 					<td style="font-family:Montserrat, sans-serif;"><b>Weight</td>
 				</tr>
-				<tr>
-					<td><input type="checkbox" class="item_id" option_id="1"> </td>
-					<td>lecture1.pdf</td>
-					<td>10/09/2022</td>
-					<td>20kB</td>
-				</tr>
 			</tbody>
 		</table>
+		<iframe id="download_iframe" style="display:none;"></iframe>
 		<script src="../script/download_script.js"></script>
  	</div>
 
