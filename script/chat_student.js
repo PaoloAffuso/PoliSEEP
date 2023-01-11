@@ -25,13 +25,25 @@ await getTeacher().then((teacher) => {
             await getTeacher().then(async (teacher) => {
                 const snapshot=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+teacher+"/Chat/"+username), limitToLast(1)));
                 snapshot.forEach(element => {
-                    document.getElementById("chat-box").innerHTML+=`
+                    if(element.val().sender===username) {
+                        document.getElementById("chat-box").innerHTML+=`
                             <div class="chat outgoing">
                                 <div class="details">
                                     <p>${element.val().message}</p>
                                 </div>
                             </div>
                         `;
+                    } else {
+                        document.getElementById("chat-box").innerHTML+=`
+                            <div class="chat incoming">
+                                <img src="../images/student_/usrimg.png" alt="">
+                                <div class="details">
+                                    <p>${element.val().message}</p>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    
                 });
             });
             
@@ -66,7 +78,10 @@ document.getElementById("message_box").addEventListener("keyup", async function(
 
             push(r, {
                 message: inputVal,
+                sender: username,
                 timestamp: Date.now()
+            }).then(() => {
+                document.getElementById("message_box").value="";
             });
         });
     }
