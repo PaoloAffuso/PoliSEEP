@@ -18,22 +18,29 @@ window.onload = function(){
     
 };
 
-onValue(ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Chat"), async ()=> {
-    if(!initialState) {
-        const snapshot=await get(query(ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Chat"), limitToLast(1)));
-        snapshot.forEach(element => {
-            document.getElementById("chat-box").innerHTML+=`
-                    <div class="chat outgoing">
-                        <div class="details">
-                            <p>${element.val().message}</p>
-                        </div>
-                    </div>
-                `;
-        });
-    }
-    else initialState=false;
-    
+await getTeacher().then((teacher) => {
+    //Aggiorna lista messaggi studente realtime
+    onValue(ref(db, 'Courses/'+course_name+"/Professor/"+teacher+"/Chat/"+username), async ()=> {
+        if(!initialState) {
+            await getTeacher().then(async (teacher) => {
+                const snapshot=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+teacher+"/Chat/"+username), limitToLast(1)));
+                snapshot.forEach(element => {
+                    document.getElementById("chat-box").innerHTML+=`
+                            <div class="chat outgoing">
+                                <div class="details">
+                                    <p>${element.val().message}</p>
+                                </div>
+                            </div>
+                        `;
+                });
+            });
+            
+        }
+        else initialState=false;
+        
+    });
 });
+
 
 function getCourseName(str) {
     //Se il nome del corso contiene spazi, nell'url gli spazi saranno convertiti in %20 e gli ' con %27
@@ -51,14 +58,21 @@ async function getLoggedType(username) {
     return type;
 }
 
-document.getElementById("message_box").addEventListener("keyup", function(event) {
+document.getElementById("message_box").addEventListener("keyup", async function(event) {
     if (event.key === 'Enter') {
-        let inputVal=document.getElementById("message_box").value;
-        console.log(inputVal);
-        let r=ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Chat");
+        await getTeacher().then((data)=>{
+            let inputVal=document.getElementById("message_box").value;
+            let r=ref(db, 'Courses/'+course_name+"/Professor/"+data+"/Chat/"+username);
 
-        push(r, {
-            message: inputVal
+            push(r, {
+                message: inputVal,
+                timestamp: Date.now()
+            });
         });
     }
 });
+
+async function getTeacher() {
+    const snapshot=await get(query(ref(db, "UsersList/"+username+"/Courses/"+course_name)));
+    return snapshot.val().teacher;
+}

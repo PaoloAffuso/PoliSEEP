@@ -63,7 +63,7 @@ async function getEnrolledStudents(username) {
     }).then(()=> {
         get(child(dbRef, "Courses")).then((snapshot) => {
             for(let course in snapshot.val()) {
-                get(child(dbRef, "Courses/"+course+"/Professor/"+name)).then((s) => {
+                get(child(dbRef, "Courses/"+course+"/Professor/"+username)).then((s) => {
                     if(s.exists()) {
                         get(child(dbRef, "Courses/"+course+"/Student")).then((snap) => {
                             snap.forEach(function() {
@@ -208,14 +208,14 @@ document.getElementById('form_course').addEventListener("click", function() {
                                 course_name: course_name.value,
                                 img_url: "CoursesImages/"+f.name
                             });
-                            r=ref(db, 'Courses/'+course_name.value+'/Professor/'+professor.value);
+                            r=ref(db, 'Courses/'+course_name.value+'/Professor/'+username);
                             set(r, {
                                 professor: professor.value,
                                 email: email
                             });
                         }
                         else {
-                            r=ref(db, 'Courses/'+course_name.value+'/Professor/'+professor.value);
+                            r=ref(db, 'Courses/'+course_name.value+'/Professor/'+username);
                             set(r, {
                                 professor: professor.value,
                                 email: email
