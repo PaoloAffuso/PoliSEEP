@@ -1,5 +1,6 @@
 import {db, storage} from '../firebaseConfig.js';
-import {ref, child, get, onValue, push, query, orderByChild, equalTo, limitToLast} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
+import {ref, child, get, onValue, push, query, orderByChild, equalTo, limitToLast, orderByValue} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
+import {ref as sRef, getDownloadURL} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js';
 
 if (localStorage.getItem("email") === null) {
     window.location.href = "/poliseep";
@@ -12,10 +13,46 @@ let get_str = window.location.search.substring(1);
 let course_name=getCourseName(get_str);
 let initialState=true; //Per sincronizzare la ricezione messaggi
 
-window.onload = function(){
+window.onload = async function(){
     let type = getLoggedType(username);
     if(type==="DOC") window.location.href = "/poliseep/teacher/teacher.html";
     
+    await getTeacher().then(async (teacher)=> {
+        let teacher_name = await getTeacherName(teacher);
+        let img_path = await getTeacherPic(teacher);
+        document.getElementById("teacher_name").innerHTML=teacher_name;
+
+        const snapshot=await get(query(ref(db, "Courses/"+course_name+"/Professor/"+teacher+"/Chat/"+username), orderByChild("timestamp")));
+
+        getDownloadURL(sRef(storage, img_path)).then((url) => {
+            document.getElementById("teacher_pic").src=url;
+            
+            snapshot.forEach(element => {
+                console.log(element.val().message)
+                if(element.val().sender===username) {
+                    document.getElementById("chat-box").innerHTML+=`
+                        <div class="chat outgoing">
+                            <div class="details">
+                                <p>${element.val().message}</p>
+                            </div>
+                        </div>
+                    `;
+                } else { 
+                    //getDownloadURL(sRef(storage, img_path)).then((url) => {
+                        document.getElementById("chat-box").innerHTML+=`
+                            <div class="chat incoming">
+                                <img src="${url}" alt="">
+                                <div class="details">
+                                    <p>${element.val().message}</p>
+                                </div>
+                            </div>
+                        `;
+                    //});
+                }
+                
+            });
+        });
+    });
 };
 
 await getTeacher().then((teacher) => {
@@ -24,7 +61,7 @@ await getTeacher().then((teacher) => {
         if(!initialState) {
             await getTeacher().then(async (teacher) => {
                 const snapshot=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+teacher+"/Chat/"+username), limitToLast(1)));
-                snapshot.forEach(element => {
+                snapshot.forEach(async element => {
                     if(element.val().sender===username) {
                         document.getElementById("chat-box").innerHTML+=`
                             <div class="chat outgoing">
@@ -34,14 +71,17 @@ await getTeacher().then((teacher) => {
                             </div>
                         `;
                     } else {
-                        document.getElementById("chat-box").innerHTML+=`
-                            <div class="chat incoming">
-                                <img src="../images/student_/usrimg.png" alt="">
-                                <div class="details">
-                                    <p>${element.val().message}</p>
+                        let img_path=await getTeacherPic(teacher);
+                        getDownloadURL(sRef(storage, img_path)).then((url) => {
+                            document.getElementById("chat-box").innerHTML+=`
+                                <div class="chat incoming">
+                                    <img src="${url}" alt="">
+                                    <div class="details">
+                                        <p>${element.val().message}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        `;
+                            `;
+                        });
                     }
                     
                 });
@@ -90,4 +130,14 @@ document.getElementById("message_box").addEventListener("keyup", async function(
 async function getTeacher() {
     const snapshot=await get(query(ref(db, "UsersList/"+username+"/Courses/"+course_name)));
     return snapshot.val().teacher;
+}
+
+async function getTeacherName(teacher) {
+    const snapshot=await get(query(ref(db, "UsersList/"+teacher)));
+    return snapshot.val().fullname;
+}
+
+async function getTeacherPic(teacher) {
+    const snapshot=await get(query(ref(db, "UsersList/"+teacher)));
+    return snapshot.val().profile_pic;
 }
