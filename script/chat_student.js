@@ -28,7 +28,6 @@ window.onload = async function(){
             document.getElementById("teacher_pic").src=url;
             
             snapshot.forEach(element => {
-                console.log(element.val().message)
                 if(element.val().sender===username) {
                     document.getElementById("chat-box").innerHTML+=`
                         <div class="chat outgoing">
@@ -112,20 +111,28 @@ async function getLoggedType(username) {
 
 document.getElementById("message_box").addEventListener("keyup", async function(event) {
     if (event.key === 'Enter') {
-        await getTeacher().then((data)=>{
-            let inputVal=document.getElementById("message_box").value;
-            let r=ref(db, 'Courses/'+course_name+"/Professor/"+data+"/Chat/"+username);
-
-            push(r, {
-                message: inputVal,
-                sender: username,
-                timestamp: Date.now()
-            }).then(() => {
-                document.getElementById("message_box").value="";
-            });
-        });
+        await sendMessage();
     }
 });
+
+document.getElementById("send_btn").addEventListener("click", async function(){
+    await sendMessage();
+});
+
+async function sendMessage() {
+    await getTeacher().then((data)=>{
+        let inputVal=document.getElementById("message_box").value;
+        let r=ref(db, 'Courses/'+course_name+"/Professor/"+data+"/Chat/"+username);
+
+        push(r, {
+            message: inputVal,
+            sender: username,
+            timestamp: Date.now()
+        }).then(() => {
+            document.getElementById("message_box").value="";
+        });
+    });
+}
 
 async function getTeacher() {
     const snapshot=await get(query(ref(db, "UsersList/"+username+"/Courses/"+course_name)));
