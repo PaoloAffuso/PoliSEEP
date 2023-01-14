@@ -1,5 +1,5 @@
 import {db, storage} from '../firebaseConfig.js';
-import {ref, child, get, onValue, push, query, orderByChild, equalTo, limitToLast, orderByValue} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
+import {ref, child, get, onValue, push, query, orderByChild, equalTo, limitToLast, update} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
 import {ref as sRef, getDownloadURL} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js';
 
 if (localStorage.getItem("email") === null) {
@@ -22,7 +22,7 @@ window.onload = async function(){
         let img_path = await getTeacherPic(teacher);
         document.getElementById("teacher_name").innerHTML=teacher_name;
 
-        const snapshot=await get(query(ref(db, "Courses/"+course_name+"/Professor/"+teacher+"/Chat/"+username), orderByChild("timestamp")));
+        const snapshot=await get(query(ref(db, "Courses/"+course_name+"/Professor/"+teacher+"/Chat/"+username+"/Messages"), orderByChild("timestamp")));
 
         getDownloadURL(sRef(storage, img_path)).then((url) => {
             document.getElementById("teacher_pic").src=url;
@@ -56,10 +56,10 @@ window.onload = async function(){
 
 await getTeacher().then((teacher) => {
     //Aggiorna lista messaggi studente realtime
-    onValue(ref(db, 'Courses/'+course_name+"/Professor/"+teacher+"/Chat/"+username), async ()=> {
+    onValue(ref(db, 'Courses/'+course_name+"/Professor/"+teacher+"/Chat/"+username+"/Messages"), async ()=> {
         if(!initialState) {
             await getTeacher().then(async (teacher) => {
-                const snapshot=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+teacher+"/Chat/"+username), limitToLast(1)));
+                const snapshot=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+teacher+"/Chat/"+username+"/Messages"), limitToLast(1)));
                 snapshot.forEach(async element => {
                     if(element.val().sender===username) {
                         document.getElementById("chat-box").innerHTML+=`
@@ -122,13 +122,17 @@ document.getElementById("send_btn").addEventListener("click", async function(){
 async function sendMessage() {
     await getTeacher().then((data)=>{
         let inputVal=document.getElementById("message_box").value;
-        let r=ref(db, 'Courses/'+course_name+"/Professor/"+data+"/Chat/"+username);
+        let r=ref(db, 'Courses/'+course_name+"/Professor/"+data+"/Chat/"+username+"/Messages");
 
         push(r, {
             message: inputVal,
             sender: username,
             timestamp: Date.now()
         }).then(() => {
+            let r=ref(db, 'Courses/'+course_name+"/Professor/"+data+"/Chat/"+username);
+            update(r, {
+                email: email
+            })
             document.getElementById("message_box").value="";
         });
     });

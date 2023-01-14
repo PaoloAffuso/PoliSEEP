@@ -36,7 +36,7 @@ window.onload = async function(){
             </div>
             `;
         });
-        const snapshot=await get(query(ref(db, "Courses/"+course_name+"/Professor/"+username+"/Chat/"+student), orderByChild("timestamp")));
+        const snapshot=await get(query(ref(db, "Courses/"+course_name+"/Professor/"+username+"/Chat/"+student+"/Messages"), orderByChild("timestamp")));
 
         getDownloadURL(sRef(storage, img_path)).then((url) => {
             snapshot.forEach((element)=>{
@@ -63,14 +63,13 @@ window.onload = async function(){
 
         
     }
-
-    
 };
+
 
 //Aggiorna lista messaggi studente realtime
 onValue(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+student), async ()=> {
     if(!initialState) {
-        const snapshot=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+student), limitToLast(1)));
+        const snapshot=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+student+"/Messages"), limitToLast(1)));
         snapshot.forEach(async element => {
             if(element.val().sender===username) {
                 document.getElementById("chat-box").innerHTML+=`
@@ -128,7 +127,7 @@ async function getLoggedType(username) {
 document.getElementById("message_box").addEventListener("keyup", async function(event) {
     if (event.key === 'Enter') {
         let inputVal=document.getElementById("message_box").value;
-        let r=ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+student);
+        let r=ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+student+"/Messages");
 
         push(r, {
             message: inputVal,
@@ -156,7 +155,7 @@ async function getChats() {
             get(child(dbRef, "UsersList/"+stud)).then(async (snapshot) => {
                 let img_path = snapshot.val().profile_pic;
                 getDownloadURL(sRef(storage, img_path)).then(async (url) => {
-                    const q=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+stud), limitToLast(1)));
+                    const q=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+stud+"/Messages"), limitToLast(1)));
                     q.forEach((message)=>{
                         document.getElementById("users-list").innerHTML+=`
                         <a href="#" onclick="changeStudent('${stud}')">
