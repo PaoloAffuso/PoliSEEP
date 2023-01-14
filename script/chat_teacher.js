@@ -126,18 +126,26 @@ async function getLoggedType(username) {
 
 document.getElementById("message_box").addEventListener("keyup", async function(event) {
     if (event.key === 'Enter') {
-        let inputVal=document.getElementById("message_box").value;
-        let r=ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+student+"/Messages");
-
-        push(r, {
-            message: inputVal,
-            sender: username,
-            timestamp: Date.now()
-        }).then(() => {
-            document.getElementById("message_box").value="";
-        });
+        await sendMessage();
     }
 });
+
+document.getElementById("send_btn").addEventListener("click", async function(){
+    await sendMessage();
+});
+
+async function sendMessage() {
+    let inputVal=document.getElementById("message_box").value;
+    let r=ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+student+"/Messages");
+
+    push(r, {
+        message: inputVal,
+        sender: username,
+        timestamp: Date.now()
+    }).then(() => {
+        document.getElementById("message_box").value="";
+    });
+}
 
 async function getStudentPic(student) {
     const snapshot=await get(query(ref(db, "UsersList/"+student)));
