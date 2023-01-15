@@ -130,6 +130,27 @@ document.getElementById("message_box").addEventListener("keyup", async function(
     }
 });
 
+document.getElementById("searchInput").addEventListener("keyup", async function(event) {
+    let inputVal=document.getElementById("searchInput").value;
+    if(inputVal==="") {
+        document.getElementById("users-list").innerHTML="";
+        getChats();
+    }
+    if (event.key === 'Enter') {
+        inputVal=document.getElementById("searchInput").value;
+        const snapshot=await get(query(ref(db, 'Courses/'+course_name+'/Professor/'+username+'/Chat')));
+        snapshot.forEach(element=>{
+            if(element.val().email.includes(inputVal) || element.val().fullname.toLowerCase().includes(inputVal.toLowerCase())){
+                document.getElementById("users-list").innerHTML="";
+                let username=element.val().email.split("@")[0].replace(".","");
+                getFilteredChat(username);
+            }
+               
+        });
+    }
+});
+
+
 document.getElementById("send_btn").addEventListener("click", async function(){
     await sendMessage();
 });
@@ -183,6 +204,31 @@ async function getChats() {
                 }); 
             });
         }
+    });
+}
+
+async function getFilteredChat(stud){
+    get(child(dbRef, "UsersList/"+stud)).then(async (snapshot) => {
+        let img_path = snapshot.val().profile_pic;
+        getDownloadURL(sRef(storage, img_path)).then(async (url) => {
+            const q=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+stud+"/Messages"), limitToLast(1)));
+            q.forEach((message)=>{
+                document.getElementById("users-list").innerHTML+=`
+                <a href="#" onclick="changeStudent('${stud}')">
+                    <div class="content">
+                        <img src="${url}" alt="">
+                        <div class="details">
+                            <span>${snapshot.val().fullname}</span>
+                            <p>${message.val().message}</p>
+                        </div>
+                    </div>
+                    <div class="new-messages">
+                        <p>1</p>
+                    </div>
+                </a>
+                `;
+            });
+        }); 
     });
 }
 

@@ -128,10 +128,13 @@ async function sendMessage() {
             message: inputVal,
             sender: username,
             timestamp: Date.now()
-        }).then(() => {
+        }).then(async () => {
             let r=ref(db, 'Courses/'+course_name+"/Professor/"+data+"/Chat/"+username);
+            let name = await getStudentName();
+            console.log(name);
             update(r, {
-                email: email
+                email: email,
+                fullname: name
             })
             document.getElementById("message_box").value="";
         });
@@ -151,4 +154,9 @@ async function getTeacherName(teacher) {
 async function getTeacherPic(teacher) {
     const snapshot=await get(query(ref(db, "UsersList/"+teacher)));
     return snapshot.val().profile_pic;
+}
+
+async function getStudentName() {
+    const snapshot=await get(query(ref(db, "UsersList/"+username)));
+    return snapshot.val().fullname;
 }
