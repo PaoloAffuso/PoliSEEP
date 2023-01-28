@@ -364,8 +364,6 @@ a, button {
 	min-width: 100%;
 }
 
-
-
 .newquestions{
 	margin-top: 30px;
 }
@@ -506,7 +504,6 @@ a, button {
 }
 
 
-
 /*VISUALIZZAZIONE QUIZ ESISTENTE (DEVE MODIFICARE GIULIA)*/
 .quiz-header{
 	text-align: center;
@@ -522,7 +519,7 @@ a, button {
 	padding: 20px;
 }
 
-.container section{
+section{
 	border: 2px solid #F0A30A;
 	border-radius: 10px;
 	padding: 10px;
@@ -538,18 +535,17 @@ label{
 	margin-bottom: 3px;
 	margin-top: 10px;
 }
-
 label:hover{
 	background: #F0A30A;
 }
 
 /* domanda a risposta aperta errata */
 .open_wrong_section{
-	border: 2px solid #B62C35;
+	border: 2px solid #F0A30A;
 	border-radius: 10px;
 	padding: 10px;
 	margin: 10px 0;
-	background-color: #B62C35;
+	background-color: white;
 }
 
 .open_wrong_label{
@@ -589,7 +585,7 @@ label:hover{
 
 /* domanda errata (multipla/singola) */
 .wrong_section{
-	border: 2px solid #B62C35;
+	border: 2px solid #F0A30A;
 	border-radius: 10px;
 	padding: 10px;
 	margin: 10px 0;
@@ -603,7 +599,7 @@ label:hover{
 	border: 1px dashed #ccc;
 	margin-bottom: 3px;
 	margin-top: 10px;
-	background: #B62C35;
+	background: white;
 }
 .wrong_label:hover{
 	background: #B62C35;
@@ -646,7 +642,7 @@ label:hover{
 	background: #fff;
 }
 
-.send-button {
+.decline-button { 
 	padding: 6px 12px;
 	outline: none;
 	border: none;
@@ -658,9 +654,10 @@ label:hover{
 	white-space: nowrap;
 	border: 2px solid rgba(240, 163, 10, 0.993);
 	transition: .3s;
+	margin-left: 240px;
 }
 
-.send-button:hover {
+.decline-button:hover {
 	background-color: #f2f2f2;
 	color: #47506B;
 }
