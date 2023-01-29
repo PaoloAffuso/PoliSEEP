@@ -391,348 +391,126 @@
 				
 				<div class="container">
 					<button class="decline-button" value="" id="deleteButton">Delete Quiz</button><br><br><br>
-<!-- 1 DOMANDA: TEMP - Domanda a risposta singola -->
-				<section id="p1">
-					<h3>1 - Inside which HTML element do we put the JavaScript?</h3>
-					<label>
-						<input type="radio" value="1" name="p1"> &lt;js&gt;
-					</label>
-					<label>
-						<input type="radio" value="2" name="p1"> &lt;scripting&gt;
-					</label>
-					<label>
-						<input type="radio" value="3" name="p1"> &lt;script&gt;
-					</label>
-					<label>
-						<input type="radio" value="4" name="p1"> &lt;javascript&gt;
-					</label>
-				</section>
-
-				<!-- TEMP - Domanda a risposta singola errata-->
+<!-- 1 DOMANDA: TEMP - Domanda a risposta singola con correzione e risposta corretta -->
 				<section class="wrong_section" id="p1">
 					<h3>1 - Inside which HTML element do we put the JavaScript?</h3>
 					<label class="wrong_label">
-						<input type="radio" disabled="disabled" value="1" name="p1" checked> &lt;js&gt;
+						&lt;js&gt;
 						<br><br>This answer is wrong because...
 					</label>
 					<label class="wrong_label">
-						<input type="radio" disabled="disabled" value="2" name="p1"> &lt;scripting&gt;
+						 &lt;scripting&gt;
 						<br><br>This answer is wrong because...
 					</label>
 					<label class="right_label">
-						<input type="radio" disabled="disabled" value="3" name="p1"> &lt;script&gt;
+						 &lt;script&gt;
 					</label>
 					<label class="wrong_label">
-						<input type="radio" disabled="disabled" value="4" name="p1"> &lt;javascript&gt;
+						 &lt;javascript&gt;
 						<br><br>This answer is wrong because...
 					</label>
 				</section>
-
-				<!-- TEMP - Domanda a risposta singola corretta -->
-				<section class="right_section" id="p1">
-					<h3>1 - Inside which HTML element do we put the JavaScript?</h3>
-					<label class="neutral_label">
-						<input type="radio" disabled="disabled" value="1" name="p1"> &lt;js&gt;
-					</label>
-					<label class="neutral_label">
-						<input type="radio" disabled="disabled" value="2" name="p1"> &lt;scripting&gt;
-					</label>
-					<label class="right_label">
-						<input type="radio" disabled="disabled" value="3" name="p1" checked> &lt;script&gt;
-					</label>
-					<label class="neutral_label">
-						<input type="radio" disabled="disabled" value="4" name="p1"> &lt;javascript&gt;
-					</label>
-				</section>
-<!-- 2 DOMANDA: TEMP - Domanda a risposta singola -->
-				<section id="p2">
-					<h3>2 - What is the correct JavaScript syntax to change the content of the HTML element below?
-						<br><br> &lt;p id="demo"&gt;This is a demonstration.&lt;/p&gt;</h3>
-					<label>
-						<input type="radio" value="1" name="p2"> document.getElement("p").innerHTML = "HELLO";
-					</label>
-					<label>
-						<input type="radio" value="2" name="p2"> document.getElementByName("p").innerHTML = "HELLO";
-					</label>
-					<label>
-						<input type="radio" value="3" name="p2"> document.getElementById("p").innerHTML = "HELLO";
-					</label>
-					<label>
-						<input type="radio" value="4" name="p2"> #demo.innerHTML = "HELLO";
-					</label>
-				</section>
-				<!-- TEMP - Domanda a risposta singola errata-->
+<!-- 2 DOMANDA: TEMP - Domanda a risposta singola con correzione e risposta corretta -->
 				<section class="wrong_section" id="p2">
 					<h3>2 - What is the correct JavaScript syntax to change the content of the HTML element below?
 						<br><br> &lt;p id="demo"&gt;This is a demonstration.&lt;/p&gt;</h3>
 					<label class="wrong_label">
-						<input type="radio" disabled="disabled" value="1" name="p2" checked>
 						document.getElement("p").innerHTML = "HELLO";
 						<br><br>This answer is wrong because...
 					</label>
 					<label class="wrong_label">
-						<input type="radio" disabled="disabled" value="2" name="p2">
 						document.getElementByName("p").innerHTML = "HELLO";
 						<br><br>This answer is wrong because...
 					</label>
 					<label class="right_label">
-						<input type="radio" disabled="disabled" value="3" name="p2">
 						document.getElementById("p").innerHTML = "HELLO";
 					</label>
 					<label class="wrong_label">
-						<input type="radio" disabled="disabled" value="4" name="p2"> #demo.innerHTML = "HELLO";
+						#demo.innerHTML = "HELLO";
 						<br><br>This answer is wrong because...
 					</label>
 				</section>
-				<!-- TEMP - Domanda a risposta singola corretta -->
-				<section class="right_section" id="p2">
-					<h3>2 - What is the correct JavaScript syntax to change the content of the HTML element below?
-						<br><br> &lt;p id="demo"&gt;This is a demonstration.&lt;/p&gt;</h3>
-					<label class="neutral_label">
-						<input type="radio" disabled="disabled" value="1" name="p2"> document.getElement("p").innerHTML
-						= "HELLO";
-					</label>
-					<label class="neutral_label">
-						<input type="radio" disabled="disabled" value="2" name="p2">
-						document.getElementByName("p").innerHTML = "HELLO";
-					</label>
-					<label class="right_label">
-						<input type="radio" disabled="disabled" value="3" name="p2" checked>
-						document.getElementById("p").innerHTML = "HELLO";
-					</label>
-					<label class="neutral_label">
-						<input type="radio" disabled="disabled" value="4" name="p2"> #demo.innerHTML = "HELLO";
-					</label>
-				</section>
-				<!-- 3 DOMANDA: TEMP - Domanda a risposta singola -->
-				<section id="p3">
-					<h3>3 - Where is the correct place to insert a JavaScript?</h3>
-					<label>
-						<input type="radio" value="1" name="p3"> The &lt;head&gt; section
-					</label>
-					<label>
-						<input type="radio" value="2" name="p3"> Both the &lt;head&gt; section and the &lt;body&gt;
-						section are correct
-					</label>
-					<label>
-						<input type="radio" value="3" name="p3"> The &lt;body&gt; section
-					</label>
-				</section>
-				<!-- TEMP - Domanda a risposta singola errata-->
+<!-- 3 DOMANDA: TEMP - Domanda a risposta singola con correzione e risposta corretta -->
 				<section class="wrong_section" id="p3">
 					<h3>3 - Where is the correct place to insert a JavaScript?</h3>
 					<label class="wrong_label">
-						<input type="radio" disabled="disabled" value="1" name="p3" checked> The &lt;head&gt; section
+						The &lt;head&gt; section
 						<br><br>This answer is wrong because...
 					</label>
 					<label class="wrong_label">
-						<input type="radio" disabled="disabled" value="2" name="p3"> Both the &lt;head&gt; section and
+						Both the &lt;head&gt; section and
 						the &lt;body&gt; section are correct
 						<br><br>This answer is wrong because...
 					</label>
 					<label class="right_label">
-						<input type="radio" disabled="disabled" value="3" name="p3"> The &lt;body&gt; section
+						The &lt;body&gt; section
 					</label>
 				</section>
-				<!-- TEMP - Domanda a risposta singola corretta -->
-				<section class="right_section" id="p3">
-					<h3>3 - Where is the correct place to insert a JavaScript?</h3>
-					<label class="neutral_label">
-						<input type="radio" disabled="disabled" value="1" name="p3"> The &lt;head&gt; section
-					</label>
-					<label class="neutral_label">
-						<input type="radio" disabled="disabled" value="2" name="p3"> Both the &lt;head&gt; section and
-						the &lt;body&gt; section are correct
-					</label>
-					<label class="right_label">
-						<input type="radio" disabled="disabled" value="3" name="p3" checked> The &lt;body&gt; section
-					</label>
-				</section>
-<!-- 4 DOMANDA: TEMP - Domanda a risposta singola -->
-				<section id="p4">
-					<h3>4 - What is the correct syntax for referring to an external script called "xxx.js"?</h3>
-					<label>
-						<input type="radio" value="1" name="p4"> &lt;script src = "xxx.js"&gt;
-					</label>
-					<label>
-						<input type="radio" value="2" name="p4"> &lt;script name = "xxx.js"&gt;
-					</label>
-					<label>
-						<input type="radio" value="3" name="p4"> &lt;script href = "xxx.js"&gt;
-					</label>
-				</section>
-				<!-- TEMP - Domanda a risposta singola errata-->
+<!-- 4 DOMANDA: TEMP - Domanda a risposta singola con correzione e risposta corretta -->
 				<section class="wrong_section" id="p4">
 					<h3>4 - What is the correct syntax for referring to an external script called "xxx.js"?</h3>
 					<label class="wrong_label">
-						<input type="radio" disabled="disabled" value="1" name="p4" checked> &lt;script src =
-						"xxx.js"&gt;
+						&lt;script src ="xxx.js"&gt;
 						<br><br>This answer is wrong because...
 					</label>
 					<label class="wrong_label">
-						<input type="radio" disabled="disabled" value="2" name="p4"> &lt;script name = "xxx.js"&gt;
+						&lt;script name = "xxx.js"&gt;
 						<br><br>This answer is wrong because...
 					</label>
 					<label class="right_label">
-						<input type="radio" disabled="disabled" value="3" name="p4"> &lt;script href = "xxx.js"&gt;
+						&lt;script href = "xxx.js"&gt;
 					</label>
 				</section>
-				<!-- TEMP - Domanda a risposta singola corretta -->
-				<section class="right_section" id="p4">
-					<h3>4 - What is the correct syntax for referring to an external script called "xxx.js"?</h3>
-					<label class="neutral_label">
-						<input type="radio" disabled="disabled" value="1" name="p4"> &lt;script src = "xxx.js"&gt;
-					</label>
-					<label class="neutral_label">
-						<input type="radio" disabled="disabled" value="2" name="p4"> &lt;script name = "xxx.js"&gt;
-					</label>
-					<label class="right_label">
-						<input type="radio" disabled="disabled" value="3" name="p4" checked> &lt;script href =
-						"xxx.js"&gt;
-					</label>
-				</section>
-<!-- 5 DOMANDA: TEMP - Domanda a risposta singola -->
-				<section id="p5">
-					<h3>5 - The external javascript must contain script tag</h3>
-					<label>
-						<input type="radio" value="1" name="p5"> True
-					</label>
-					<label>
-						<input type="radio" value="2" name="p5"> False
-					</label>
-				</section>
-				<!-- TEMP - Domanda a risposta singola errata-->
+<!-- 5 DOMANDA: Domanda a risposta singola con correzione e risposta corretta -->
 				<section class="wrong_section" id="p5">
 					<h3>5 - The external javascript must contain script tag</h3>
 					<label class="right_label">
-						<input type="radio" disabled="disabled" value="1" name="p5" checked> True
+						 True
 					</label>
 					<label class="wrong_label">
-						<input type="radio" disabled="disabled" value="2" name="p5"> False
+						 False
 						<br><br>This answer is wrong because...
 					</label>
 				</section>
-				<!-- TEMP - Domanda a risposta singola corretta -->
-				<section class="right_section" id="p5">
-					<h3>5 - The external javascript must contain script tag</h3>
-					<label class="right_label">
-						<input type="radio" disabled="disabled" value="1" name="p5"> True
-					</label>
-					<label class="neutral_label">
-						<input type="radio" disabled="disabled" value="2" name="p5"> False
-					</label>
-				</section>
-				<!-- 6 DOMANDA: TEMP - Domanda a risposta singola -->
-				<section id="p6">
-					<h3>6 - How do you write "Hello World" in an alert box?</h3>
-					<label>
-						<input type="radio" value="1" name="p6"> msgBox("Hello World")
-					</label>
-					<label>
-						<input type="radio" value="2" name="p6"> alertBox("Hello World")
-					</label>
-					<label>
-						<input type="radio" value="3" name="p6"> alert("Hello World")
-					</label>
-					<label>
-						<input type="radio" value="4" name="p6"> console.write("Hello World")
-					</label>
-				</section>
-				<!-- TEMP - Domanda a risposta singola errata-->
+<!-- 6 DOMANDA: TEMP - Domanda a risposta singola con correzione e risposta corretta -->
 				<section class="wrong_section" id="p6">
 					<h3>6 - How do you write "Hello World" in an alert box?</h3>
 					<label class="wrong_label">
-						<input type="radio" disabled="disabled" value="1" name="p6" checked> msgBox("Hello World")
+						msgBox("Hello World")
 						<br><br>This answer is wrong because...
 					</label>
 					<label class="wrong_label">
-						<input type="radio" disabled="disabled" value="2" name="p6"> alertBox("Hello World")
+						alertBox("Hello World")
 						<br><br>This answer is wrong because...
 					</label>
 					<label class="right_label">
-						<input type="radio" disabled="disabled" value="3" name="p6"> alert("Hello World")
+						alert("Hello World")
 					</label>
 					<label class="wrong_label">
-						<input type="radio" disabled="disabled" value="4" name="p6"> console.write("Hello World")
+						console.write("Hello World")
 						<br><br>This answer is wrong because...
 					</label>
 				</section>
-				<!-- TEMP - Domanda a risposta singola corretta-->
-				<section class="right_section" id="p6">
-					<h3>6 - How do you write "Hello World" in an alert box?</h3>
-					<label class="neutral_label">
-						<input type="radio" disabled="disabled" value="1" name="p6"> msgBox("Hello World")
-					</label>
-					<label class="neutral_label">
-						<input type="radio" disabled="disabled" value="2" name="p6"> alertBox("Hello World")
-					</label>
-					<label class="right_label">
-						<input type="radio" disabled="disabled" value="3" name="p6" checked> alert("Hello World")
-					</label>
-					<label class="neutral_label">
-						<input type="radio" disabled="disabled" value="4" name="p6"> console.write("Hello World")
-					</label>
-				</section>
-				<!-- 7 DOMANDA: TEMP - Domanda a risposta singola -->
-				<section id="p7">
-					<h3>7 - How do you create a function in JavaScript?</h3>
-					<label>
-						<input type="radio" value="1" name="p7"> function myfunction;
-					</label>
-					<label>
-						<input type="radio" value="2" name="p7"> function myfunction()
-					</label>
-					<label>
-						<input type="radio" value="3" name="p7"> myfunction()
-					</label>
-					<label>
-						<input type="radio" value="4" name="p7"> function = myfunction()
-					</label>
-				</section>
-				<!-- TEMP - Domanda a risposta singola errata-->
+<!-- 7 DOMANDA: TEMP - Domanda a risposta singola con correzione e risposta corretta -->
 				<section class="wrong_section" id="p7">
 					<h3>7 - How do you create a function in JavaScript?</h3>
 					<label class="wrong_label">
-						<input type="radio" disabled="disabled" value="1" name="p7" checked> function myfunction;
+						 function myfunction;
 						<br><br>This answer is wrong because...
 					</label>
 					<label class="wrong_label">
-						<input type="radio" disabled="disabled" value="2" name="p7"> function myfunction()
+						 function myfunction()
 						<br><br>This answer is wrong because...
 					</label>
 					<label class="right_label">
-						<input type="radio" disabled="disabled" value="3" name="p7"> myfunction()
+						 myfunction()
 					</label>
 					<label class="wrong_label">
-						<input type="radio" disabled="disabled" value="4" name="p7"> function = myfunction()
+						function = myfunction()
 						<br><br>This answer is wrong because...
 					</label>
 				</section>
-				<!-- TEMP - Domanda a risposta singola corretta-->
-				<section class="right_section" id="p7">
-					<h3>7 - How do you create a function in JavaScript?</h3>
-					<label class="neutral_label">
-						<input type="radio" disabled="disabled" value="1" name="p7"> function myfunction;
-					</label>
-					<label class="neutral_label">
-						<input type="radio" disabled="disabled" value="2" name="p7"> function myfunction()
-					</label>
-					<label class="right_label">
-						<input type="radio" disabled="disabled" value="3" name="p7" checked> myfunction()
-					</label>
-					<label class="neutral_label">
-						<input type="radio" disabled="disabled" value="4" name="p7"> function = myfunction()
-					</label>
-				</section>
-				<!-- 8 DOMANDA: TEMP - Domanda a risposta singola -->
-				<section id="p8">
-					<h3>8 - Speak about hoisting mechanism</h3>
-					<label>
-						<textarea rows="5" placeholder="You can type here your answer"></textarea>
-					</label>
-				</section>
-
-				<!-- TEMP - Domanda a risposta aperta errata -->
+<!-- 8 DOMANDA: TEMP - Domanda a risposta aperta con correzione e risposta corretta -->
 				<section class="open_wrong_section" id="p8">
 					<h3>8 - Speak about hoisting mechanism</h3>
 					<label class="open_wrong_label">
@@ -740,111 +518,30 @@
 						<br><br>This answer is wrong because...
 					</label>
 				</section>
-
-				<!-- TEMP - Domanda a risposta aperta corretta -->
-				<section class="open_right_section" id="p8">
-					<h3>8 - Speak about hoisting mechanism</h3>
-					<label class="open_right_label">
-						<textarea rows="5" disabled="disabled" placeholder="Here there is the right answer"></textarea>
-					</label>
-				</section>
-				<!-- 9 DOMANDA: TEMP - Domanda a risposta multipla -->
-				<section id="p9">
-					<h3>9 - Multiple choice question</h3>
-					<label>
-						<input type="checkbox" value="1" name="p9"> first answer
-					</label>
-					<label>
-						<input type="checkbox" value="2" name="p9"> second answer
-					</label>
-					<label>
-						<input type="checkbox" value="3" name="p9"> third answer
-					</label>
-					<label>
-						<input type="checkbox" value="4" name="p9"> fourth answer
-					</label>
-					<label>
-						<input type="checkbox" value="5" name="p9"> fifth answer
-					</label>
-					<label>
-						<input type="checkbox" value="6" name="p9"> sixth answer
-					</label>
-				</section>
-
-				<!-- TEMP - Domanda a risposta multipla errata -->
+<!-- 9 DOMANDA: TEMP - Domanda a risposta multipla con correzione e risposta corretta -->
 				<section class="wrong_section" id="p9">
 					<h3>9 - Multiple choice question</h3>
 					<label class="right_label">
-						<input type="checkbox" disabled="disabled" value="1" name="p9"> first answer
+						first answer
 					</label>
 					<label class="right_label">
-						<input type="checkbox" disabled="disabled" value="2" name="p9"> second answer
+						second answer
 					</label>
 					<label class="wrong_label">
-						<input type="checkbox" disabled="disabled" value="3" name="p9" checked> third answer
+						third answer
 						<br><br>This answer is wrong because...
 					</label>
 					<label class="wrong_label">
-						<input type="checkbox" disabled="disabled" value="4" name="p9"> fourth answer
+						fourth answer
                         <br><br>This answer is wrong because...
 					</label>
 					<label class="wrong_label">
-						<input type="checkbox" disabled="disabled" value="5" name="p9"> fifth answer
+						fifth answer
                         <br><br>This answer is wrong because...
 					</label>
 					<label class="wrong_label">
-						<input type="checkbox" disabled="disabled" value="6" name="p9" checked> sixth answer
+						sixth answer
 						<br><br>This answer is wrong because...
-					</label>
-				</section>
-
-				<!-- TEMP - Domanda a risposta multipla errata (mista) -->
-				<section class="wrong_section" id="p9">
-					<h3>9 - Multiple choice question</h3>
-					<label class="right_label">
-						<input type="checkbox" disabled="disabled" value="1" name="p9"checked> first answer
-					</label>
-					<label class="right_label">
-						<input type="checkbox" disabled="disabled" value="2" name="p9"> second answer
-					</label>
-					<label class="wrong_label">
-						<input type="checkbox" disabled="disabled" value="3" name="p9"> third answer
-                        <br><br>This answer is wrong because...
-					</label>
-					<label class="wrong_label">
-						<input type="checkbox" disabled="disabled" value="4" name="p9"> fourth answer
-                        <br><br>This answer is wrong because...
-					</label>
-					<label class="wrong_label">
-						<input type="checkbox" disabled="disabled" value="5" name="p9"> fifth answer
-                        <br><br>This answer is wrong because...
-					</label>
-					<label class="wrong_label">
-						<input type="checkbox" disabled="disabled" value="6" name="p9" checked> sixth answer
-						<br><br>This answer is wrong because...
-					</label>
-				</section>
-
-				<!-- TEMP - Domanda a risposta multipla corretta -->
-				<section class="right_section" id="p9">
-					<h3>9 - Multiple choice question</h3>
-					<label class="right_label">
-						<input type="checkbox" disabled="disabled" value="1" name="p9" checked> first answer
-					</label>
-					<label class="right_label">
-						<input type="checkbox" disabled="disabled" value="2" name="p9" checked> second answer
-					</label>
-					<label class="neutral_label">
-						<input type="checkbox" disabled="disabled" value="3" name="p9"> third answer
-					</label>
-					<label class="neutral_label">
-						<input type="checkbox" disabled="disabled" value="4" name="p9"> fourth answer
-					</label>
-					<label class="neutral_label">
-						<input type="checkbox" disabled="disabled" value="5" name="p9"> fifth answer
-					</label>
-					<label class="neutral_label">
-						<input type="checkbox" disabled="disabled" value="6" name="p9"> sixth answer
 					</label>
 				</section>
 			</div>
