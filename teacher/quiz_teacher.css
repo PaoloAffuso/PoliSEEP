@@ -184,6 +184,7 @@ a, button {
 	display: block;
 	justify-content: center;
 	box-shadow: inset 0 0 20px rgba(0,0,0,0.7),0 0 30px rgba(0,0,0,0.5);
+	overflow: hidden;
 }
 
 .left-side ul {
@@ -281,7 +282,7 @@ a, button {
 	overflow: scroll;
 }
 
-.quiz-side h1{
+#newquiz h1{
 	padding-bottom: 30px;
     padding-top: 100px;
     text-align: center;
@@ -417,7 +418,7 @@ a, button {
 	padding: 15px;
 }
 
-.newquestions #questiontype:focus{ 
+.newquestions #questiontype:focus{
 	box-shadow: inset 0 0 10px #0a5ef06e;
 }
 
@@ -485,11 +486,11 @@ a, button {
 	padding: 15px;
 }
 
-.newquestions #nanswerssaq:focus{ 
+.newquestions #nanswerssaq:focus{
 	box-shadow: inset 0 0 10px #0a5ef06e;
 }
 
-.newquestions #nanswersmaq:focus{ 
+.newquestions #nanswersmaq:focus{
 	box-shadow: inset 0 0 10px #0a5ef06e;
 }
 
@@ -678,7 +679,7 @@ label:hover{
 	background: #fff;
 }
 
-.decline-button { 
+.decline-button {
 	padding: 6px 12px;
 	outline: none;
 	border: none;
@@ -811,12 +812,28 @@ footer .footer-container .foot {
 	.nav .check-box {
 		visibility: visible;
 	}
+}
+
+@media screen and (max-width: 1100px) {
 	.container_img img {
-		width: 100%;
+		width: 500px;
+		height: 250px;
 		/* align-self: center; */
 	}
-	.container_img {
-		width: 75%;
+}
+
+@media screen and (max-width: 840px) {
+	.container_img img {
+		width: 300px;
+		height: 150px;
+		/* align-self: center; */
+	}
+}
+
+@media screen and (max-width: 580px) {
+	.container_img img {
+		width: 220px;
+		height: 120px;
 		/* align-self: center; */
 	}
 }

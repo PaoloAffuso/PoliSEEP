@@ -103,24 +103,24 @@ p{   /* PARAGRAFO TESTO "Please,select your role*/
 }
 
 .form-container .form{ /*FORM SINGOLO*/
-    width: 50%;   
+    width: 50%;
     padding: 30px;
     transition: margin-left 0.18s ease;
 }
 
 /*TRANSIZIONI DA FORM DI LOGIN A SIGN UP E VICEVERSA*/
-.form-container.active .login{ 
+.form-container.active .login{
     margin-left: -50%;
     opacity: 0;
-    transition: margin-left 0.18s ease, opacity 0.15s ease; 
+    transition: margin-left 0.18s ease, opacity 0.15s ease;
 }
 
-.form-container .signup{ 
+.form-container .signup{
     opacity: 0;
     transition: opacity 0.09s ease;
 }
 
-.form-container.active .signup{ 
+.form-container.active .signup{
     opacity: 1;
     transition: opacity 0.2s ease;
 }
@@ -211,7 +211,7 @@ p{   /* PARAGRAFO TESTO "Please,select your role*/
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 20px;   
+    margin-top: 20px;
 }
 
 .checkbox-text .checkbox-content{ /*CONTAINER DI REMEMBER ME*/
@@ -262,11 +262,11 @@ p{   /* PARAGRAFO TESTO "Please,select your role*/
 .cookie-container p {
     font-size: 18px;
 }
-  
+
 .cookie-container p a {
     color: black;
 }
-  
+
 .cookie-container .accept {
     border: 0;
     padding: 16px 48px;
@@ -296,7 +296,7 @@ p{   /* PARAGRAFO TESTO "Please,select your role*/
     margin-right: 20px;
     margin-left: 20px;
 }
-/**/  
+/**/
 
 /*------------------------------------------------------PAGINA INFO (TERMINI E CONDIZIONI)-------------------------------------*/
 .btn_close{ /*PULSANTE CLOSE*/
@@ -321,4 +321,10 @@ p{   /* PARAGRAFO TESTO "Please,select your role*/
 
 .p{
     margin-top: 20px;
+}
+
+@media screen and (max-width: 768px) {
+	.btn_close{ /*PULSANTE CLOSE*/
+        padding-right: 60px;
+    }
 }

@@ -324,6 +324,10 @@ a, button {
 /*------------------------------------------------------------SEZIONE CORSI _START------------------------------------------------------*/
 
 /* Sezione Corsi */
+.nuovo_corso {
+	padding: 100px;
+}
+
 .inbt {
 	padding: 10px;
 	font-family: "Montserrat", sans-serif;
