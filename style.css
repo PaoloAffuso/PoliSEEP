@@ -657,3 +657,8 @@ footer .footer-container .foot{
 		display: none;
 	}
 }
+@media screen and (max-width: 1104px) {
+	#about {
+		padding-top: 150px;
+	}
+}

@@ -322,3 +322,8 @@ p{   /* PARAGRAFO TESTO "Please,select your role*/
 .p{
     margin-top: 20px;
 }
+@media screen and (max-width: 768px) {
+	.btn_close{ /*PULSANTE CLOSE*/
+        padding-right: 60px;
+    }
+}
