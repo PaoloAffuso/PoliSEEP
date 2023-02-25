@@ -22,6 +22,7 @@ window.onload = function(){
     document.getElementById("href_chat").href+="?"+get_str;
     printData(username, getCourseName(get_str));
     updatePic();
+    getEnrolledStudents(username, getCourseName(get_str));
 };
 
 async function printData(username, course_name) {
@@ -48,6 +49,24 @@ async function printData(username, course_name) {
         else
             document.getElementById("learning_verification").innerHTML = snapshot.val().learning_verification;
         
+    });
+}
+
+async function getEnrolledStudents(username, course_name){
+    let count = 0;
+    get(child(dbRef, "UsersList")).then((snapshot) => {
+        for(let user in snapshot.val()) {
+            get(child(dbRef, "UsersList/"+user)).then((snap) => {
+                if(snap.val().tipo==="STU") {
+                    get(child(dbRef, "UsersList/"+user+"/Courses/"+course_name)).then((course) => {
+                        if(course.exists() && course.val().teacher===username) {
+                            count++;
+                            document.getElementById("n_student").innerHTML=count;
+                        }   
+                    });
+                }
+            });
+        }
     });
 }
 

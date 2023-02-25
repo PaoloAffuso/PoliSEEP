@@ -21,6 +21,11 @@ let student = localStorage.getItem("student");
 window.onload = async function(){
     let type = getLoggedType(username);
     if(type==="STU") window.location.href = "/poliseep/student/student.html";
+
+    let get_str = window.location.search.substring(1);
+    document.getElementById("href_file").href+="?"+get_str;
+    document.getElementById("href_courses").href+="?"+get_str;
+    document.getElementById("href_quiz").href+="?"+get_str;
     
     getChats();
 
