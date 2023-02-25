@@ -5,7 +5,7 @@ $(document).ready(function() {
         var tiposelezionato = $(this).val();
         var section = $(this).parent().parent().parent()
 
-        if(tiposelezionato == 'radioquestion') {            
+        if(tiposelezionato == 'radioquestion') {
             section.children('#saq').css("display", "block");
             section.children('#maq').css("display", "none");
             section.children('#oq').css("display", "none");
@@ -49,7 +49,7 @@ $(document).ready(function() {
             table.appendChild(tr);
 
             for (var i = 0; i < numerosaq; i++){
-                var tr = document.createElement('tr');   
+                var tr = document.createElement('tr');
 
                 var td1 = document.createElement('td');
                 var td2 = document.createElement('td');
@@ -105,7 +105,7 @@ $(document).ready(function() {
             table.appendChild(tr);
 
             for (var i = 0; i < numerosaq; i++){
-                var tr = document.createElement('tr');   
+                var tr = document.createElement('tr');
 
                 var td1 = document.createElement('td');
                 var td2 = document.createElement('td');
@@ -157,7 +157,7 @@ $(document).ready(function() {
         var section = $(this).parent().parent().parent();
         var numdomanda = section.prop("id").charAt(1);
         var vanswers = section.children('#maq').children('.vanswers');
-        
+
         if (vanswers.children().length > 0){
             vanswers.empty();
 
@@ -175,7 +175,7 @@ $(document).ready(function() {
             table.appendChild(tr);
 
             for (var i = 0; i < numeromaq; i++){
-                var tr = document.createElement('tr');   
+                var tr = document.createElement('tr');
 
                 var td1 = document.createElement('td');
                 var td2 = document.createElement('td');
@@ -216,7 +216,7 @@ $(document).ready(function() {
             }
 
             vanswers.append(table);
-        
+
         }
         else{
             var table = document.createElement('table');
@@ -233,7 +233,7 @@ $(document).ready(function() {
             table.appendChild(tr);
 
             for (var i = 0; i < numeromaq; i++){
-                var tr = document.createElement('tr');   
+                var tr = document.createElement('tr');
 
                 var td1 = document.createElement('td');
                 var td2 = document.createElement('td');
@@ -281,7 +281,7 @@ $(document).ready(function() {
 // aggiunge pedice per la stampa dei numeri ordinali
 function getOrdinal(n) {
     let ord = 'th';
-  
+
     if (n % 10 == 1 && n % 100 != 11)
     {
       ord = 'st';
@@ -294,7 +294,7 @@ function getOrdinal(n) {
     {
       ord = 'rd';
     }
-  
+
     return ord;
 }
 
