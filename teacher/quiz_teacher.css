@@ -515,7 +515,7 @@ a, button {
 	padding: 6px 12px;
 	outline: none;
 	border: none;
-	background: dodgerblue;
+	background: #004A86;
 	color: rgb(255, 254, 254);
 	font-size: 18px;
 	border-radius: 4px;
@@ -523,7 +523,23 @@ a, button {
 	white-space: nowrap;
 	transition: .5s;
 	margin-top: -17px;
-	margin-left: -725px;
+	align-items: center;
+}
+
+#removeQuestion{
+	padding: 6px 12px;
+	outline: none;
+	border: none;
+	background: #B62C35;
+	color: rgb(255, 254, 254);
+	font-size: 18px;
+	border-radius: 4px;
+	cursor: pointer;
+	white-space: nowrap;
+	transition: .5s;
+	margin-top: -50px;
+	margin-bottom: 25px;
+	align-items: center;
 }
 
 .button-container .confirm{
