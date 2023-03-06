@@ -16,8 +16,11 @@ window.onload = function(){
     let type = getLoggedType(username);
     if(type==="STU") window.location.href = "/poliseep/student/student.html"; //Pagina student ancora da fare
 
-    
+    let get_str = window.location.search.substring(1);
     document.getElementById("href_info").href+="?"+get_str;
+    document.getElementById("href_chat").href+="?"+get_str;
+    document.getElementById("href_quiz").href+="?"+get_str;
+
     showFiles(username);
 };
 
