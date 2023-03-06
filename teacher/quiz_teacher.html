@@ -57,24 +57,24 @@
 		<div class="left-side" id="left">
 			<ul>
 				<li
-					onclick="document.getElementById('quiz1').style.display='block'; document.getElementById('noquiz').style.display='none'; document.getElementById('newquiz').style.display='none';">
+					onclick="Array.from(document.querySelectorAll('[id^=quiz]')).forEach(function(val) {val.style.display = 'none';}); document.getElementById('quiz1').style.display='block'; document.getElementById('noquiz').style.display='none'; document.getElementById('newquiz').style.display='none';">
 					Chapter 1 - Titolo 1</li>
 				<li
-					onclick="document.getElementById('quiz2').style.display='block'; document.getElementById('noquiz').style.display='none'; document.getElementById('newquiz').style.display='none';">
+					onclick="Array.from(document.querySelectorAll('[id^=quiz]')).forEach(function(val) {val.style.display = 'none';}); document.getElementById('quiz2').style.display='block'; document.getElementById('noquiz').style.display='none'; document.getElementById('newquiz').style.display='none';">
 					Chapter 1 - Titolo 2</li>
 				<li
-					onclick="document.getElementById('quiz3').style.display='block'; document.getElementById('noquiz').style.display='none'; document.getElementById('newquiz').style.display='none';">
+					onclick="Array.from(document.querySelectorAll('[id^=quiz]')).forEach(function(val) {val.style.display = 'none';}); document.getElementById('quiz3').style.display='block'; document.getElementById('noquiz').style.display='none'; document.getElementById('newquiz').style.display='none';">
 					Chapter 2 - Javascript Quiz</li>
 				<li
-					onclick="document.getElementById('quiz4').style.display='block'; document.getElementById('noquiz').style.display='none'; document.getElementById('newquiz').style.display='none';">
+					onclick="Array.from(document.querySelectorAll('[id^=quiz]')).forEach(function(val) {val.style.display = 'none';}); document.getElementById('quiz4').style.display='block'; document.getElementById('noquiz').style.display='none'; document.getElementById('newquiz').style.display='none';">
 					Chapter 3 - Titolo 1</li>
 				<li
-					onclick="document.getElementById('quiz5').style.display='block'; document.getElementById('noquiz').style.display='none'; document.getElementById('newquiz').style.display='none';">
+					onclick="Array.from(document.querySelectorAll('[id^=quiz]')).forEach(function(val) {val.style.display = 'none';}); document.getElementById('quiz5').style.display='block'; document.getElementById('noquiz').style.display='none'; document.getElementById('newquiz').style.display='none';">
 					Chapter 3 - Titolo 2</li>
 			</ul>
 			<div class="button-container">
 				<button
-					onclick="document.getElementById('newquiz').style.display='block'; document.getElementById('noquiz').style.display='none';"
+					onclick="document.getElementById('newquiz').style.display='block'; document.getElementById('noquiz').style.display='none'; Array.from(document.querySelectorAll('[id^=quiz]')).forEach(function(val) {val.style.display = 'none';});"
 					class='accept-button' id='addButton'>Create a new Quiz</button></a>
 			</div>
 		</div>
@@ -544,7 +544,15 @@
 			</div>
 
 			<div class="button-container">
-				<button class='confirm' id='confirm'><i class="uil uil-check"> Confirm</i></button>
+				<button class='confirm' id='confirm' onclick="confirmAlert()"><i class="uil uil-check"> Confirm</i></button>
+				<script>
+					function confirmAlert() {
+						var answer = window.confirm("Are you sure you want to confirm the changes? In case of confirmation it will no longer be possible to modify the quiz.");
+						if (answer) {
+							// Inserire link a DB
+						} else {}
+					}
+				</script>
 			</div>
 
 		</div>
