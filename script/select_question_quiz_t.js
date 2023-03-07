@@ -514,6 +514,7 @@ $(document).ready(function() {
         var t = $(this).parent().parent().children();
         if ($(this).is(':checked')) {
             t[t.length - 1].children[0].style = "display : none";
+            t[t.length - 1].children[0].value = "";
         } else {
             t[t.length - 1].children[0].style = "display : block";
         }
@@ -532,6 +533,7 @@ $(document).ready(function() {
             if (chk.id != real_id) { // se l'id del radio button corrente non corrisponde a quello del radio attualmente selezionato
                 txt.style = "display : block"; // l'area testuale della risposta viene mostrata
             } else { // altrimenti:
+                txt.value = "";
                 txt.style = "display : none"; // l'area testuale della risposta viene nascosta
             }
         }
