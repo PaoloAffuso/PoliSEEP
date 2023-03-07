@@ -51,7 +51,7 @@ async function getCountCourses(username) {
         snapshot.forEach(function() {
             count++;
         });
-        //La classe di your_courses deve essere unica. Il 0 sta perchè è univoca. Va fatto perché il css è stilizzato in base all'id
+        //La classe di your_courses deve essere unica. Lo 0 sta perchè è univoca. Va fatto perché il css è stilizzato in base all'id
         document.getElementsByClassName('your_courses')[0].innerHTML = count;
     });
 }
@@ -68,7 +68,7 @@ async function getEnrolledStudents(username) {
                         get(child(dbRef, "Courses/"+course+"/Student")).then((snap) => {
                             snap.forEach(function() {
                                 count++;
-                                //La classe di your_courses deve essere unica. Il 0 sta perchè è univoca. Va fatto perché il css è stilizzato in base all'id
+                                //La classe di your_courses deve essere unica. Lo 0 sta perchè è univoca. Va fatto perché il css è stilizzato in base all'id
                                 document.getElementsByClassName('enrolled_students')[0].innerHTML = count;
                             });
                         });
