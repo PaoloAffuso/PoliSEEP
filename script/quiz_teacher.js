@@ -52,41 +52,40 @@ function submitQuiz(){
     for(let i=1; i<=count; i++){ // n° quesiti
         var question = document.querySelector("#d"+i+" .first2 #wrapper1 #question").value;
         var questionType = document.querySelector("#d"+i+" .first2 #wrapper2 #questiontype").value;
-        console.log(question);
-        console.log(questionType);
+
         switch(questionType)
         {
             case "radioquestion": 
                 var nanswerssaq = document.querySelector("#d"+i+" #saq #nanswerssaq").value;
-                var answers = []; // l'affermazione
-                var checked = []; // indica se l'affermazione è corretta
-                var explain = []; // indica perché l'affermazione è sbagliata
-
-                for(let j=1; j<=nanswerssaq; j++){ // n° affermazioni del quesito
-                    console.log(document.querySelector("#d"+i+" #saq .vanswers #answer"+j).value);
-                    answers[j-1] = document.querySelector("#d"+i+" #saq .vanswers #answer"+j).value;
-                    checked[j-1] = document.querySelector("#d"+i+" #saq .vanswers #check"+j).checked;
-                    explain[j-1] = document.querySelector("#d"+i+" #saq .vanswers #explain"+j).value;
-                }
-                console.log(answers);
-                console.log(checked);
-                console.log(explain);
-
                 let capitolo = "capitolo x "+quizName; // dummy
 
-                // chiamata al DB
-                /*
-                get(child(dbRef, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo)).then((snaphot) => {
-                    let r=ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo);
-                    set(r, {
-                        quiz_name: quizName,
-                        quiz_desc: quizDesc,
-                        quiz_chapter: "1" // dummy
-                    }).then(() => {
-                        
-                    });
+                for(let j=1; j<=nanswerssaq; j++){ // n° affermazioni del quesito
+                    // chiamata al DB
+                    get(child(dbRef, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo)).then((snaphot) => {
+                        let r=ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo);
+                        set(r, {
+                            quiz_name: quizName,
+                            quiz_desc: quizDesc,
+                            quiz_chapter: "1" // dummy
+                        }).then(() => {
+                            console.log("Prova");
+                            get(child(dbRef, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i)).then(async (snap) => {
+                                let r1=ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i);
+                                await set(r1, {
+                                    question: question
+                                });
 
-                });*/
+                                let r2=ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i+"/Answer "+j);
+                                await set(r2, {
+                                    answer: document.querySelector("#d"+i+" #saq .vanswers #answer"+j).value,
+                                    checked: document.querySelector("#d"+i+" #saq .vanswers #check"+j).checked,
+                                    explain: document.querySelector("#d"+i+" #saq .vanswers #explain"+j).value
+                                });
+                                
+                            });
+                        });
+                    });
+                }
             break;
 
             case "checkboxquestion": 

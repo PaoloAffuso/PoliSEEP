@@ -315,8 +315,10 @@ $(document).ready(function() {
 
             var wrp1 = document.createElement("div");
             wrp1.className = "wrapper";
+            wrp1.setAttribute('id','wrapper1');
             var wrp2 = document.createElement("div");
             wrp2.className = "wrapper";
+            wrp2.setAttribute('id','wrapper2');
             var wrp3 = document.createElement("div");
             wrp3.className = "wrapper";
             var wrp4 = document.createElement("div");
@@ -489,8 +491,10 @@ $(document).ready(function() {
 
             var wrp1 = document.createElement("div");
             wrp1.className = "wrapper";
+            wrp1.setAttribute('id', 'wrapper1');
             var wrp2 = document.createElement("div");
             wrp2.className = "wrapper";
+            wrp2.setAttribute('id', 'wrapper2');
             var wrp3 = document.createElement("div");
             wrp3.className = "wrapper";
             var wrp4 = document.createElement("div");
