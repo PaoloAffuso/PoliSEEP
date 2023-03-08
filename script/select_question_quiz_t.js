@@ -5,7 +5,7 @@ $(document).ready(function() {
         var tiposelezionato = $(this).val();
         var section = $(this).parent().parent().parent()
 
-        if(tiposelezionato == 'radioquestion') {            
+        if(tiposelezionato == 'radioquestion') {
             section.children('#saq').css("display", "block");
             section.children('#maq').css("display", "none");
             section.children('#oq').css("display", "none");
@@ -49,7 +49,7 @@ $(document).ready(function() {
             table.appendChild(tr);
 
             for (var i = 0; i < numerosaq; i++){
-                var tr = document.createElement('tr');   
+                var tr = document.createElement('tr');
 
                 var td1 = document.createElement('td');
                 var td2 = document.createElement('td');
@@ -105,7 +105,7 @@ $(document).ready(function() {
             table.appendChild(tr);
 
             for (var i = 0; i < numerosaq; i++){
-                var tr = document.createElement('tr');   
+                var tr = document.createElement('tr');
 
                 var td1 = document.createElement('td');
                 var td2 = document.createElement('td');
@@ -157,7 +157,7 @@ $(document).ready(function() {
         var section = $(this).parent().parent().parent();
         var numdomanda = section.prop("id").charAt(1);
         var vanswers = section.children('#maq').children('.vanswers');
-        
+
         if (vanswers.children().length > 0){
             vanswers.empty();
 
@@ -175,7 +175,7 @@ $(document).ready(function() {
             table.appendChild(tr);
 
             for (var i = 0; i < numeromaq; i++){
-                var tr = document.createElement('tr');   
+                var tr = document.createElement('tr');
 
                 var td1 = document.createElement('td');
                 var td2 = document.createElement('td');
@@ -216,7 +216,7 @@ $(document).ready(function() {
             }
 
             vanswers.append(table);
-        
+
         }
         else{
             var table = document.createElement('table');
@@ -233,7 +233,7 @@ $(document).ready(function() {
             table.appendChild(tr);
 
             for (var i = 0; i < numeromaq; i++){
-                var tr = document.createElement('tr');   
+                var tr = document.createElement('tr');
 
                 var td1 = document.createElement('td');
                 var td2 = document.createElement('td');
@@ -281,7 +281,7 @@ $(document).ready(function() {
 // aggiunge pedice per la stampa dei numeri ordinali
 function getOrdinal(n) {
     let ord = 'th';
-  
+
     if (n % 10 == 1 && n % 100 != 11)
     {
       ord = 'st';
@@ -294,190 +294,354 @@ function getOrdinal(n) {
     {
       ord = 'rd';
     }
-  
+
     return ord;
 }
 
 // aggiunge una nuova domanda
 $(document).ready(function() {
     $("#addQuestion").on('click', function() {
-
         var sections = document.querySelectorAll("section[id^='d']");
-        var last_section_num = sections[sections.length - 1].id.charAt(1);
-        var new_num = Number(last_section_num) + 1
 
-        var section = document.createElement('section');
-        section.id = "d"+new_num
+        if (sections.length == "0") {
+            var section = document.createElement('section');
+            section.id = "d1"
 
-        var h2 = document.createElement('h2');
-        h2.innerHTML = "Question "+new_num
+            var h2 = document.createElement('h2');
+            h2.innerHTML = "Question 1"
 
-        var rmvdiv = document.createElement("div");
-        rmvdiv.className = "button-container";
-        var rmvbtn = document.createElement("button");
-        rmvbtn.className = "removeQuestion";
-        rmvbtn.id = "removeQuestion";
-        var i_rmv = document.createElement("i");
-        i_rmv.className = "uil uil-minus-circle";
-        i_rmv.innerHTML = " Remove Question";
+            var frst = document.createElement("div");
+            frst.className = "first2";
 
-        var frst = document.createElement("div");
-        frst.className = "first2";
+            var wrp1 = document.createElement("div");
+            wrp1.className = "wrapper";
+            var wrp2 = document.createElement("div");
+            wrp2.className = "wrapper";
+            var wrp3 = document.createElement("div");
+            wrp3.className = "wrapper";
+            var wrp4 = document.createElement("div");
+            wrp4.className = "wrapper";
 
-        var wrp1 = document.createElement("div");
-        wrp1.className = "wrapper";
-        var wrp2 = document.createElement("div");
-        wrp2.className = "wrapper";
-        var wrp3 = document.createElement("div");
-        wrp3.className = "wrapper";
-        var wrp4 = document.createElement("div");
-        wrp4.className = "wrapper";
+            var p1 = document.createElement("p");
+            p1.innerHTML = "Question:"
+            var p2 = document.createElement("p");
+            p2.innerHTML = "Question type:"
+            var p3 = document.createElement("p");
+            p3.innerHTML = "Number of answers:";
+            var p4 = document.createElement("p");
+            p4.innerHTML = "Number of answers:";
 
-        var p1 = document.createElement("p");
-        p1.innerHTML = "Question:"
-        var p2 = document.createElement("p");
-        p2.innerHTML = "Question type:"
-        var p3 = document.createElement("p");
-        p3.innerHTML = "Number of answers:";
-        var p4 = document.createElement("p");
-        p4.innerHTML = "Number of answers:";
+            var input1 = document.createElement("input");
+            input1.type = "text";
+            input1.className = "textarea";
+            input1.placeholder = "Enter the question";
+            input1.name = "question";
+            input1.id = "question";
+            input1.required = true;
 
-        var input1 = document.createElement("input");
-        input1.type = "text";
-        input1.className = "textarea";
-        input1.placeholder = "Enter the question";
-        input1.name = "question";
-        input1.id = "question";
-        input1.required = true;
+            var input2 = document.createElement("input");
+            input2.type = "text";
+            input2.className = "textarea";
+            input2.placeholder = "Enter the correct answer and its explanation";
+            input2.name = "explainopen";
+            input2.id = "explain1";
+            input2.required = true;
 
-        var input2 = document.createElement("input");
-        input2.type = "text";
-        input2.className = "textarea";
-        input2.placeholder = "Enter the correct answer and its explanation";
-        input2.name = "explainopen";
-        input2.id = "explain1";
-        input2.required = true;
+            var answ1 = document.createElement("div");
+            answ1.className = "answers";
+            answ1.id = "saq";
+            var answ2 = document.createElement("div");
+            answ2.className = "answers";
+            answ2.id = "maq";
+            var answ3 = document.createElement("div");
+            answ3.className = "answers";
+            answ3.id = "oq";
+            var vansw1 = document.createElement("div");
+            vansw1.className = "vanswers";
+            var vansw2 = document.createElement("div");
+            vansw2.className = "vanswers";
+            var explainopn = document.createElement("div");
+            explainopn.className = "explainopen";
 
-        var answ1 = document.createElement("div");
-        answ1.className = "answers";
-        answ1.id = "saq";
-        var answ2 = document.createElement("div");
-        answ2.className = "answers";
-        answ2.id = "maq";
-        var answ3 = document.createElement("div");
-        answ3.className = "answers";
-        answ3.id = "oq";
-        var vansw1 = document.createElement("div");
-        vansw1.className = "vanswers";
-        var vansw2 = document.createElement("div");
-        vansw2.className = "vanswers";
-        var explainopn = document.createElement("div");
-        explainopn.className = "explainopen";
+            var select1 = document.createElement("select");
+            select1.name = "questiontype";
+            select1.id = "questiontype";
+            select1.className = "questiontype";
+            select1.required = true;
 
-        var select1 = document.createElement("select");
-        select1.name = "questiontype";
-        select1.id = "questiontype";
-        select1.className = "questiontype";
-        select1.required = true;
+            var select2 = document.createElement("select");
+            select2.name = "nanswers";
+            select2.id = "nanswerssaq";
+            select2.className = "nanswerssaq";
+            select2.required = true;
 
-        var select2 = document.createElement("select");
-        select2.name = "nanswers";
-        select2.id = "nanswerssaq";
-        select2.className = "nanswerssaq";
-        select2.required = true;
+            var select3 = document.createElement("select");
+            select3.name = "nanswers";
+            select3.id = "nanswersmaq";
+            select3.className = "nanswersmaq";
+            select3.required = true;
+            select3.op
 
-        var select3 = document.createElement("select");
-        select3.name = "nanswers";
-        select3.id = "nanswersmaq";
-        select3.className = "nanswersmaq";
-        select3.required = true;
-        select3.op
-
-        for (var i = 0; i<=10; i++){
-            var opt = document.createElement("option");
-            if (i == 0) {
-                opt.value = i;
-                opt.disabled = true;
-                opt.selected = true;
-                opt.innerHTML = i;
-                select2.appendChild(opt);
-            } else {
-                opt.value = i;
-                opt.innerHTML = i;
-                select2.appendChild(opt);
+            for (var i = 0; i<=10; i++){
+                var opt = document.createElement("option");
+                if (i == 0) {
+                    opt.value = i;
+                    opt.disabled = true;
+                    opt.selected = true;
+                    opt.innerHTML = i;
+                    select2.appendChild(opt);
+                } else {
+                    opt.value = i;
+                    opt.innerHTML = i;
+                    select2.appendChild(opt);
+                }
             }
-        }
 
-        for (var i = 0; i<=10; i++){
-            var opt = document.createElement("option");
-            if (i == 0) {
-                opt.value = i;
-                opt.disabled = true;
-                opt.selected = true;
-                opt.innerHTML = i;
-                select3.appendChild(opt);
-            } else {
-                opt.value = i;
-                opt.innerHTML = i;
-                select3.appendChild(opt);
+            for (var i = 0; i<=10; i++){
+                var opt = document.createElement("option");
+                if (i == 0) {
+                    opt.value = i;
+                    opt.disabled = true;
+                    opt.selected = true;
+                    opt.innerHTML = i;
+                    select3.appendChild(opt);
+                } else {
+                    opt.value = i;
+                    opt.innerHTML = i;
+                    select3.appendChild(opt);
+                }
             }
-        }
 
-        for (var i = 0; i<=3; i++){
-            var opt = document.createElement("option");
-            if (i == 0) {
-                opt.value = "introquestiontype";
-                opt.disabled = true;
-                opt.selected = true;
-                opt.innerHTML = "Select question type";
-                select1.appendChild(opt);
-            } else if (i == 1) {
-                opt.value = "radioquestion";
-                opt.innerHTML = "Single answer question";
-                select1.appendChild(opt);
-            } else if (i == 2) {
-                opt.value = "checkboxquestion";
-                opt.innerHTML = "Multiple answers question";
-                select1.appendChild(opt);
-            } else {
-                opt.value = "rispaperta";
-                opt.innerHTML = "Open-ended question";
-                select1.appendChild(opt);
+            for (var i = 0; i<=3; i++){
+                var opt = document.createElement("option");
+                if (i == 0) {
+                    opt.value = "introquestiontype";
+                    opt.disabled = true;
+                    opt.selected = true;
+                    opt.innerHTML = "Select question type";
+                    select1.appendChild(opt);
+                } else if (i == 1) {
+                    opt.value = "radioquestion";
+                    opt.innerHTML = "Single answer question";
+                    select1.appendChild(opt);
+                } else if (i == 2) {
+                    opt.value = "checkboxquestion";
+                    opt.innerHTML = "Multiple answers question";
+                    select1.appendChild(opt);
+                } else {
+                    opt.value = "rispaperta";
+                    opt.innerHTML = "Open-ended question";
+                    select1.appendChild(opt);
+                }
             }
+
+            wrp1.appendChild(p1);
+            wrp1.appendChild(input1);
+            wrp2.appendChild(p2);
+            wrp2.appendChild(select1);
+            frst.appendChild(wrp1);
+            frst.appendChild(wrp2);
+
+            wrp3.appendChild(p3);
+            wrp3.appendChild(select2);
+            answ1.appendChild(wrp3);
+            answ1.appendChild(vansw1);
+
+            wrp4.appendChild(p4);
+            wrp4.appendChild(select3);
+            answ2.appendChild(wrp4);
+            answ2.appendChild(vansw2);
+
+            explainopn.appendChild(input2);
+            answ3.appendChild(explainopn);
+
+            section.appendChild(h2);
+            section.appendChild(frst);
+            section.appendChild(answ1);
+            section.appendChild(answ2);
+            section.appendChild(answ3);
+
+            var add_btn = document.getElementById("addQuestion")
+            var par_e = add_btn.parentNode
+            par_e.before(section);
         }
+        else {
+            var last_section_num = sections[sections.length - 1].id.charAt(1);
+            var new_num = Number(last_section_num) + 1
 
-        rmvbtn.appendChild(i_rmv);
-        rmvdiv.appendChild(rmvbtn);
+            var section = document.createElement('section');
+            section.id = "d"+new_num
 
-        wrp1.appendChild(p1);
-        wrp1.appendChild(input1);
-        wrp2.appendChild(p2);
-        wrp2.appendChild(select1);
-        frst.appendChild(wrp1);
-        frst.appendChild(wrp2);
+            var h2 = document.createElement('h2');
+            h2.innerHTML = "Question "+new_num
 
-        wrp3.appendChild(p3);
-        wrp3.appendChild(select2);
-        answ1.appendChild(wrp3);
-        answ1.appendChild(vansw1);
+            var rmvdiv = document.createElement("div");
+            rmvdiv.className = "button-container";
+            var rmvbtn = document.createElement("button");
+            rmvbtn.className = "removeQuestion";
+            rmvbtn.id = "removeQuestion";
+            var i_rmv = document.createElement("i");
+            i_rmv.className = "uil uil-minus-circle";
+            i_rmv.innerHTML = " Remove Question";
 
-        wrp4.appendChild(p4);
-        wrp4.appendChild(select3);
-        answ2.appendChild(wrp4);
-        answ2.appendChild(vansw2);
+            var frst = document.createElement("div");
+            frst.className = "first2";
 
-        explainopn.appendChild(input2);
-        answ3.appendChild(explainopn);
+            var wrp1 = document.createElement("div");
+            wrp1.className = "wrapper";
+            var wrp2 = document.createElement("div");
+            wrp2.className = "wrapper";
+            var wrp3 = document.createElement("div");
+            wrp3.className = "wrapper";
+            var wrp4 = document.createElement("div");
+            wrp4.className = "wrapper";
 
-        section.appendChild(h2);
-        section.appendChild(rmvdiv)
-        section.appendChild(frst);
-        section.appendChild(answ1);
-        section.appendChild(answ2);
-        section.appendChild(answ3);
+            var p1 = document.createElement("p");
+            p1.innerHTML = "Question:"
+            var p2 = document.createElement("p");
+            p2.innerHTML = "Question type:"
+            var p3 = document.createElement("p");
+            p3.innerHTML = "Number of answers:";
+            var p4 = document.createElement("p");
+            p4.innerHTML = "Number of answers:";
 
-        var prev_qst = sections[sections.length - 1];
-        prev_qst.after(section);
+            var input1 = document.createElement("input");
+            input1.type = "text";
+            input1.className = "textarea";
+            input1.placeholder = "Enter the question";
+            input1.name = "question";
+            input1.id = "question";
+            input1.required = true;
+
+            var input2 = document.createElement("input");
+            input2.type = "text";
+            input2.className = "textarea";
+            input2.placeholder = "Enter the correct answer and its explanation";
+            input2.name = "explainopen";
+            input2.id = "explain1";
+            input2.required = true;
+
+            var answ1 = document.createElement("div");
+            answ1.className = "answers";
+            answ1.id = "saq";
+            var answ2 = document.createElement("div");
+            answ2.className = "answers";
+            answ2.id = "maq";
+            var answ3 = document.createElement("div");
+            answ3.className = "answers";
+            answ3.id = "oq";
+            var vansw1 = document.createElement("div");
+            vansw1.className = "vanswers";
+            var vansw2 = document.createElement("div");
+            vansw2.className = "vanswers";
+            var explainopn = document.createElement("div");
+            explainopn.className = "explainopen";
+
+            var select1 = document.createElement("select");
+            select1.name = "questiontype";
+            select1.id = "questiontype";
+            select1.className = "questiontype";
+            select1.required = true;
+
+            var select2 = document.createElement("select");
+            select2.name = "nanswers";
+            select2.id = "nanswerssaq";
+            select2.className = "nanswerssaq";
+            select2.required = true;
+
+            var select3 = document.createElement("select");
+            select3.name = "nanswers";
+            select3.id = "nanswersmaq";
+            select3.className = "nanswersmaq";
+            select3.required = true;
+            select3.op
+
+            for (var i = 0; i<=10; i++){
+                var opt = document.createElement("option");
+                if (i == 0) {
+                    opt.value = i;
+                    opt.disabled = true;
+                    opt.selected = true;
+                    opt.innerHTML = i;
+                    select2.appendChild(opt);
+                } else {
+                    opt.value = i;
+                    opt.innerHTML = i;
+                    select2.appendChild(opt);
+                }
+            }
+
+            for (var i = 0; i<=10; i++){
+                var opt = document.createElement("option");
+                if (i == 0) {
+                    opt.value = i;
+                    opt.disabled = true;
+                    opt.selected = true;
+                    opt.innerHTML = i;
+                    select3.appendChild(opt);
+                } else {
+                    opt.value = i;
+                    opt.innerHTML = i;
+                    select3.appendChild(opt);
+                }
+            }
+
+            for (var i = 0; i<=3; i++){
+                var opt = document.createElement("option");
+                if (i == 0) {
+                    opt.value = "introquestiontype";
+                    opt.disabled = true;
+                    opt.selected = true;
+                    opt.innerHTML = "Select question type";
+                    select1.appendChild(opt);
+                } else if (i == 1) {
+                    opt.value = "radioquestion";
+                    opt.innerHTML = "Single answer question";
+                    select1.appendChild(opt);
+                } else if (i == 2) {
+                    opt.value = "checkboxquestion";
+                    opt.innerHTML = "Multiple answers question";
+                    select1.appendChild(opt);
+                } else {
+                    opt.value = "rispaperta";
+                    opt.innerHTML = "Open-ended question";
+                    select1.appendChild(opt);
+                }
+            }
+
+            rmvbtn.appendChild(i_rmv);
+            rmvdiv.appendChild(rmvbtn);
+
+            wrp1.appendChild(p1);
+            wrp1.appendChild(input1);
+            wrp2.appendChild(p2);
+            wrp2.appendChild(select1);
+            frst.appendChild(wrp1);
+            frst.appendChild(wrp2);
+
+            wrp3.appendChild(p3);
+            wrp3.appendChild(select2);
+            answ1.appendChild(wrp3);
+            answ1.appendChild(vansw1);
+
+            wrp4.appendChild(p4);
+            wrp4.appendChild(select3);
+            answ2.appendChild(wrp4);
+            answ2.appendChild(vansw2);
+
+            explainopn.appendChild(input2);
+            answ3.appendChild(explainopn);
+
+            section.appendChild(h2);
+            section.appendChild(rmvdiv)
+            section.appendChild(frst);
+            section.appendChild(answ1);
+            section.appendChild(answ2);
+            section.appendChild(answ3);
+
+            var prev_qst = sections[sections.length - 1];
+            prev_qst.after(section);
+        }
     });
 });
 
