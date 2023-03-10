@@ -95,19 +95,16 @@ function viewSingleQuiz(quiz){
 function submitQuiz(){
     var quizName = document.getElementById("namequiz").value;
     var quizDesc = document.getElementById("descriptionquiz").value;
-    //var quizChap = document.getElementById("namequiz").value;
+    var quizChap = document.getElementById("chapterquiz");
+    quizChap = quizChap.options[quizChap.selectedIndex].value;
 
     var container_div = document.getElementById('questions');
-    console.log(container_div);
     var count = container_div.getElementsByTagName('section').length;
-    console.log(count);
-    console.log(quizName);
-    console.log(quizDesc);
 
     for(let i=1; i<=count; i++){ // n° quesiti
         var question = document.querySelector("#d"+i+" .first2 #wrapper1 #question").value;
         var questionType = document.querySelector("#d"+i+" .first2 #wrapper2 #questiontype").value;
-        let capitolo = "capitolo x "+quizName; // dummy
+        let capitolo = "Capitolo "+quizChap.slice(7, quizChap.length)+" "+quizName;
 
         switch(questionType)
         {
