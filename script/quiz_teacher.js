@@ -52,12 +52,12 @@ function submitQuiz(){
     for(let i=1; i<=count; i++){ // n° quesiti
         var question = document.querySelector("#d"+i+" .first2 #wrapper1 #question").value;
         var questionType = document.querySelector("#d"+i+" .first2 #wrapper2 #questiontype").value;
+        let capitolo = "capitolo x "+quizName; // dummy
 
         switch(questionType)
         {
             case "radioquestion": 
                 var nanswerssaq = document.querySelector("#d"+i+" #saq #nanswerssaq").value;
-                let capitolo = "capitolo x "+quizName; // dummy
 
                 for(let j=1; j<=nanswerssaq; j++){ // n° affermazioni del quesito
                     // chiamata al DB
@@ -68,11 +68,10 @@ function submitQuiz(){
                             quiz_desc: quizDesc,
                             quiz_chapter: "1" // dummy
                         }).then(() => {
-                            console.log("Prova");
                             get(child(dbRef, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i)).then(async (snap) => {
                                 let r1=ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i);
                                 await set(r1, {
-                                    question: question
+                                    question: document.querySelector("#d"+i+" .first2 #wrapper1 #question").value
                                 });
 
                                 let r2=ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i+"/Answer "+j);
@@ -90,24 +89,60 @@ function submitQuiz(){
 
             case "checkboxquestion": 
                 var nanswersmaq = document.querySelector("#d"+i+" #maq #nanswersmaq").value;
-                var answers = []; // l'affermazione
-                var checked = []; // indica se l'affermazione è corretta
-                //checked = document.querySelectorAll("");
-                var explain = []; // indica perché l'affermazione è sbagliata
 
                 for(let j=1; j<=nanswersmaq; j++){ // n° affermazioni del quesito
-                    console.log(document.querySelector("#d"+i+" #maq .vanswers #answer"+j).value);
-                    answers[j-1] = document.querySelector("#d"+i+" #maq .vanswers #answer"+j).value;
-                    checked[j-1] = document.querySelector("#d"+i+" #maq .vanswers #check"+j).checked;
-                    explain[j-1] = document.querySelector("#d"+i+" #maq .vanswers #explain"+j).value;
+                    // chiamata al DB
+                    get(child(dbRef, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo)).then((snaphot) => {
+                        let r=ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo);
+                        set(r, {
+                            quiz_name: quizName,
+                            quiz_desc: quizDesc,
+                            quiz_chapter: "1" // dummy
+                        }).then(() => {
+                            console.log("Prova");
+                            get(child(dbRef, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i)).then(async (snap) => {
+                                let r1=ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i);
+                                await set(r1, {
+                                    question: document.querySelector("#d"+i+" .first2 #wrapper1 #question").value
+                                });
+
+                                let r2=ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i+"/Answer "+j);
+                                await set(r2, {
+                                    answer: document.querySelector("#d"+i+" #maq .vanswers #answer"+j).value,
+                                    checked: document.querySelector("#d"+i+" #maq .vanswers #check"+j).checked,
+                                    explain: document.querySelector("#d"+i+" #maq .vanswers #explain"+j).value
+                                });
+                                
+                            });
+                        });
+                    });
                 }
-                console.log(answers);
-                console.log(checked);
-                console.log(explain);
             break;
 
             case "rispaperta": 
                 var answers = document.querySelector("#d"+i+" #oq .explainopen #explain1").value;
+                get(child(dbRef, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo)).then((snaphot) => {
+                    let r=ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo);
+                    set(r, {
+                        quiz_name: quizName,
+                        quiz_desc: quizDesc,
+                        quiz_chapter: "1" // dummy
+                    }).then(() => {
+                        console.log("Prova");
+                        get(child(dbRef, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i)).then(async (snap) => {
+                            let r1=ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i);
+                            await set(r1, {
+                                question: document.querySelector("#d"+i+" .first2 #wrapper1 #question").value
+                            });
+
+                            let r2=ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i+"/Answer 1");
+                            await set(r2, {
+                                answer: document.querySelector("#d"+i+" #oq .explainopen #explain1").value
+                            });
+                            
+                        });
+                    });
+                });
                 console.log(answers);
             break;
 

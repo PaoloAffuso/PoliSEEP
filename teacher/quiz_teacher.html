@@ -146,26 +146,27 @@
 		</div>
 
 		<!-- SEZIONE CHE DEVE MODIFICARE GIULIA PER LA VISUALIZZAZIONE quiz 3 - Javascript -->
+		<!-- Questa sezione va modificata onclick della barra laterale di sinistra-->
 		<div class="quiz-side" id="quiz3">
 			<header class="quiz-header">
-				<h1>Javascript Quiz</h1>
-				<p>Train yourself with Javascript language</p>
+				<h1>Javascript Quiz</h1> <!--Titolo quiz (chiave db quiz)-->
+				<p>Train yourself with Javascript language</p> <!--Descrizione quiz-->
 			</header><br><br>
 
 			<div class="container">
 				<button class="decline-button" value="" id="deleteButton">Delete Quiz</button><br><br><br>
 				<!-- 1 DOMANDA: TEMP - Domanda a risposta singola con correzione e risposta corretta -->
-				<section class="wrong_section" id="p1">
-					<h3>1 - Inside which HTML element do we put the JavaScript?</h3>
-					<label class="wrong_label">
+				<section class="wrong_section" id="p1"> <!--id incrementale in base alle domande-->
+					<h3>1 - Inside which HTML element do we put the JavaScript?</h3> <!--Domanda n-->
+					<label class="wrong_label"> <!--Se la domanda n non è checked aggiungi il class wrong_label-->
 						&lt;js&gt;
-						<br><br>This answer is wrong because...
+						<br><br>This answer is wrong because... <!--E aggiungi anche la spiegazione n-->
 					</label>
 					<label class="wrong_label">
 						&lt;scripting&gt;
 						<br><br>This answer is wrong because...
 					</label>
-					<label class="right_label">
+					<label class="right_label"> <!--Se la risposta n invece è checked aggiungi il class right_label-->
 						&lt;script&gt;
 					</label>
 					<label class="wrong_label">
