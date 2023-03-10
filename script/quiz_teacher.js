@@ -3,6 +3,8 @@ import {ref, child, get, query, equalTo, orderByChild, set, update, push} from '
 import {uploadBytes, ref as sRef, getDownloadURL, deleteObject, listAll, getMetadata} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js';
 
 window.submitQuiz=submitQuiz;
+window.viewSingleQuiz=viewSingleQuiz;
+
 let get_str = window.location.search.substring(1);
 let course_name = getCourseName(get_str);
 
@@ -18,7 +20,7 @@ window.onload = function(){
     let type = getLoggedType(username);
     if(type==="STU") window.location.href = "/poliseep/student/student.html"; //Pagina student ancora da fare
 
-
+    getQuizList();
 };
 
 async function getLoggedType(username) {
@@ -35,6 +37,59 @@ function getCourseName(str) {
     str=str.split("=")[1].replace(new RegExp("%20", "g"), ' ');
     str=str.replace(new RegExp("%27", "g"), "'");
     return str;
+}
+
+function getQuizList(){
+    get(child(dbRef, "UsersList/"+username+"/Courses/"+course_name+"/Quiz")).then((snapshot) => {
+        for(let quiz in snapshot.val()) {
+            document.getElementById("ul_left").innerHTML+=`<li
+            onclick="viewSingleQuiz('${quiz}')">
+            ${quiz}</li>`;
+        }
+    });
+}
+
+function viewSingleQuiz(quiz){
+    Array.from(document.querySelectorAll('[id^=quiz]')).forEach(function(val) {val.style.display = 'none';}); document.getElementById('quiz3').style.display='block'; document.getElementById('noquiz').style.display='none'; document.getElementById('newquiz').style.display='none';
+    get(child(dbRef, "UsersList/"+username+"/Courses/"+course_name+"/Quiz/"+quiz)).then((snapshot) => {
+        document.getElementById("quiz_name").innerHTML=snapshot.val().quiz_name;
+        document.getElementById("quiz_desc").innerHTML=snapshot.val().quiz_desc;
+        
+        for(let question in snapshot.val()) {
+            if(question.includes("Question")) { //Filtro solo le domande
+                let number = question.split(" ")[1];
+                get(child(dbRef, "UsersList/"+username+"/Courses/"+course_name+"/Quiz/"+quiz+"/"+question)).then((snap) => {
+                    document.querySelector("#quiz3 .container").innerHTML+=`
+                        <section class="wrong_section" id="p${number}">
+                            <h3>${number} - ${snap.val().question}</h3>
+                        </section>
+                    `;
+
+                    for(let answer in snap.val()) {
+                        if(answer.includes("Answer")) {
+                            get(child(dbRef, "UsersList/"+username+"/Courses/"+course_name+"/Quiz/"+quiz+"/"+question+"/"+answer)).then((snap1) => {
+                                console.log(snap1.val().checked)
+                                if(snap1.val().checked===false) {
+                                    document.querySelector("#quiz3 .container #p"+number).innerHTML+=`
+                                        <label class="wrong_label">
+                                            ${snap1.val().answer}
+                                            <br><br>${snap1.val().explain}
+                                        </label>
+                                    `;
+                                } else {
+                                    document.querySelector("#quiz3 .container #p"+number).innerHTML+=`
+                                        <label class="right_label">
+                                            ${snap1.val().answer}
+                                        </label>
+                                    `;
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }
+    });
 }
 
 function submitQuiz(){
