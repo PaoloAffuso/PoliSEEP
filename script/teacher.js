@@ -19,6 +19,7 @@ window.onload = function(){
     showCourses(username);
     getCountCourses(username);
     getEnrolledStudents(username);
+    getLoadedQuiz(username)
 };
 
 async function setFullname(id, username){
@@ -70,6 +71,31 @@ async function getEnrolledStudents(username) {
                                 count++;
                                 //La classe di your_courses deve essere unica. Lo 0 sta perchè è univoca. Va fatto perché il css è stilizzato in base all'id
                                 document.getElementsByClassName('enrolled_students')[0].innerHTML = count;
+                            });
+                        });
+                    }
+                });
+            }
+        });
+    });
+}
+
+async function getLoadedQuiz(username) {
+    let count=0;
+    console.log(count);
+    let name = get(child(dbRef, "UsersList/"+username)).then((snapshot) => {
+        name=snapshot.val().fullname+" "; //Viene inserito uno spazio a fine chiave
+    }).then(()=> {
+        get(child(dbRef, "Courses")).then((snapshot) => {
+            for(let course in snapshot.val()) {
+                get(child(dbRef, "Courses/"+course+"/Professor/"+username)).then((s) => {
+                    if(s.exists()) {
+                        get(child(dbRef, "Courses/"+course+"/Quiz")).then((snap) => {
+                            snap.forEach(function() {
+                                count++;
+                                console.log(count);
+                                //La classe di your_courses deve essere unica. Lo 0 sta perchè è univoca. Va fatto perché il css è stilizzato in base all'id
+                                document.getElementsByClassName('loaded_quiz')[0].innerHTML = count;
                             });
                         });
                     }
