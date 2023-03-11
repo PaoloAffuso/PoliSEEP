@@ -68,7 +68,6 @@ function viewSingleQuiz(quiz){
                     for(let answer in snap.val()) {
                         if(answer.includes("Answer")) {
                             get(child(dbRef, "UsersList/"+username+"/Courses/"+course_name+"/Quiz/"+quiz+"/"+question+"/"+answer)).then((snap1) => {
-                                console.log(snap1.val().checked)
                                 if(snap1.val().checked===false) {
                                     document.querySelector("#quiz3 .container #p"+number).innerHTML+=`
                                         <label class="wrong_label">
@@ -104,7 +103,7 @@ function submitQuiz(){
     for(let i=1; i<=count; i++){ // n° quesiti
         var question = document.querySelector("#d"+i+" .first2 #wrapper1 #question").value;
         var questionType = document.querySelector("#d"+i+" .first2 #wrapper2 #questiontype").value;
-        let capitolo = "Capitolo "+quizChap.slice(7, quizChap.length)+" "+quizName;
+        let capitolo = "Capitolo "+quizChap.slice(7, quizChap.length)+" - "+quizName;
 
         switch(questionType)
         {
@@ -118,7 +117,7 @@ function submitQuiz(){
                         set(r, {
                             quiz_name: quizName,
                             quiz_desc: quizDesc,
-                            quiz_chapter: "1" // dummy
+                            quiz_chapter: quizChap.slice(7, quizChap.length)
                         }).then(() => {
                             get(child(dbRef, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i)).then(async (snap) => {
                                 let r1=ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i);
@@ -149,7 +148,7 @@ function submitQuiz(){
                         set(r, {
                             quiz_name: quizName,
                             quiz_desc: quizDesc,
-                            quiz_chapter: "1" // dummy
+                            quiz_chapter: quizChap.slice(7, quizChap.length)
                         }).then(() => {
                             console.log("Prova");
                             get(child(dbRef, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i)).then(async (snap) => {
@@ -178,7 +177,7 @@ function submitQuiz(){
                     set(r, {
                         quiz_name: quizName,
                         quiz_desc: quizDesc,
-                        quiz_chapter: "1" // dummy
+                        quiz_chapter: quizChap.slice(7, quizChap.length)
                     }).then(() => {
                         console.log("Prova");
                         get(child(dbRef, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i)).then(async (snap) => {
@@ -203,6 +202,9 @@ function submitQuiz(){
             break;
         }
     }
+
+    alert("Quiz created.");
+    window.location.reload();
 }
 
 
