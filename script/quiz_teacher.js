@@ -1,9 +1,10 @@
 import {db, storage} from '../firebaseConfig.js';
-import {ref, child, get, query, equalTo, orderByChild, set, update, push} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
+import {ref, child, get, query, equalTo, orderByChild, set, update, remove} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
 import {uploadBytes, ref as sRef, getDownloadURL, deleteObject, listAll, getMetadata} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js';
 
 window.submitQuiz=submitQuiz;
 window.viewSingleQuiz=viewSingleQuiz;
+window.deleteQuiz = deleteQuiz;
 
 let get_str = window.location.search.substring(1);
 let course_name = getCourseName(get_str);
@@ -54,6 +55,8 @@ function getQuizList(){
 }
 
 function viewSingleQuiz(quiz){
+    document.querySelector("#quiz3 .container").innerHTML = "";
+    document.querySelector("#quiz3 .container").innerHTML += `<button class="decline-button" value="${quiz}" onclick="deleteQuiz('${quiz}')" id="deleteButton">Delete Quiz</button><br><br><br>`;
     Array.from(document.querySelectorAll('[id^=quiz]')).forEach(function(val) {val.style.display = 'none';}); document.getElementById('quiz3').style.display='block'; document.getElementById('noquiz').style.display='none'; document.getElementById('newquiz').style.display='none';
     get(child(dbRef, "UsersList/"+username+"/Courses/"+course_name+"/Quiz/"+quiz)).then((snapshot) => {
         document.getElementById("quiz_name").innerHTML=snapshot.val().quiz_name;
@@ -188,6 +191,14 @@ document.getElementById("confirm").addEventListener("click", async function(e) {
         window.location.reload();
     })
 });
+
+function deleteQuiz(quiz){
+    let r = ref(db, "UsersList/"+username+"/Courses/"+course_name+"/Quiz/"+quiz);
+    remove(r).then(()=>{
+        alert('Quiz "' + quiz +'" deleted');
+        window.location.reload();
+    });
+}
 
 
 
