@@ -37,7 +37,7 @@ window.onload = async function(){
             <img src="${url}" alt="">
             <div class="details">
                 <span>${student_name}</span>
-                <p>Active now</p>
+                <p></p>
             </div>
             `;
         });
@@ -130,7 +130,7 @@ async function getLoggedType(username) {
 }
 
 document.getElementById("message_box").addEventListener("keyup", async function(event) {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && document.getElementById("message_box").value!="") {
         await sendMessage();
     }
 });
@@ -157,7 +157,10 @@ document.getElementById("searchInput").addEventListener("keyup", async function(
 
 
 document.getElementById("send_btn").addEventListener("click", async function(){
-    await sendMessage();
+    if(document.getElementById("send_btn").value!=""){
+        await sendMessage();
+    }
+
 });
 
 async function sendMessage() {
