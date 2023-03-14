@@ -198,12 +198,21 @@ a, button {
 	font-weight: 700;
 	font-size: 1.2em;
 	margin-bottom: 20px;
+	display: flex;
 }
 .left-side li:hover {
 	color: #000;
 	font-size: 1.5em;
 	font-weight: 900;
 	transition: .3s ease-in-out;
+}
+.left-side li .new-quiz p{
+	margin-left: 30px; 
+    font-size: smaller;
+    background-color: #4bb377; 
+    color: white;
+    border-radius: 5px; 
+    padding: 3px;
 }
 
 /*Pulsante nuovo quiz*/
