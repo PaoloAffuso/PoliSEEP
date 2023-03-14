@@ -58,7 +58,10 @@ async function getQuizList(){
                     } else {
                         document.getElementById("ul_left").innerHTML+=`<li
                         onclick="viewSingleQuiz('${quiz}', '${teacher}')" id="quiz${count}">
-                        ${quiz}</li>`;
+                        ${quiz}
+                        <div class="new-quiz">
+                            <p>NEW</p>
+                        </div></li>`;
                     }
                 });
                 count++;

@@ -198,6 +198,7 @@ a, button {
 	font-weight: 700;
 	font-size: 1.2em;
 	margin-bottom: 20px;
+	display: flex;
 }
 .left-side li:hover {
 	color: #000;
@@ -207,6 +208,15 @@ a, button {
 }
 
 /* -------------------------- QUIZ - Nuova implementazione (pannello destro) --------------------------------- */
+
+.left-side li .new-quiz p{
+	margin-left: 30px; 
+    font-size: smaller;
+    background-color: #4bb377; 
+    color: white;
+    border-radius: 5px; 
+    padding: 3px;
+}
 
 .inbt {
 	padding: 10px;
