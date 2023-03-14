@@ -129,7 +129,8 @@ async function submitQuiz(){
                         await get(child(dbRef, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i)).then(async (snap) => {
                             let r1=await ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i);
                             await update(r1, {
-                                question: document.querySelector("#d"+i+" .first2 #wrapper1 #question").value
+                                question: document.querySelector("#d"+i+" .first2 #wrapper1 #question").value,
+                                questionType: questionType
                             }).then(async ()=>{
                                 let r2=await ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i+"/Answer "+j);
                                 await set(r2, {
@@ -150,7 +151,8 @@ async function submitQuiz(){
                         await get(child(dbRef, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i)).then(async (snap) => {
                             let r1=ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i);
                             await update(r1, {
-                                question: document.querySelector("#d"+i+" .first2 #wrapper1 #question").value
+                                question: document.querySelector("#d"+i+" .first2 #wrapper1 #question").value,
+                                questionType: questionType
                             }).then(async ()=> {
                                 let r2=ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i+"/Answer "+j);
                                 await set(r2, {
@@ -167,7 +169,8 @@ async function submitQuiz(){
                     await get(child(dbRef, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i)).then(async (snap) => {
                         let r1=ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i);
                         await set(r1, {
-                            question: document.querySelector("#d"+i+" .first2 #wrapper1 #question").value
+                            question: document.querySelector("#d"+i+" .first2 #wrapper1 #question").value,
+                            questionType: questionType
                         }).then(async()=> {
                             let r2=ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i+"/Answer 1");
                             await set(r2, {

@@ -22,6 +22,10 @@ window.onload = async function(){
         let img_path = await getTeacherPic(teacher);
         document.getElementById("teacher_name").innerHTML=teacher_name;
 
+        document.getElementById("href_file").href+="?"+get_str;
+        document.getElementById("href_quiz").href+="?"+get_str;
+        document.getElementById("href_info").href+="?"+get_str;
+
         const snapshot=await get(query(ref(db, "Courses/"+course_name+"/Professor/"+teacher+"/Chat/"+username+"/Messages"), orderByChild("timestamp")));
 
         getDownloadURL(sRef(storage, img_path)).then((url) => {

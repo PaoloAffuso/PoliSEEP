@@ -274,6 +274,7 @@ a, button {
 	max-width: 700px;
 	margin: auto;
 	padding: 20px;
+	position: relative;
 }
 
 section{
@@ -411,6 +412,8 @@ label:hover{
 	white-space: nowrap;
 	border: 2px solid rgba(240, 163, 10, 0.993);
 	transition: .3s;
+	position: absolute;
+	bottom: -1em;
 }
 
 .send-button:hover {
