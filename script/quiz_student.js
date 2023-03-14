@@ -99,7 +99,7 @@ function viewCorrectedQuiz(quiz, teacher, id) {
                                         if(snap2.exists()) {
                                             document.querySelector("#quiz3 .container #p"+number).innerHTML+=`
                                                 <label class="wrong_label">
-                                                    Risposta data: ${snap1.val().answer}
+                                                    Given answer: ${snap1.val().answer}
                                                     <br><br>Explanation: ${snap1.val().explain}
                                                 </label>
                                             `;
@@ -118,7 +118,7 @@ function viewCorrectedQuiz(quiz, teacher, id) {
                                         if(snap2.exists()) {
                                             document.querySelector("#quiz3 .container #p"+number).innerHTML+=`
                                                 <label class="right_label">
-                                                    Risposta data: ${snap1.val().answer}
+                                                    Given answer: ${snap1.val().answer}
                                                 </label>
                                             `;
                                         } else {
