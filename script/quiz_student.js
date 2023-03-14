@@ -1,9 +1,10 @@
 import {db} from '../firebaseConfig.js';
-import {ref, child, get, query, equalTo, orderByChild, set, update} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
+import {ref, child, get, query, equalTo, orderByChild, set, remove} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
 
 window.viewSingleQuiz = viewSingleQuiz;
 window.viewCorrectedQuiz = viewCorrectedQuiz;
 window.submitQuiz = submitQuiz;
+window.retakeQuiz = retakeQuiz;
 
 let get_str = window.location.search.substring(1);
 let course_name = getCourseName(get_str);
@@ -46,19 +47,21 @@ function getCourseName(str) {
 async function getQuizList(){
     //Prima recupero il docente della materia, poi stampo la lista
     await getTeacher().then((teacher)=> {
-        get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz")).then((snapshot) => {
+        get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz")).then(async (snapshot) => {
+            var count=1;
             for(let quiz in snapshot.val()) {
-                get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz+"/Question 1/"+username)).then((snap1) => {
+                await get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz+"/Question 1/"+username)).then((snap1) => {
                     if(snap1.exists()) {
                         document.getElementById("ul_left").innerHTML+=`<li
-                        onclick="viewCorrectedQuiz('${quiz}', '${teacher}')">
+                        onclick="viewCorrectedQuiz('${quiz}', '${teacher}', 'quiz${count}')" id="quiz${count}">
                         ${quiz}</li>`;
                     } else {
                         document.getElementById("ul_left").innerHTML+=`<li
-                        onclick="viewSingleQuiz('${quiz}', '${teacher}')">
+                        onclick="viewSingleQuiz('${quiz}', '${teacher}')" id="quiz${count}">
                         ${quiz}</li>`;
                     }
                 });
+                count++;
             }
         });
     })
@@ -70,9 +73,10 @@ async function getTeacher() {
 }
 
 //Quiz effettuato dall'utente. Visualizza anche le risposte
-function viewCorrectedQuiz(quiz, teacher) {
+function viewCorrectedQuiz(quiz, teacher, id) {
     document.getElementById('quiz3').style.display='block'; document.getElementById('noquiz').style.display='none';
-    //document.querySelector("#quiz3 .container").innerHTML+=`<button class="send-button" onclick="submitQuiz('${quiz}','${teacher}')">Send</button>`;
+    document.querySelector("#quiz3 .container").innerHTML="";
+    document.querySelector("#quiz3 .container").innerHTML+=`<button class="send-button" onclick="retakeQuiz('${quiz}','${teacher}', '${id}')">Retake quiz</button>`;
 
     get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz)).then((snapshot) => {
         for(let question in snapshot.val()) {
@@ -160,6 +164,7 @@ function viewCorrectedQuiz(quiz, teacher) {
 //Quiz non ancora effettuato quindi "pulito"
 function viewSingleQuiz(quiz, teacher){
     document.getElementById('quiz3').style.display='block'; document.getElementById('noquiz').style.display='none';
+    document.querySelector("#quiz3 .container").innerHTML="";
     document.querySelector("#quiz3 .container").innerHTML+=`<button class="send-button" onclick="submitQuiz('${quiz}','${teacher}')">Send</button>`;
     get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz)).then((snapshot) => {
         document.getElementById("quiz_name").innerHTML=snapshot.val().quiz_name;
@@ -226,4 +231,19 @@ async function submitQuiz(quiz, teacher) {
     }
     alert("Quiz submitted");
     window.location.reload();
+}
+
+function retakeQuiz(quiz, teacher, id) {
+    get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz)).then(async (snapshot) => {
+        for(let question in snapshot.val()) {
+            if(question.includes("Question")) {
+                let r = ref(db, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz+"/"+question+"/"+username);
+                await remove(r);
+            }
+        }
+    }).then(()=>{
+        alert('Now you can retake the quiz "'+quiz+'"');
+        //document.getElementById(id).click(); Non funziona - serve il refresh
+        window.location.reload();
+    });
 }
