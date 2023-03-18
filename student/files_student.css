@@ -115,6 +115,7 @@ body {
 	color: #fff;
 	font-size: 16px;
 	margin-top: -12px;
+	cursor: pointer;
 }
 
 .mynav .logout:hover {
@@ -182,6 +183,8 @@ body {
 	font-size: 16px;
 	text-decoration: none;
 	padding: 15px 0px;
+	width: 100%;
+	text-align: center;
 }
 
 .close img {

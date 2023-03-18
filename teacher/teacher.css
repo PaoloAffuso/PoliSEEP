@@ -106,9 +106,11 @@ nav ul li a:hover {
 	color: #fff;
 	cursor: pointer;
 }
+
 .logout:hover {
 	color: #47506B;
 	background: #fff;
+	cursor: pointer;
 }
 
 /* Testo degli elementi non attivi della navbar */
