@@ -104,6 +104,7 @@ nav ul li a:hover {
 	transition: .5s;
 	background-color: rgba(255, 0, 0, 0.993);
 	color: #fff;
+	cursor: pointer;
 }
 .logout:hover {
 	color: #47506B;
