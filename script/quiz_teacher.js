@@ -101,9 +101,8 @@ function viewSingleQuiz(quiz){
 async function submitQuiz(){
     var quizName = document.getElementById("namequiz").value;
     var quizDesc = document.getElementById("descriptionquiz").value;
-    var quizChap = document.getElementById("chapterquiz");
-    quizChap = quizChap.options[quizChap.selectedIndex].value;
-    let capitolo = "Capitolo "+quizChap.slice(7, quizChap.length)+" - "+quizName;
+    var quizChap = document.getElementById("chapterquiz").value;
+    let capitolo = "Chapter "+quizChap+" - "+quizName;
 
     var container_div = document.getElementById('questions');
     var count = container_div.getElementsByTagName('section').length;
