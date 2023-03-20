@@ -47,8 +47,11 @@ function getCourseName(str) {
 function getQuizList(){
     get(child(dbRef, "UsersList/"+username+"/Courses/"+course_name+"/Quiz")).then((snapshot) => {
         for(let quiz in snapshot.val()) {
+            var quizEscaped = quiz.replace("'", "&prime;");
+            var onclick = `viewSingleQuiz('${quizEscaped}');`;
+           // onclick=quiz.replace("'", "&apos;");
             document.getElementById("ul_left").innerHTML+=`<li
-            onclick="viewSingleQuiz('${quiz}')">
+            onclick="${onclick}">
             ${quiz}</li>`;
         }
     });
@@ -57,7 +60,8 @@ function getQuizList(){
 function viewSingleQuiz(quiz){
     document.querySelector("#quiz3 .container").innerHTML = "";
     document.querySelector("#quiz3 .container").innerHTML += `<button class="decline-button" value="${quiz}" onclick="deleteQuiz('${quiz}')" id="deleteButton">Delete Quiz</button><br><br><br>`;
-    Array.from(document.querySelectorAll('[id^=quiz]')).forEach(function(val) {val.style.display = 'none';}); document.getElementById('quiz3').style.display='block'; document.getElementById('noquiz').style.display='none'; document.getElementById('newquiz').style.display='none';
+    //Array.from(document.querySelectorAll('[id^=quiz]')).forEach(function(val) {val.style.display = 'none';}); document.getElementById('quiz3').style.display='block'; document.getElementById('noquiz').style.display='none'; document.getElementById('newquiz').style.display='none';
+    document.getElementById('quiz3').style.display='block'; document.getElementById('noquiz').style.display='none';
     get(child(dbRef, "UsersList/"+username+"/Courses/"+course_name+"/Quiz/"+quiz)).then((snapshot) => {
         document.getElementById("quiz_name").innerHTML=snapshot.val().quiz_name;
         document.getElementById("quiz_desc").innerHTML=snapshot.val().quiz_desc;
@@ -195,6 +199,7 @@ document.getElementById("confirm").addEventListener("click", async function(e) {
 });
 
 function deleteQuiz(quiz){
+    quiz = quiz.replace("′", "'");
     let r = ref(db, "UsersList/"+username+"/Courses/"+course_name+"/Quiz/"+quiz);
     remove(r).then(()=>{
         alert('Quiz "' + quiz +'" deleted');

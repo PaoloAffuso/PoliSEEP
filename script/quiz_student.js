@@ -50,14 +50,15 @@ async function getQuizList(){
         get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz")).then(async (snapshot) => {
             var count=1;
             for(let quiz in snapshot.val()) {
+                var quizEscaped = quiz.replace("'", "&prime;");
                 await get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz+"/Question 1/"+username)).then((snap1) => {
                     if(snap1.exists()) {
                         document.getElementById("ul_left").innerHTML+=`<li
-                        onclick="viewCorrectedQuiz('${quiz}', '${teacher}', 'quiz${count}')" id="quiz${count}">
+                        onclick="viewCorrectedQuiz('${quizEscaped}', '${teacher}', 'quiz${count}')" id="quiz${count}">
                         ${quiz}</li>`;
                     } else {
                         document.getElementById("ul_left").innerHTML+=`<li
-                        onclick="viewSingleQuiz('${quiz}', '${teacher}')" id="quiz${count}">
+                        onclick="viewSingleQuiz('${quizEscaped}', '${teacher}')" id="quiz${count}">
                         ${quiz}
                         <div class="new-quiz">
                             <p>NEW</p>
@@ -77,6 +78,8 @@ async function getTeacher() {
 
 //Quiz effettuato dall'utente. Visualizza anche le risposte
 function viewCorrectedQuiz(quiz, teacher, id) {
+    quiz = quiz.replace("′", "'");
+
     document.getElementById('quiz3').style.display='block'; document.getElementById('noquiz').style.display='none';
     document.querySelector("#quiz3 .container").innerHTML="";
     document.querySelector("#quiz3 .container").innerHTML+=`<button class="send-button" onclick="retakeQuiz('${quiz}','${teacher}', '${id}')">Retake quiz</button>`;
@@ -165,11 +168,14 @@ function viewCorrectedQuiz(quiz, teacher, id) {
 }
 
 //Quiz non ancora effettuato quindi "pulito"
-function viewSingleQuiz(quiz, teacher){
+async function viewSingleQuiz(quiz, teacher){
     document.getElementById('quiz3').style.display='block'; document.getElementById('noquiz').style.display='none';
+    document.getElementById("quiz_name").innerHTML = "";
+    document.getElementById("quiz_desc").innerHTML = "";
     document.querySelector("#quiz3 .container").innerHTML="";
     document.querySelector("#quiz3 .container").innerHTML+=`<button class="send-button" onclick="submitQuiz('${quiz}','${teacher}')">Send</button>`;
-    get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz)).then((snapshot) => {
+    quiz = quiz.replace("′", "'");
+    await get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz)).then((snapshot) => {
         document.getElementById("quiz_name").innerHTML=snapshot.val().quiz_name;
         document.getElementById("quiz_desc").innerHTML=snapshot.val().quiz_desc;
         for(let question in snapshot.val()) {
@@ -216,6 +222,7 @@ function viewSingleQuiz(quiz, teacher){
 }
 
 async function submitQuiz(quiz, teacher) {
+    quiz = quiz.replace("′", "'");
     var container_div = document.getElementById('container_div');
     var count = container_div.getElementsByTagName('section').length;
     for(let i=1;i<=count;i++) {
@@ -237,6 +244,7 @@ async function submitQuiz(quiz, teacher) {
 }
 
 function retakeQuiz(quiz, teacher, id) {
+    quiz = quiz.replace("′", "'");
     get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz)).then(async (snapshot) => {
         for(let question in snapshot.val()) {
             if(question.includes("Question")) {

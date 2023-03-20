@@ -62,7 +62,7 @@ async function getEnrolledStudents(username, course_name){
                     get(child(dbRef, "UsersList/"+user+"/Courses/"+course_name)).then((course) => {
                         if(course.exists() && course.val().teacher===username) {
                             count++;
-                            document.getElementById("n_student").innerHTML=count;
+                            document.getElementById("stuNum").innerHTML=count;
                         }   
                     });
                 }
@@ -246,4 +246,3 @@ document.getElementById("declineBTN").addEventListener("click", ()=>{
         });
     });
 })
-
