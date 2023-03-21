@@ -676,6 +676,22 @@ border-color: #bfb;
 	margin-top: 20px;
 }
 
+#button-closemodal {
+	color: white;
+	background-color: red;
+	font-size: x-large;
+	font-weight: bold;
+	border-radius: 100%;
+	margin-left: 87%;
+    margin-top: -5%;
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+	cursor: pointer;
+}
+
 /* ------------------------------------------------------------ MODALE _END ------------------------------------------------------------ */
 
 /*-------------------------------------------------------------FOOTER _START----------------------------------------------------------*/

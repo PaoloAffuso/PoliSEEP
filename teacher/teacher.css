@@ -494,6 +494,22 @@ body.closed .modal{
 	visibility: hidden;
 	translate: -50px -50px;
 }
+
+#button-closemodal {
+	color: white;
+	background-color: red;
+	font-size: x-large;
+	font-weight: bold;
+	border-radius: 100%;
+	margin-left: 70%;
+    margin-top: -1%;
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+	cursor: pointer;
+}
 /* ------------------------------------------------------------modale end ------------------------------------------------------------ */
 /* ------------------------------------------------------------modale form  ------------------------------------------------------------ */
 form {
