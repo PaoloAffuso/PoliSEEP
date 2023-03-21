@@ -454,6 +454,22 @@ border-color: #bfb;
 .modal .form-group.select-all label{
 	margin-bottom: 20px;
 }
+
+#button-closemodal {
+	color: white;
+	background-color: red;
+	font-size: x-large;
+	font-weight: bold;
+	border-radius: 100%;
+	margin-left: 85%;
+    margin-top: -1%;
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+	cursor: pointer;
+}
 /*-----------------------------modale 1------------------------------------*/
 .modal-background1{
 	position : fixed;
@@ -505,7 +521,21 @@ body.closed1 .modal1{
 	visibility: hidden;
 	translate: -50px -50px;
 }
-
+#button-closemodal2 {
+	color: white;
+	background-color: red;
+	font-size: x-large;
+	font-weight: bold;
+	border-radius: 100%;
+	margin-left: 85%;
+    margin-top: -8%;
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+	cursor: pointer;
+}
 /*------------------------------modale 1 end -----------------------------------*/
 
 /* --------------------------------modale form  ------------------------------ */
