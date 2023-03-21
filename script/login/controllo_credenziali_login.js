@@ -14,6 +14,7 @@ document.getElementById('btn_submit_signup').addEventListener("click", function(
 function validation(nome, email, pass1, pass2) {
     let regexNome = /^[a-zA-Z\s]+$/; //Il nome non può contenere numeri ma solo lettere maiuscole-minuscole
     let regexMail = /^[a-zA-Z0-9-.]+@(studenti.poliba|poliba)\.it$/; //La mail deve essere nel formato studenti.poliba.it o poliba.it. Può contenere lettere e numeri e deve essere presente la @
+    let regexPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;  //Minimo otto caratteri, almeno una lettera maiuscola, una lettera minuscola, un numero e un carattere speciale.
 
     if(nome.value==null 
         || isEmptyOrSpaces(email.value) 
@@ -29,6 +30,11 @@ function validation(nome, email, pass1, pass2) {
     }
     if(email.value && !regexMail.test(email.value)) {
         alert("Enter a valid mail.\nMail should be in poliba domain.");
+        return false;
+    }
+    
+    if(password1.value && !regexPass.test(password1.value)) {
+        alert("The Password must meet these criteria:\n1. Minimum 8 characters; \n2. At least one uppercase and lowercase letter;\n3. At least one numeric and special character;");
         return false;
     }
 
@@ -77,7 +83,6 @@ function signup(nome,email, pass1, pass2) {
         }
     });
 }
-
 
 /*-----------------------------LOGIN----------------------------*/
 document.getElementById('btn_submit').addEventListener("click", function() {
