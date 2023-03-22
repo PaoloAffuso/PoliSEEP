@@ -14,7 +14,7 @@ if (localStorage.getItem("email") === null) {
 }
 
 const dbRef = ref(db);
-let email = localStorage.getItem("email"); 
+let email = localStorage.getItem("email");
 let username=email.split("@")[0].replace(".","");
 
 window.onload = function(){
@@ -60,12 +60,11 @@ function getQuizList(){
 function viewSingleQuiz(quiz){
     document.querySelector("#quiz3 .container").innerHTML = "";
     document.querySelector("#quiz3 .container").innerHTML += `<button class="decline-button" value="${quiz}" onclick="deleteQuiz('${quiz}')" id="deleteButton">Delete Quiz</button><br><br><br>`;
-    //Array.from(document.querySelectorAll('[id^=quiz]')).forEach(function(val) {val.style.display = 'none';}); document.getElementById('quiz3').style.display='block'; document.getElementById('noquiz').style.display='none'; document.getElementById('newquiz').style.display='none';
-    document.getElementById('quiz3').style.display='block'; document.getElementById('noquiz').style.display='none';
+    document.getElementById('quiz3').style.display='block'; document.getElementById('noquiz').style.display='none'; document.getElementById('newquiz').style.display='none';
     get(child(dbRef, "UsersList/"+username+"/Courses/"+course_name+"/Quiz/"+quiz)).then((snapshot) => {
         document.getElementById("quiz_name").innerHTML=snapshot.val().quiz_name;
         document.getElementById("quiz_desc").innerHTML=snapshot.val().quiz_desc;
-        
+
         for(let question in snapshot.val()) {
             if(question.includes("Question")) { //Filtro solo le domande
                 let number = question.split(" ")[1];
@@ -121,12 +120,12 @@ async function submitQuiz(){
     }).then(async() => {
         for(let i=1; i<=count; i++){ // n° quesiti
             var questionType = document.querySelector("#d"+i+" .first2 #wrapper2 #questiontype").value;
-    
+
             switch(questionType)
             {
-                case "radioquestion": 
+                case "radioquestion":
                     var nanswerssaq = document.querySelector("#d"+i+" #saq #nanswerssaq").value;
-    
+
                     for(let j=1; j<=nanswerssaq; j++){ // n° affermazioni del quesito
                         // chiamata al DB
                         await get(child(dbRef, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i)).then(async (snap) => {
@@ -145,10 +144,10 @@ async function submitQuiz(){
                         });
                     }
                 break;
-    
-                case "checkboxquestion": 
+
+                case "checkboxquestion":
                     var nanswersmaq = document.querySelector("#d"+i+" #maq #nanswersmaq").value;
-    
+
                     for(let j=1; j<=nanswersmaq; j++){ // n° affermazioni del quesito
                         // chiamata al DB
                         await get(child(dbRef, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i)).then(async (snap) => {
@@ -163,12 +162,12 @@ async function submitQuiz(){
                                     checked: document.querySelector("#d"+i+" #maq .vanswers #check"+j).checked,
                                     explain: document.querySelector("#d"+i+" #maq .vanswers #explain"+j).value
                                 });
-                            });                                
+                            });
                         });
                     }
                 break;
-    
-                case "rispaperta": 
+
+                case "rispaperta":
                     await get(child(dbRef, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i)).then(async (snap) => {
                         let r1=ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo+"/Question "+i);
                         await set(r1, {
@@ -182,7 +181,7 @@ async function submitQuiz(){
                         });
                     });
                 break;
-    
+
                 default:
                     alert("Select the question type!");
                 break;

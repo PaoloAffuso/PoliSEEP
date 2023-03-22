@@ -58,12 +58,12 @@
 		<!-- pannello laterale (sx) -->
 		<div class="left-side" id="left">
 			<ul id="ul_left">
-				<!-- Lista quiz --> 
+				<!-- Lista quiz -->
 
 			</ul>
 			<div class="button-container">
 				<button
-					onclick="document.getElementById('newquiz').style.display='block'; document.getElementById('noquiz').style.display='none'; Array.from(document.querySelectorAll('[id^=quiz]')).forEach(function(val) {val.style.display = 'none';});"
+					onclick="document.getElementById('newquiz').style.display='block'; document.getElementById('noquiz').style.display='none'; Array.from(document.querySelectorAll('[id=quiz3]')).forEach(function(val) {val.style.display = 'none';});"
 					class='accept-button' id='addButton'>Create a new Quiz</button></a>
 			</div>
 		</div>
@@ -133,10 +133,10 @@
 		<div class="quiz-side" id="quiz3">
 			<header class="quiz-header">
 				<h1 id="quiz_name"></h1> <!---->
-				<p id="quiz_desc"></p> 
+				<p id="quiz_desc"></p>
 			</header><br><br>
 
-			<div class="container">				
+			<div class="container">
 				<!--QUI DENTRO CI VA LA VISUALIZZAZIONE DEL QUIZ + PULSANTE deleteQuiz-->
 			</div>
 		</div>
