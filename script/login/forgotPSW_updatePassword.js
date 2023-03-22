@@ -11,7 +11,7 @@ frm.submit(function (e) {
       if (response == "OK") 
 	  {
 		  alert("Successful password recovery. Redirect to login...");
-		  window.location = "./signup_login.php"; /*PHP*/
+		  window.location = "../../login/login.html"; /*PHP*/
 	  }
     },
     error: function (data) {
