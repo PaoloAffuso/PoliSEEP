@@ -21,7 +21,7 @@ function sendEmailWithCode()
                 type: "post",
                 data: {"codice": codice, "email": email},
                 success: function(data){
-                    if(data==="KO")
+                    if(data==="OK")
                     {
                         alert("We sent an e-mail with a PIN. ");
                         window.location.href= "forgotPSW_insertPin.html";
