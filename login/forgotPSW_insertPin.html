@@ -11,6 +11,8 @@
 
   <link rel="stylesheet" href="./loginStyle.css" />
 
+  <script type="module" src="../script/psw_recovery.js"></script>
+
   <title>PoliSƎEP - A smart Software Engineering Education Platform</title>
 </head>
 
@@ -31,18 +33,18 @@
             <div class="form forgot-password">
               <span class="text-black text-center formtype">Password recovery (2)</span>
               <p style="color: rgb(0, 0, 0)"> Insert the PIN sent via e-mail. </p>
-              <form id="frm" action="forgotPSW_insertPin.php" method="POST" class="text-black">
+              <form id="frm" class="text-black">
                 <div class="input-field">
                   <input type="text" name="form_pin" id="form_pin" placeholder="Enter PIN" required />
                   <i class="uil uil-asterisk icon"></i>
                 </div>
                 <div class="input-field button">
-                  <button type="submit" id="btn_submit" class="btn btn-bd-primary submitlogin">
+                  <button type="button" id="btn_submit" class="btn btn-bd-primary submitlogin" onclick="confirmPIN();">
                     Next
                   </button>
                 </div>
                 <div class="input-field button">
-                  <button type="submit" id="btn_submit" class="btn btn-bd-primary submitlogin" data-bs-toggle="modal" onclick="location.href = './forgotPSW_insertEmail.html';">
+                  <button type="button" id="btn_submit" class="btn btn-bd-primary submitlogin" data-bs-toggle="modal" onclick="location.href = './forgotPSW_insertEmail.html';">
                     Back
                   </button>
                 </div>
