@@ -17,6 +17,7 @@ window.onload = function(){
     document.getElementById("href_file").href+="?"+get_str;
     document.getElementById("href_chat").href+="?"+get_str;
     document.getElementById("href_quiz").href+="?"+get_str;
+    showDocPic(getCourseName(get_str));
     printData(username, getCourseName(get_str));
 };
 
@@ -67,4 +68,27 @@ async function getLoggedType(username) {
         type=element.val().tipo;
     });
     return type;
+}
+
+async function showDocPic(course_name) {
+    let teacher = "";
+    get(child(dbRef, "UsersList/"+username+"/Courses/"+course_name)).then((snapshot) => {
+        teacher = snapshot.val().teacher;
+    }).then(()=>{
+        get(child(dbRef, "UsersList/"+teacher)).then((snapshot) => {
+            var path = snapshot.val().profile_pic;
+            let img = sRef(storage, path);
+            getDownloadURL(img).then((url) => {
+                document.getElementById("photo").src=url;
+                $( "#photo" ).load(window.location.href + " #photo" );
+            });
+        });
+    });
+    const snapshot=await get(query(ref(db, "UsersList"), orderByChild("email"), equalTo(email)));
+    let path="";
+    snapshot.forEach(element => {
+        path=element.val().profile_pic;
+    });
+
+    
 }

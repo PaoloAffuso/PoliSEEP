@@ -21,6 +21,7 @@ window.onload = function(){
     getTasks(username);
     pendingNum(username);
     getCountCourses();
+    getCompletedCourses();
     showCourses();
     showYourCourses(username);
 };
@@ -120,7 +121,7 @@ async function getCountCourses() {
         snapshot.forEach(function() {
             count++;
         });
-        //La classe di your_courses deve essere unica. Il 0 sta perchè è univoca. Va fatto perché il css è stilizzato in base all'id
+        //La classe di your_courses deve essere unica. Lo 0 sta perchè è univoca. Va fatto perché il css è stilizzato in base all'id
         document.getElementById("enrolled_courses").innerHTML = count;
 
         get(child(dbRef, "Courses")).then((snapshot1) => {
@@ -128,9 +129,55 @@ async function getCountCourses() {
             snapshot1.forEach(function() {
                 tot++;
             });
-            //La classe di your_courses deve essere unica. Il 0 sta perchè è univoca. Va fatto perché il css è stilizzato in base all'id
+            //La classe di your_courses deve essere unica. Lo 0 sta perchè è univoca. Va fatto perché il css è stilizzato in base all'id
             document.getElementById("available_courses").innerHTML = tot - count;   
         });
+    });
+}
+
+async function getCompletedCourses() {
+
+    var countAnsweredQuiz = 0;
+    var countTotQuiz = 0;
+    var countTotCoursesCompleted = 0;
+    var countTotCourses = 0;
+
+    await get(child(dbRef, "UsersList/")).then(async (snapshot) => {
+        for(let user in snapshot.val())
+        {
+            await get(child(dbRef, "UsersList/"+user)).then(async (snapshot) => {
+                if(snapshot.val().tipo=="DOC")
+                {
+                    await get(child(dbRef, "UsersList/"+user+"/Courses")).then(async (snapshot) => {
+                        
+                        for(let course in snapshot.val())
+                        {
+                            countTotCourses++;
+                            await get(child(dbRef, "UsersList/"+user+"/Courses/"+course+"/Quiz")).then(async (snapshot) => {
+                                for(let quiz in snapshot.val())
+                                {
+                                    countTotQuiz++;
+                                    await get(child(dbRef, "UsersList/"+user+"/Courses/"+course+"/Quiz/"+quiz+"/Question 1/"+username)).then((snapshot) => {
+                                        if(snapshot.exists())
+                                        {
+                                            countAnsweredQuiz++;
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                        if(countAnsweredQuiz>=countTotQuiz) // se è vero allora un singolo corso è stato completato
+                        {
+                            countTotCoursesCompleted++;
+                        }
+                    });
+                }
+            });
+        }
+        document.getElementById("completed_courses").innerHTML=countTotCoursesCompleted;
+        document.getElementById("not_completed_courses").innerHTML=countTotCourses-countTotCoursesCompleted;
+        document.getElementById("completed_quiz").innerHTML=countAnsweredQuiz;
+        document.getElementById("not_completed_quiz").innerHTML=countTotQuiz-countAnsweredQuiz;
     });
 }
 
