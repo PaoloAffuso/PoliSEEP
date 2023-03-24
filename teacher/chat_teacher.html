@@ -85,7 +85,8 @@
 			   <!--Form per scrivere il messaggio-->
 			   <form action="#" class="typing-area" onsubmit="return false;">
 					<input type="text" class="input-field" id="message_box" placeholder="Type a message here..." autocomplete="off" name="messaggio">
-					<button class="attachments" id="attachments"><i class="fa-solid fa-paperclip"></i></button>	
+					<input type="file" id="uploadFile" style="display:none"/>
+					<button class="attachments" id="attachments" onclick="sendAttachments();"><i class="fa-solid fa-paperclip"></i></button>
 					<button class="send" id="send_btn"><i class="fa-solid fa-paper-plane"></i></button>
 			   </form>
 
