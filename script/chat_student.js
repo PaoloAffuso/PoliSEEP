@@ -1,6 +1,8 @@
 import {db, storage} from '../firebaseConfig.js';
 import {ref, child, get, onValue, push, query, orderByChild, equalTo, limitToLast, update} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
-import {ref as sRef, getDownloadURL} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js';
+import {ref as sRef, getDownloadURL, uploadBytes} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js';
+
+window.sendAttachments = sendAttachments;
 
 if (localStorage.getItem("email") === null) {
     window.location.href = "/poliseep";
@@ -28,32 +30,61 @@ window.onload = async function(){
 
         const snapshot=await get(query(ref(db, "Courses/"+course_name+"/Professor/"+teacher+"/Chat/"+username+"/Messages"), orderByChild("timestamp")));
 
-        getDownloadURL(sRef(storage, img_path)).then((url) => {
+        await getDownloadURL(sRef(storage, img_path)).then(async (url) => {
             document.getElementById("teacher_pic").src=url;
             
-            snapshot.forEach(element => {
-                if(element.val().sender===username) {
-                    document.getElementById("chat-box").innerHTML+=`
-                        <div class="chat outgoing">
-                            <div class="details">
-                                <p>${element.val().message}</p>
-                            </div>
-                        </div>
-                    `;
-                } else { 
-                    //getDownloadURL(sRef(storage, img_path)).then((url) => {
-                        document.getElementById("chat-box").innerHTML+=`
-                            <div class="chat incoming">
-                                <img src="${url}" alt="">
-                                <div class="details">
-                                    <p>${element.val().message}</p>
+            //snapshot.forEach(element => {
+            for(let messaggio in snapshot.val()) {
+                await get(child(dbRef, "Courses/"+course_name+"/Professor/"+teacher+"/Chat/"+username+"/Messages/"+messaggio)).then(async (element) => {
+                    if(element.val().sender===username) {
+                        if(element.val().type == "allegato") {
+                            var path = element.val().message;
+                            var messaggio = path.split("/").pop();
+                            await getDownloadURL(sRef(storage, path)).then((url) => {
+                                document.getElementById("chat-box").innerHTML+=`
+                                    <div class="chat outgoing">
+                                        <div class="details">
+                                            <a href="${url}" target="_blank"><p>${messaggio}</p></a>
+                                        </div>
+                                    </div>
+                                `;
+                            });
+                        } else {
+                            document.getElementById("chat-box").innerHTML+=`
+                                <div class="chat outgoing">
+                                    <div class="details">
+                                        <p>${element.val().message}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        `;
-                    //});
-                }
-                
-            });
+                            `;
+                        }
+                    } else { 
+                        if(element.val().type == "allegato") {
+                            var path = element.val().message;
+                            var messaggio = path.split("/").pop();
+                            await getDownloadURL(sRef(storage, path)).then((url_file) => {
+                                document.getElementById("chat-box").innerHTML+=`
+                                    <div class="chat incoming">
+                                        <img src="${url}" alt="">
+                                        <div class="details">
+                                            <a href="${url_file}" target="_blank"><p>${messaggio}</p></a>
+                                        </div>
+                                    </div>
+                                `;
+                            });
+                        } else {
+                            document.getElementById("chat-box").innerHTML+=`
+                                <div class="chat incoming">
+                                    <img src="${url}" alt="">
+                                    <div class="details">
+                                        <p>${element.val().message}</p>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    }
+                });
+            }//);
         });
     });
 };
@@ -64,30 +95,61 @@ await getTeacher().then((teacher) => {
         if(!initialState) {
             await getTeacher().then(async (teacher) => {
                 const snapshot=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+teacher+"/Chat/"+username+"/Messages"), limitToLast(1)));
-                snapshot.forEach(async element => {
-                    if(element.val().sender===username) {
-                        document.getElementById("chat-box").innerHTML+=`
-                            <div class="chat outgoing">
-                                <div class="details">
-                                    <p>${element.val().message}</p>
-                                </div>
-                            </div>
-                        `;
-                    } else {
-                        let img_path=await getTeacherPic(teacher);
-                        getDownloadURL(sRef(storage, img_path)).then((url) => {
-                            document.getElementById("chat-box").innerHTML+=`
-                                <div class="chat incoming">
-                                    <img src="${url}" alt="">
-                                    <div class="details">
-                                        <p>${element.val().message}</p>
+                //snapshot.forEach(async element => {
+                for(let messaggio in snapshot.val()) {
+                    await get(child(dbRef, "Courses/"+course_name+"/Professor/"+teacher+"/Chat/"+username+"/Messages/"+messaggio)).then(async (element) => {
+                        if(element.val().sender===username) {
+                            if(element.val().type == "allegato") {
+                                var path = element.val().message;
+                                var messaggio = path.split("/").pop();
+                                await getDownloadURL(sRef(storage, path)).then((url) => {
+                                    document.getElementById("chat-box").innerHTML+=`
+                                        <div class="chat outgoing">
+                                            <div class="details">
+                                                <a href="${url}" target="_blank"><p>${messaggio}</p></a>
+                                            </div>
+                                        </div>
+                                    `;
+                                });
+                            } else {
+                                document.getElementById("chat-box").innerHTML+=`
+                                    <div class="chat outgoing">
+                                        <div class="details">
+                                            <p>${element.val().message}</p>
+                                        </div>
                                     </div>
-                                </div>
-                            `;
-                        });
-                    }
-                    
-                });
+                                `;
+                            }
+                        } else {
+                            if(element.val().type == "allegato") {
+                                var path = element.val().message;
+                                var messaggio = path.split("/").pop();
+                                await getDownloadURL(sRef(storage, path)).then((url_file) => {
+                                    document.getElementById("chat-box").innerHTML+=`
+                                        <div class="chat incoming">
+                                            <img src="${url}" alt="">
+                                            <div class="details">
+                                                <a href="${url_file}" target="_blank"><p>${messaggio}</p></a>
+                                            </div>
+                                        </div>
+                                    `;
+                                });
+                            } else {
+                                let img_path=await getTeacherPic(teacher);
+                                getDownloadURL(sRef(storage, img_path)).then((url) => {
+                                    document.getElementById("chat-box").innerHTML+=`
+                                        <div class="chat incoming">
+                                            <img src="${url}" alt="">
+                                            <div class="details">
+                                                <p>${element.val().message}</p>
+                                            </div>
+                                        </div>
+                                    `;
+                                });
+                            }
+                        }
+                    });
+                }//);
             });
             
         }
@@ -114,7 +176,7 @@ async function getLoggedType(username) {
 }
 
 document.getElementById("message_box").addEventListener("keyup", async function(event) {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && document.getElementById("message_box").value!="") {
         await sendMessage();
     }
 });
@@ -135,7 +197,6 @@ async function sendMessage() {
         }).then(async () => {
             let r=ref(db, 'Courses/'+course_name+"/Professor/"+data+"/Chat/"+username);
             let name = await getStudentName();
-            console.log(name);
             update(r, {
                 email: email,
                 fullname: name
@@ -143,6 +204,45 @@ async function sendMessage() {
             document.getElementById("message_box").value="";
         });
     });
+}
+
+$(document).ready(function() {
+    $(window).keydown(function(event){
+      if(event.keyCode == 13) {
+        event.preventDefault();
+        return false;
+      }
+    });
+});
+
+document.getElementById("uploadFile").addEventListener("change", async function(e) {
+    let doc = e.target.files[0];
+    var extension = doc.name.split(".").pop();
+    doc = renameFile(doc, doc.name.split("."+extension)[0] + Date.now() + "." + extension);
+    
+    const storo = sRef(storage, 'Chat/'+username+"/"+doc.name);
+    await getTeacher().then(async (teacher)=>{
+        await uploadBytes(storo, doc).then(async () => {
+            let r=ref(db, 'Courses/'+course_name+"/Professor/"+teacher+"/Chat/"+username+"/Messages");
+            await push(r, {
+                message: "Chat/"+username+"/"+doc.name,
+                sender: username,
+                timestamp: Date.now(),
+                type: "allegato"
+            });
+        });
+    });
+});
+
+function renameFile(originalFile, newName) {
+    return new File([originalFile], newName, {
+        type: originalFile.type,
+        lastModified: originalFile.lastModified,
+    });
+}
+
+function sendAttachments(){
+    document.getElementById("uploadFile").click();
 }
 
 async function getTeacher() {

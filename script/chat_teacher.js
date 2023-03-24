@@ -44,44 +44,61 @@ window.onload = async function(){
         });
         const snapshot=await get(query(ref(db, "Courses/"+course_name+"/Professor/"+username+"/Chat/"+student+"/Messages"), orderByChild("timestamp")));
 
-        getDownloadURL(sRef(storage, img_path)).then((url) => {
-            snapshot.forEach(async (element)=>{
-            //for(let element in snapshot.val()) {
-                console.log(element)
-                if(element.val().sender===username) {
-                    if(element.val().type == "allegato") {
-                        var path = element.val().message;
-                        var messaggio = path.split("/").pop();
-                        getDownloadURL(sRef(storage, path)).then((url) => {
+        getDownloadURL(sRef(storage, img_path)).then(async (url) => {
+            //snapshot.forEach(async (element)=>{
+            for(let message in snapshot.val()) {
+                await get(child(dbRef, "Courses/"+course_name+"/Professor/"+username+"/Chat/"+student+"/Messages/"+message)).then(async (element) => {
+                    if(element.val().sender===username) {
+                        if(element.val().type == "allegato") {
+                            var path = element.val().message;
+                            var messaggio = path.split("/").pop();
+                            await getDownloadURL(sRef(storage, path)).then((url) => {
+                                document.getElementById("chat-box").innerHTML+=`
+                                    <div class="chat outgoing">
+                                        <div class="details">
+                                            <a href="${url}" target="_blank"><p>${messaggio}</p></a>
+                                        </div>
+                                    </div>
+                                `;
+                            });
+                        }
+                        else {
                             document.getElementById("chat-box").innerHTML+=`
                                 <div class="chat outgoing">
                                     <div class="details">
-                                        <a href="${url}" target="_blank"><p>${messaggio}</p></a>
+                                        <p>${element.val().message}</p>
                                     </div>
                                 </div>
                             `;
-                        });
-                    }
-                    else {
-                        document.getElementById("chat-box").innerHTML+=`
-                            <div class="chat outgoing">
-                                <div class="details">
-                                    <p>${element.val().message}</p>
+                        }
+                    } else {
+                        if(element.val().type == "allegato") {
+                            var path = element.val().message;
+                            var messaggio = path.split("/").pop();
+                            await getDownloadURL(sRef(storage, path)).then((url_file) => {
+                                document.getElementById("chat-box").innerHTML+=`
+                                    <div class="chat incoming">
+                                        <img src="${url}" alt="">
+                                        <div class="details">
+                                            <a href="${url_file}" target="_blank"><p>${messaggio}</p></a>
+                                        </div>
+                                    </div>
+                                `;
+                            });
+                        } else {
+                            document.getElementById("chat-box").innerHTML+=`
+                                <div class="chat incoming">
+                                    <img src="${url}" alt="">
+                                    <div class="details">
+                                        <p>${element.val().message}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        `;
+                            `;
+                        }
+                        
                     }
-                } else {
-                    document.getElementById("chat-box").innerHTML+=`
-                        <div class="chat incoming">
-                            <img src="${url}" alt="">
-                            <div class="details">
-                                <p>${element.val().message}</p>
-                            </div>
-                        </div>
-                    `;
-                }
-            });
+                });
+            }//);
         });
 
         
@@ -217,7 +234,7 @@ $(document).ready(function() {
         return false;
       }
     });
-  });
+});
 
 document.getElementById("uploadFile").addEventListener("change", async function(e) {
     let doc = e.target.files[0];
