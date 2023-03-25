@@ -136,6 +136,11 @@ document.getElementById("form_course").addEventListener("click", function() {
     let f=getFile();  
     let r=ref(db, 'UsersList/'+username+"/Courses/"+getCourseName(get_str));
 
+    if(document.getElementById("cfu_form").value!=='') {
+        update(r, {
+            cfu: document.getElementById("cfu_form").value
+        });
+    }
     if(document.getElementById("obiettivoCorso").value!=='') {
         update(r, {
             course_goals: document.getElementById("obiettivoCorso").value
@@ -161,6 +166,45 @@ document.getElementById("form_course").addEventListener("click", function() {
             });
         });
     } else location.reload();
+});
+
+document.getElementById("btn1").addEventListener("click", async function(){
+    let get_str = window.location.search.substring(1);
+
+    await get(child(dbRef, 'UsersList/'+username+"/Courses/"+getCourseName(get_str))).then((snapshot) => {
+        $('input:text[id="course_name"]').attr('placeholder',snapshot.val().course_name);
+        $('input[id="cfu_form"]').attr('placeholder',snapshot.val().cfu);
+
+        var course_goals = snapshot.val().course_goals;
+        if(course_goals==="") {
+            $('textarea[id="obiettivoCorso"]').attr('placeholder',"Course goals");
+        }
+        else if(course_goals.length<40) {
+            $('textarea[id="obiettivoCorso"]').attr('placeholder',course_goals);
+        } else {
+            $('textarea[id="obiettivoCorso"]').attr('placeholder',course_goals.substring(0,30)+"...");
+        }
+
+        var brief_description = snapshot.val().brief_description;
+        if(brief_description === "") {
+            $('textarea[id="descrizioneCorso"]').attr('placeholder',"Brief description of the course");
+        }
+        else if(brief_description.length<40) {
+            $('textarea[id="descrizioneCorso"]').attr('placeholder',brief_description);
+        } else {
+            $('textarea[id="descrizioneCorso"]').attr('placeholder',brief_description.substring(0,30)+"...");
+        }
+
+        var learning_verification = snapshot.val().learning_verification;
+        if(learning_verification === "") {
+            $('input[id="verificaCorso"]').attr('placeholder',"Learning Verification");
+        }
+        else if(learning_verification.length<40) {
+            $('input[id="verificaCorso"]').attr('placeholder',learning_verification);
+        } else {
+            $('input[id="verificaCorso"]').attr('placeholder',learning_verification.substring(0,30)+"...");
+        }
+    });
 });
 
 /*MOSTRA ISCRIZIONE AL CORSO IN STATO PENDING DEGLI STUDENTI*/
