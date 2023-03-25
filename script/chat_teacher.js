@@ -1,5 +1,5 @@
 import {db, storage} from '../firebaseConfig.js';
-import {ref, child, get, onValue, push, query, orderByChild, equalTo, limitToLast} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
+import {ref, child, get, onValue, push, query, orderByChild, equalTo, limitToLast, update} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
 import {ref as sRef, getDownloadURL, uploadBytes} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js';
 
 window.changeStudent=changeStudent;
@@ -213,6 +213,14 @@ document.getElementById("send_btn").addEventListener("click", async function(){
 
 });
 
+//Se si clicca sulla barra dei mesaggi, l'ultimo messaggio studente e' stato letto
+document.getElementById('message_box').addEventListener('focus',async function() {
+    var stud = localStorage.getItem("student");
+    let r=ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+stud);
+    await update(r, {
+        seen: true
+    });
+});
 
 async function sendMessage() {
     let inputVal=document.getElementById("message_box").value;
@@ -275,46 +283,76 @@ async function getStudentName(student) {
 }
 
 async function getChats() {
-    get(child(dbRef, "Courses/"+course_name+"/Professor/"+username+"/Chat")).then((snapshot) => {
+    await get(child(dbRef, "Courses/"+course_name+"/Professor/"+username+"/Chat")).then(async (snapshot) => {
         for(let stud in snapshot.val()) {
-            get(child(dbRef, "UsersList/"+stud)).then(async (snapshot) => {
-                let img_path = snapshot.val().profile_pic;
-                getDownloadURL(sRef(storage, img_path)).then(async (url) => {
-                    const q=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+stud+"/Messages"), limitToLast(1)));
-                    q.forEach((message)=>{
-                        if(message.val().type == "allegato") {
-                            document.getElementById("users-list").innerHTML+=`
-                            <a href="#" onclick="changeStudent('${stud}')">
-                                <div class="content">
-                                    <img src="${url}" alt="">
-                                    <div class="details">
-                                        <span>${snapshot.val().fullname}</span>
-                                        <p>${message.val().message.split("/").pop()}</p>
-                                    </div>
-                                </div>
-                                <div class="new-messages">
-                                    <p>1</p>
-                                </div>
-                            </a>
-                            `;
-                        } else {
-                            document.getElementById("users-list").innerHTML+=`
-                            <a href="#" onclick="changeStudent('${stud}')">
-                                <div class="content">
-                                    <img src="${url}" alt="">
-                                    <div class="details">
-                                        <span>${snapshot.val().fullname}</span>
-                                        <p>${message.val().message}</p>
-                                    </div>
-                                </div>
-                                <div class="new-messages">
-                                    <p>1</p>
-                                </div>
-                            </a>
-                            `;
-                        }
-                    });
-                }); 
+            await checkSeenMessage(stud).then(async (seen)=>{
+                await get(child(dbRef, "UsersList/"+stud)).then(async (snapshot) => {
+                    let img_path = snapshot.val().profile_pic;
+                    await getDownloadURL(sRef(storage, img_path)).then(async (url) => {
+                        const q=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+stud+"/Messages"), limitToLast(1)));
+                        q.forEach((message)=>{
+                            if(seen === true) {
+                                if(message.val().type == "allegato") {
+                                    document.getElementById("users-list").innerHTML+=`
+                                    <a href="#" onclick="changeStudent('${stud}')">
+                                        <div class="content">
+                                            <img src="${url}" alt="">
+                                            <div class="details">
+                                                <span>${snapshot.val().fullname}</span>
+                                                <p>${message.val().message.split("/").pop()}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    `;
+                                } else {
+                                    document.getElementById("users-list").innerHTML+=`
+                                    <a href="#" onclick="changeStudent('${stud}')">
+                                        <div class="content">
+                                            <img src="${url}" alt="">
+                                            <div class="details">
+                                                <span>${snapshot.val().fullname}</span>
+                                                <p>${message.val().message}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    `;
+                                }
+                            } else {
+                                if(message.val().type == "allegato") {
+                                    document.getElementById("users-list").innerHTML+=`
+                                    <a href="#" onclick="changeStudent('${stud}')">
+                                        <div class="content">
+                                            <img src="${url}" alt="">
+                                            <div class="details">
+                                                <span>${snapshot.val().fullname}</span>
+                                                <p>${message.val().message.split("/").pop()}</p>
+                                            </div>
+                                            <div class="new-messages">
+                                                <p>1</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    `;
+                                } else {
+                                    document.getElementById("users-list").innerHTML+=`
+                                    <a href="#" onclick="changeStudent('${stud}')">
+                                        <div class="content">
+                                            <img src="${url}" alt="">
+                                            <div class="details">
+                                                <span>${snapshot.val().fullname}</span>
+                                                <p>${message.val().message}</p>
+                                            </div>
+                                            <div class="new-messages">
+                                                <p>1</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    `;
+                                }
+                            }
+                        });
+                    }); 
+                });
             });
         }
     });
@@ -360,6 +398,11 @@ async function getFilteredChat(stud){
             });
         }); 
     });
+}
+
+async function checkSeenMessage(stud) {
+    const snapshot=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+stud)));
+    return snapshot.val().seen;
 }
 
 function changeStudent(student) {

@@ -199,7 +199,8 @@ async function sendMessage() {
             let name = await getStudentName();
             update(r, {
                 email: email,
-                fullname: name
+                fullname: name,
+                seen: false
             })
             document.getElementById("message_box").value="";
         });
