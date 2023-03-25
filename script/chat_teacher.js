@@ -1,5 +1,5 @@
 import {db, storage} from '../firebaseConfig.js';
-import {ref, child, get, onValue, push, query, orderByChild, equalTo, limitToLast, update} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
+import {ref, child, get, onValue, push, query, orderByChild, equalTo, limitToLast} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
 import {ref as sRef, getDownloadURL, uploadBytes} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js';
 
 window.changeStudent=changeStudent;
@@ -16,7 +16,6 @@ let get_str = window.location.search.substring(1);
 let course_name=getCourseName(get_str);
 let initialState=true; //Per sincronizzare la ricezione messaggi
 let initChats=true; //Per sincronizzare l'elenco chat
-let onValueUpdate=false;
 //let student="amezzina3"; //Dummy - deve essere dall'elenco chat docente. onclick cambia username_student all'interno del local storage
 let student = localStorage.getItem("student");
 
@@ -43,12 +42,12 @@ window.onload = async function(){
             </div>
             `;
         });
-        const snapshot=await get(query(ref(db, "Courses/"+course_name+"/Professor/"+username+"/Chat/Students/"+student+"/Messages"), orderByChild("timestamp")));
+        const snapshot=await get(query(ref(db, "Courses/"+course_name+"/Professor/"+username+"/Chat/"+student+"/Messages"), orderByChild("timestamp")));
 
         getDownloadURL(sRef(storage, img_path)).then(async (url) => {
             //snapshot.forEach(async (element)=>{
             for(let message in snapshot.val()) {
-                await get(child(dbRef, "Courses/"+course_name+"/Professor/"+username+"/Chat/Students/"+student+"/Messages/"+message)).then(async (element) => {
+                await get(child(dbRef, "Courses/"+course_name+"/Professor/"+username+"/Chat/"+student+"/Messages/"+message)).then(async (element) => {
                     if(element.val().sender===username) {
                         if(element.val().type == "allegato") {
                             var path = element.val().message;
@@ -108,10 +107,9 @@ window.onload = async function(){
 
 
 //Aggiorna lista messaggi studente realtime
-onValue(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/Students/"+student), async (data)=> {
-    console.log(data.val())
+onValue(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+student), async ()=> {
     if(!initialState) {
-        const snapshot=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/Students/"+student+"/Messages"), limitToLast(1)));
+        const snapshot=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+student+"/Messages"), limitToLast(1)));
         snapshot.forEach(async element => {
             if(element.val().sender===username) {
                 if(element.val().type == "allegato") {
@@ -156,23 +154,14 @@ onValue(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/Students/"+
     else initialState=false;
 });
 
-await onValue(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"), async (data)=> {
-    onValueUpdate=true;
+onValue(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat"), async ()=> {
     if(!initChats) {
         document.getElementById("users-list").innerHTML = "";
-        await getChats().then(()=>{
-            onValueUpdate=false;
-        });
+        getChats();
     }
     else initChats=false;
-})
-
-await onValue(ref(db, 'Courses/'+course_name+"/Professor/"+username+"Seen/amezzina3"), async (data)=> {
-    if(!onValueUpdate) {
-        document.getElementById("users-list").innerHTML = "";
-        await getChats();
-    }
 });
+
 
 function getCourseName(str) {
     //Se il nome del corso contiene spazi, nell'url gli spazi saranno convertiti in %20 e gli ' con %27
@@ -206,13 +195,12 @@ document.getElementById("searchInput").addEventListener("keyup", async function(
         inputVal=document.getElementById("searchInput").value;
         const snapshot=await get(query(ref(db, 'Courses/'+course_name+'/Professor/'+username+'/Chat')));
         snapshot.forEach(element=>{
-            if(element.key !== "Seen") {
-                if(element.val().email.includes(inputVal) || element.val().fullname.toLowerCase().includes(inputVal.toLowerCase())){
-                    document.getElementById("users-list").innerHTML="";
-                    let username=element.val().email.split("@")[0].replace(".","");
-                    getFilteredChat(username);
-                }
-            }  
+            if(element.val().email.includes(inputVal) || element.val().fullname.toLowerCase().includes(inputVal.toLowerCase())){
+                document.getElementById("users-list").innerHTML="";
+                let username=element.val().email.split("@")[0].replace(".","");
+                getFilteredChat(username);
+            }
+               
         });
     }
 });
@@ -225,18 +213,10 @@ document.getElementById("send_btn").addEventListener("click", async function(){
 
 });
 
-//Se si clicca sulla barra dei mesaggi, l'ultimo messaggio studente e' stato letto
-document.getElementById('message_box').addEventListener('focus',async function() {
-    var stud = localStorage.getItem("student");
-    let r=ref(db, 'Courses/'+course_name+"/Professor/"+username+"Seen/"+stud);
-    await update(r, {
-        seen: true
-    });
-});
 
 async function sendMessage() {
     let inputVal=document.getElementById("message_box").value;
-    let r=ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/Students/"+student+"/Messages");
+    let r=ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+student+"/Messages");
 
     push(r, {
         message: inputVal,
@@ -263,7 +243,7 @@ document.getElementById("uploadFile").addEventListener("change", async function(
     
     const storo = sRef(storage, 'Chat/'+username+"/"+doc.name);
     await uploadBytes(storo, doc).then(async () => {
-        let r=ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/Students/"+student+"/Messages");
+        let r=ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+student+"/Messages");
         await push(r, {
             message: "Chat/"+username+"/"+doc.name,
             sender: username,
@@ -295,160 +275,91 @@ async function getStudentName(student) {
 }
 
 async function getChats() {
-    await get(child(dbRef, "Courses/"+course_name+"/Professor/"+username+"/Chat/Students")).then(async (snapshot) => {
+    get(child(dbRef, "Courses/"+course_name+"/Professor/"+username+"/Chat")).then((snapshot) => {
         for(let stud in snapshot.val()) {
-            if(stud !== "Seen") {
-                await checkSeenMessage(stud).then(async (seen)=>{
-                    await get(child(dbRef, "UsersList/"+stud)).then(async (snapshot) => {
-                        let img_path = snapshot.val().profile_pic;
-                        await getDownloadURL(sRef(storage, img_path)).then(async (url) => {
-                            const q=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/Students/"+stud+"/Messages"), limitToLast(1)));
-                            q.forEach((message)=>{
-                                if(seen === true) {
-                                    if(message.val().type == "allegato") {
-                                        document.getElementById("users-list").innerHTML+=`
-                                        <a href="#" onclick="changeStudent('${stud}')">
-                                            <div class="content">
-                                                <img src="${url}" alt="">
-                                                <div class="details">
-                                                    <span>${snapshot.val().fullname}</span>
-                                                    <p>${message.val().message.split("/").pop()}</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        `;
-                                    } else {
-                                        document.getElementById("users-list").innerHTML+=`
-                                        <a href="#" onclick="changeStudent('${stud}')">
-                                            <div class="content">
-                                                <img src="${url}" alt="">
-                                                <div class="details">
-                                                    <span>${snapshot.val().fullname}</span>
-                                                    <p>${message.val().message}</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        `;
-                                    }
-                                } else {
-                                    if(message.val().type == "allegato") {
-                                        document.getElementById("users-list").innerHTML+=`
-                                        <a href="#" onclick="changeStudent('${stud}')">
-                                            <div class="content">
-                                                <img src="${url}" alt="">
-                                                <div class="details">
-                                                    <span>${snapshot.val().fullname}</span>
-                                                    <p>${message.val().message.split("/").pop()}</p>
-                                                </div>
-                                                <div class="new-messages">
-                                                    <p>1</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        `;
-                                    } else {
-                                        document.getElementById("users-list").innerHTML+=`
-                                        <a href="#" onclick="changeStudent('${stud}')">
-                                            <div class="content">
-                                                <img src="${url}" alt="">
-                                                <div class="details">
-                                                    <span>${snapshot.val().fullname}</span>
-                                                    <p>${message.val().message}</p>
-                                                </div>
-                                                <div class="new-messages">
-                                                    <p>1</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        `;
-                                    }
-                                }
-                            });
-                        }); 
+            get(child(dbRef, "UsersList/"+stud)).then(async (snapshot) => {
+                let img_path = snapshot.val().profile_pic;
+                getDownloadURL(sRef(storage, img_path)).then(async (url) => {
+                    const q=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+stud+"/Messages"), limitToLast(1)));
+                    q.forEach((message)=>{
+                        if(message.val().type == "allegato") {
+                            document.getElementById("users-list").innerHTML+=`
+                            <a href="#" onclick="changeStudent('${stud}')">
+                                <div class="content">
+                                    <img src="${url}" alt="">
+                                    <div class="details">
+                                        <span>${snapshot.val().fullname}</span>
+                                        <p>${message.val().message.split("/").pop()}</p>
+                                    </div>
+                                </div>
+                                <div class="new-messages">
+                                    <p>1</p>
+                                </div>
+                            </a>
+                            `;
+                        } else {
+                            document.getElementById("users-list").innerHTML+=`
+                            <a href="#" onclick="changeStudent('${stud}')">
+                                <div class="content">
+                                    <img src="${url}" alt="">
+                                    <div class="details">
+                                        <span>${snapshot.val().fullname}</span>
+                                        <p>${message.val().message}</p>
+                                    </div>
+                                </div>
+                                <div class="new-messages">
+                                    <p>1</p>
+                                </div>
+                            </a>
+                            `;
+                        }
                     });
-                });
-            }
+                }); 
+            });
         }
     });
 }
 
 async function getFilteredChat(stud){
-    await get(child(dbRef, "UsersList/"+stud)).then(async (snapshot) => {
+    get(child(dbRef, "UsersList/"+stud)).then(async (snapshot) => {
         let img_path = snapshot.val().profile_pic;
-        await checkSeenMessage(stud).then(async (seen)=>{
-            await getDownloadURL(sRef(storage, img_path)).then(async (url) => {
-                const q=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/Students/"+stud+"/Messages"), limitToLast(1)));
-                q.forEach((message)=>{
-                    if(seen === true) {
-                        if(message.val().type == "allegato") {
-                            document.getElementById("users-list").innerHTML+=`
-                            <a href="#" onclick="changeStudent('${stud}')">
-                                <div class="content">
-                                    <img src="${url}" alt="">
-                                    <div class="details">
-                                        <span>${snapshot.val().fullname}</span>
-                                        <p>${message.val().message.split("/").pop()}</p>
-                                    </div>
-                                </div>
-                            </a>
-                            `;
-                        } else {
-                            document.getElementById("users-list").innerHTML+=`
-                            <a href="#" onclick="changeStudent('${stud}')">
-                                <div class="content">
-                                    <img src="${url}" alt="">
-                                    <div class="details">
-                                        <span>${snapshot.val().fullname}</span>
-                                        <p>${message.val().message}</p>
-                                    </div>
-                                </div>
-                            </a>
-                            `;
-                        }
-                    } else {
-                        if(message.val().type == "allegato") {
-                            document.getElementById("users-list").innerHTML+=`
-                            <a href="#" onclick="changeStudent('${stud}')">
-                                <div class="content">
-                                    <img src="${url}" alt="">
-                                    <div class="details">
-                                        <span>${snapshot.val().fullname}</span>
-                                        <p>${message.val().message.split("/").pop()}</p>
-                                    </div>
-                                    <div class="new-messages">
-                                        <p>1</p>
-                                    </div>
-                                </div>
-                            </a>
-                            `;
-                        } else {
-                            document.getElementById("users-list").innerHTML+=`
-                            <a href="#" onclick="changeStudent('${stud}')">
-                                <div class="content">
-                                    <img src="${url}" alt="">
-                                    <div class="details">
-                                        <span>${snapshot.val().fullname}</span>
-                                        <p>${message.val().message}</p>
-                                    </div>
-                                    <div class="new-messages">
-                                        <p>1</p>
-                                    </div>
-                                </div>
-                            </a>
-                            `;
-                        }
-                    }
-                });
+        getDownloadURL(sRef(storage, img_path)).then(async (url) => {
+            const q=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+stud+"/Messages"), limitToLast(1)));
+            q.forEach((message)=>{
+                if(message.val().type == "allegato") {
+                    document.getElementById("users-list").innerHTML+=`
+                    <a href="#" onclick="changeStudent('${stud}')">
+                        <div class="content">
+                            <img src="${url}" alt="">
+                            <div class="details">
+                                <span>${snapshot.val().fullname}</span>
+                                <p>${message.val().message.split("/").pop()}</p>
+                            </div>
+                        </div>
+                        <div class="new-messages">
+                            <p>1</p>
+                        </div>
+                    </a>
+                    `;
+                } else {
+                    document.getElementById("users-list").innerHTML+=`
+                    <a href="#" onclick="changeStudent('${stud}')">
+                        <div class="content">
+                            <img src="${url}" alt="">
+                            <div class="details">
+                                <span>${snapshot.val().fullname}</span>
+                                <p>${message.val().message}</p>
+                            </div>
+                        </div>
+                        <div class="new-messages">
+                            <p>1</p>
+                        </div>
+                    </a>
+                    `;
+                }
             });
         }); 
     });
-}
-
-async function checkSeenMessage(stud) {
-    const snapshot=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+username+"Seen/"+stud)));
-    if(snapshot.exists())
-        return snapshot.val().seen;
-    else return undefined;
 }
 
 function changeStudent(student) {
