@@ -28,14 +28,14 @@ window.onload = async function(){
         document.getElementById("href_quiz").href+="?"+get_str;
         document.getElementById("href_info").href+="?"+get_str;
 
-        const snapshot=await get(query(ref(db, "Courses/"+course_name+"/Professor/"+teacher+"/Chat/Students/"+username+"/Messages"), orderByChild("timestamp")));
+        const snapshot=await get(query(ref(db, "Courses/"+course_name+"/Professor/"+teacher+"/Chat/"+username+"/Messages"), orderByChild("timestamp")));
 
         await getDownloadURL(sRef(storage, img_path)).then(async (url) => {
             document.getElementById("teacher_pic").src=url;
             
             //snapshot.forEach(element => {
             for(let messaggio in snapshot.val()) {
-                await get(child(dbRef, "Courses/"+course_name+"/Professor/"+teacher+"/Chat/Students/"+username+"/Messages/"+messaggio)).then(async (element) => {
+                await get(child(dbRef, "Courses/"+course_name+"/Professor/"+teacher+"/Chat/"+username+"/Messages/"+messaggio)).then(async (element) => {
                     if(element.val().sender===username) {
                         if(element.val().type == "allegato") {
                             var path = element.val().message;
@@ -91,13 +91,13 @@ window.onload = async function(){
 
 await getTeacher().then((teacher) => {
     //Aggiorna lista messaggi studente realtime
-    onValue(ref(db, 'Courses/'+course_name+"/Professor/"+teacher+"/Chat/Students/"+username+"/Messages"), async ()=> {
+    onValue(ref(db, 'Courses/'+course_name+"/Professor/"+teacher+"/Chat/"+username+"/Messages"), async ()=> {
         if(!initialState) {
             await getTeacher().then(async (teacher) => {
-                const snapshot=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+teacher+"/Chat/Students/"+username+"/Messages"), limitToLast(1)));
+                const snapshot=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+teacher+"/Chat/"+username+"/Messages"), limitToLast(1)));
                 //snapshot.forEach(async element => {
                 for(let messaggio in snapshot.val()) {
-                    await get(child(dbRef, "Courses/"+course_name+"/Professor/"+teacher+"/Chat/Students/"+username+"/Messages/"+messaggio)).then(async (element) => {
+                    await get(child(dbRef, "Courses/"+course_name+"/Professor/"+teacher+"/Chat/"+username+"/Messages/"+messaggio)).then(async (element) => {
                         if(element.val().sender===username) {
                             if(element.val().type == "allegato") {
                                 var path = element.val().message;
@@ -186,25 +186,20 @@ document.getElementById("send_btn").addEventListener("click", async function(){
 });
 
 async function sendMessage() {
-    await getTeacher().then(async (data)=>{
+    await getTeacher().then((data)=>{
         let inputVal=document.getElementById("message_box").value;
-        let r=ref(db, 'Courses/'+course_name+"/Professor/"+data+"/Chat/Students/"+username+"/Messages");
+        let r=ref(db, 'Courses/'+course_name+"/Professor/"+data+"/Chat/"+username+"/Messages");
 
-        await push(r, {
+        push(r, {
             message: inputVal,
             sender: username,
             timestamp: Date.now()
         }).then(async () => {
-            let r=ref(db, 'Courses/'+course_name+"/Professor/"+data+"/Chat/Students/"+username);
+            let r=ref(db, 'Courses/'+course_name+"/Professor/"+data+"/Chat/"+username);
             let name = await getStudentName();
-            await update(r, {
+            update(r, {
                 email: email,
                 fullname: name
-            }).then(async()=>{
-                let r=ref(db, 'Courses/'+course_name+"/Professor/"+data+"Seen/"+username);
-                await update(r, {
-                    seen: false
-                })
             })
             document.getElementById("message_box").value="";
         });
@@ -228,7 +223,7 @@ document.getElementById("uploadFile").addEventListener("change", async function(
     const storo = sRef(storage, 'Chat/'+username+"/"+doc.name);
     await getTeacher().then(async (teacher)=>{
         await uploadBytes(storo, doc).then(async () => {
-            let r=ref(db, 'Courses/'+course_name+"/Professor/"+teacher+"/Chat/Students/"+username+"/Messages");
+            let r=ref(db, 'Courses/'+course_name+"/Professor/"+teacher+"/Chat/"+username+"/Messages");
             await push(r, {
                 message: "Chat/"+username+"/"+doc.name,
                 sender: username,
