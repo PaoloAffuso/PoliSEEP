@@ -28,6 +28,10 @@ window.onload = function(){
     getQuizList();
 };
 
+window.onbeforeunload = function() {
+    return "Are you sure you want to leave?"; //Il messaggio non viene mostrato, serve solo restituire una stringa
+}
+
 async function getLoggedType(username) {
     const snapshot=await get(query(ref(db, "UsersList"), orderByChild("email"), equalTo(email)));
     let type="";

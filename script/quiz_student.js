@@ -17,7 +17,11 @@ const dbRef = ref(db);
 let email = localStorage.getItem("email"); 
 let username=email.split("@")[0].replace(".","");
 
+let firstLoad=true;
+let stop=false;
+
 window.onload = function(){
+    firstLoad=true;
     let type = getLoggedType(username);
     if(type==="DOC") window.location.href = "/poliseep/teacher/teacher.html"; //Pagina student ancora da fare
 
@@ -27,6 +31,12 @@ window.onload = function(){
 
     getQuizList();
 };
+
+//Se e' la prima apertura della pagina oppure siamo su un quiz in corso, rileva il refresh di pagina
+window.onbeforeunload = function() {
+    if(!firstLoad && (localStorage.getItem("viewSingleQuiz")=="true" || localStorage.getItem("viewSingleQuiz")==undefined))
+        return "Are you sure you want to leave?"; //Il messaggio non viene mostrato, serve solo restituire una stringa
+}
 
 async function getLoggedType(username) {
     const snapshot=await get(query(ref(db, "UsersList"), orderByChild("email"), equalTo(email)));
@@ -46,8 +56,8 @@ function getCourseName(str) {
 
 async function getQuizList(){
     //Prima recupero il docente della materia, poi stampo la lista
-    await getTeacher().then((teacher)=> {
-        get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz")).then(async (snapshot) => {
+    await getTeacher().then(async (teacher)=> {
+        await get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz")).then(async (snapshot) => {
             var count=1;
             for(let quiz in snapshot.val()) {
                 var quizEscaped = quiz.replace("'", "&prime;");
@@ -68,7 +78,7 @@ async function getQuizList(){
                 count++;
             }
         });
-    })
+    });
 }
 
 async function getTeacher() {
@@ -78,6 +88,13 @@ async function getTeacher() {
 
 //Quiz effettuato dall'utente. Visualizza anche le risposte
 function viewCorrectedQuiz(quiz, teacher, id) {
+    if(localStorage.getItem("viewSingleQuiz")=="true"){
+        if(!firstLoad) 
+            if (!confirm("Are you sure you want to exit this page?"))
+                return false;
+        firstLoad=false;
+    }
+
     quiz = quiz.replace("′", "'");
 
     document.getElementById('quiz3').style.display='block'; document.getElementById('noquiz').style.display='none';
@@ -87,6 +104,7 @@ function viewCorrectedQuiz(quiz, teacher, id) {
     document.querySelector("#quiz3 .container").innerHTML+=`<button class="send-button" onclick="retakeQuiz('${quiz}','${teacher}', '${id}')">Retake quiz</button>`;
 
     get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz)).then((snapshot) => {
+        localStorage.setItem("viewSingleQuiz", false);
         document.getElementById("quiz_name").innerHTML=snapshot.val().quiz_name;
         document.getElementById("quiz_desc").innerHTML=snapshot.val().quiz_desc;
         for(let question in snapshot.val()) {
@@ -164,6 +182,16 @@ function viewCorrectedQuiz(quiz, teacher, id) {
 
 //Quiz non ancora effettuato quindi "pulito"
 async function viewSingleQuiz(quiz, teacher){
+    if(firstLoad) localStorage.setItem("viewSingleQuiz", true);
+
+    if(localStorage.getItem("viewSingleQuiz")=="true"){
+        console.log(localStorage.getItem("viewSingleQuiz"))
+        if(!firstLoad) 
+            if (!confirm("Are you sure you want to exit this page?"))
+                return false;
+        firstLoad=false;
+    }
+
     document.getElementById('noquiz').style.display='none';
     //document.getElementById('quiz3').style.display='block'; 
     document.querySelector('#panel #quiz3').style.display='block';
@@ -173,6 +201,7 @@ async function viewSingleQuiz(quiz, teacher){
     document.querySelector("#quiz3 .container").innerHTML+=`<button class="send-button" onclick="submitQuiz('${quiz}','${teacher}')">Send</button>`;
     quiz = quiz.replace("′", "'");
     await get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz)).then((snapshot) => {
+        localStorage.setItem("viewSingleQuiz", true);
         document.getElementById("quiz_name").innerHTML=snapshot.val().quiz_name;
         document.getElementById("quiz_desc").innerHTML=snapshot.val().quiz_desc;
         for(let question in snapshot.val()) {
