@@ -147,7 +147,7 @@ function viewCorrectedQuiz(quiz, teacher, id) {
                                                     <textarea rows="5" disabled>Given answer: ${snap2.val().answer}</textarea>
                                                 </label>
                                                 <label class="right_label">
-                                                    <textarea rows="5" disabled>Given answer: ${snap1.val().answer}</textarea>
+                                                    <textarea rows="5" disabled>Correct answer: ${snap1.val().answer}</textarea>
                                                 </label>
                                             `;
                                         }
