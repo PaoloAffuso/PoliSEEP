@@ -54,11 +54,11 @@ async function getQuizList(){
                 await get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz+"/Question 1/"+username)).then((snap1) => {
                     if(snap1.exists()) {
                         document.getElementById("ul_left").innerHTML+=`<li
-                        onclick="viewCorrectedQuiz('${quizEscaped}', '${teacher}', 'quiz${count}')" id="quiz${count}">
+                        onclick="viewCorrectedQuiz('${quizEscaped}', '${teacher}', 'quiz-${count}')" id="quiz-${count}">
                         ${quiz}</li>`;
                     } else {
                         document.getElementById("ul_left").innerHTML+=`<li
-                        onclick="viewSingleQuiz('${quizEscaped}', '${teacher}')" id="quiz${count}">
+                        onclick="viewSingleQuiz('${quizEscaped}', '${teacher}')" id="quiz-${count}">
                         ${quiz}
                         <div class="new-quiz">
                             <p>NEW</p>
@@ -81,10 +81,14 @@ function viewCorrectedQuiz(quiz, teacher, id) {
     quiz = quiz.replace("′", "'");
 
     document.getElementById('quiz3').style.display='block'; document.getElementById('noquiz').style.display='none';
+    document.getElementById("quiz_name").innerHTML = "";
+    document.getElementById("quiz_desc").innerHTML = "";
     document.querySelector("#quiz3 .container").innerHTML="";
     document.querySelector("#quiz3 .container").innerHTML+=`<button class="send-button" onclick="retakeQuiz('${quiz}','${teacher}', '${id}')">Retake quiz</button>`;
 
     get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz)).then((snapshot) => {
+        document.getElementById("quiz_name").innerHTML=snapshot.val().quiz_name;
+        document.getElementById("quiz_desc").innerHTML=snapshot.val().quiz_desc;
         for(let question in snapshot.val()) {
             if(question.includes("Question")) {
                 let number = question.split(" ")[1];
@@ -119,7 +123,7 @@ function viewCorrectedQuiz(quiz, teacher, id) {
                                         }
                                     });
                                     
-                                } else {
+                                } else if(snap1.val().checked===true){
                                     get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz+"/"+question+"/"+username+"/"+answer)).then((snap2) => {
                                         if(snap2.exists()) {
                                             document.querySelector("#quiz3 .container #p"+number).innerHTML+=`
@@ -135,33 +139,24 @@ function viewCorrectedQuiz(quiz, teacher, id) {
                                             `;
                                         }
                                     });
+                                } else { //caso risposta aperta
+                                    get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz+"/"+question+"/"+username+"/"+answer)).then((snap2) => {
+                                        if(snap2.exists()) {
+                                            document.querySelector("#quiz3 .container #p"+number).innerHTML+=`
+                                                <label>
+                                                    <textarea rows="5" disabled>Given answer: ${snap2.val().answer}</textarea>
+                                                </label>
+                                                <label class="right_label">
+                                                    <textarea rows="5" disabled>Given answer: ${snap1.val().answer}</textarea>
+                                                </label>
+                                            `;
+                                        }
+                                    });
                                 }
                             });
                         }
                     }
                 });
-                /*
-                get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz+"/"+question+"/"+username)).then((snap) => {
-                    for(let studentAnswer in snap.val()) {
-                        get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz+"/"+question+"/"+studentAnswer)).then((snap1) => {
-                            console.log(snap1.val().explain);
-                            if(snap1.val().checked===false) {
-                                document.querySelector("#quiz3 .container #p"+number).innerHTML+=`
-                                        <label class="wrong_label">
-                                            ${snap1.val().answer}
-                                            <br><br>Explanation: ${snap1.val().explain}
-                                        </label>
-                                    `;
-                            } else {
-                                document.querySelector("#quiz3 .container #p"+number).innerHTML+=`
-                                        <label class="right_label">
-                                            ${snap1.val().answer}
-                                        </label>
-                                    `;
-                            }
-                        });
-                    }
-                });*/
             }
         }
     });
@@ -169,7 +164,9 @@ function viewCorrectedQuiz(quiz, teacher, id) {
 
 //Quiz non ancora effettuato quindi "pulito"
 async function viewSingleQuiz(quiz, teacher){
-    document.getElementById('quiz3').style.display='block'; document.getElementById('noquiz').style.display='none';
+    document.getElementById('noquiz').style.display='none';
+    //document.getElementById('quiz3').style.display='block'; 
+    document.querySelector('#panel #quiz3').style.display='block';
     document.getElementById("quiz_name").innerHTML = "";
     document.getElementById("quiz_desc").innerHTML = "";
     document.querySelector("#quiz3 .container").innerHTML="";
@@ -208,7 +205,7 @@ async function viewSingleQuiz(quiz, teacher){
                                 } else {
                                     document.querySelector("#quiz3 .container #p"+number).innerHTML+=`
                                         <label>
-                                            <textarea rows="5" placeholder="You can type here your answer" id="a${answer.split(" ")[1]}">${snap1.val().answer}</textarea>
+                                            <textarea rows="5" placeholder="You can type here your answer" id="a${answer.split(" ")[1]}"></textarea>
                                         </label>
                                     `;
                                 }
@@ -229,7 +226,7 @@ async function submitQuiz(quiz, teacher) {
         var label = document.querySelector("#quiz3 .container #p"+i).getElementsByTagName('label').length;
         for(let l=1;l<=label;l++) {
             var answer = document.querySelector("#quiz3 .container #p"+i+" #a"+l);
-            if(answer.checked) {
+            if(answer.checked || answer.type === "textarea") {
                 await get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz+"/Question "+i+"/"+username+"/")).then(async (snapshot) => {
                     let r=await ref(db, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz+"/Question "+i+"/"+username+"/Answer "+l);
                     await set(r, {
