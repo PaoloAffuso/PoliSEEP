@@ -18,6 +18,7 @@ let email = localStorage.getItem("email");
 let username=email.split("@")[0].replace(".","");
 
 window.onload = function(){
+    localStorage.removeItem("createQuiz");
     let type = getLoggedType(username);
     if(type==="STU") window.location.href = "/poliseep/student/student.html"; //Pagina student ancora da fare
 
@@ -29,7 +30,8 @@ window.onload = function(){
 };
 
 window.onbeforeunload = function() {
-    return "Are you sure you want to leave?"; //Il messaggio non viene mostrato, serve solo restituire una stringa
+    if(localStorage.getItem("createQuiz")=="true")
+        return "Are you sure you want to leave?"; //Il messaggio non viene mostrato, serve solo restituire una stringa
 }
 
 async function getLoggedType(username) {
@@ -48,6 +50,10 @@ function getCourseName(str) {
     return str;
 }
 
+document.getElementById("addButton").addEventListener("click", function(){
+    localStorage.setItem("createQuiz", true);
+});
+
 function getQuizList(){
     get(child(dbRef, "UsersList/"+username+"/Courses/"+course_name+"/Quiz")).then((snapshot) => {
         for(let quiz in snapshot.val()) {
@@ -62,6 +68,11 @@ function getQuizList(){
 }
 
 function viewSingleQuiz(quiz){
+    if(localStorage.getItem("createQuiz")=="true")
+        if(!confirm("Are you sure you want to exit this page?"))
+            return false;
+        else localStorage.removeItem("createQuiz");
+
     document.querySelector("#quiz3 .container").innerHTML = "";
     document.querySelector("#quiz3 .container").innerHTML += `<button class="decline-button" value="${quiz}" onclick="deleteQuiz('${quiz}')" id="deleteButton">Delete Quiz</button><br><br><br>`;
     document.getElementById('quiz3').style.display='block'; document.getElementById('noquiz').style.display='none'; document.getElementById('newquiz').style.display='none';
