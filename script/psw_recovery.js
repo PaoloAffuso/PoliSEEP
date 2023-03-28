@@ -68,6 +68,13 @@ function changePassword(){
     var username=localStorage.getItem("unamepswrecovery");
 
     var pass = document.getElementById("password").value;
+
+    let regexPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    if(pass && !regexPass.test(pass)) {
+        alert("The Password must meet these criteria:\n1. Minimum 8 characters; \n2. At least one uppercase and lowercase letter;\n3. At least one numeric and special character;");
+        return false;
+    }
+
     var enc_Pass = encPass(pass);
 
     get(child(dbRef, "UsersList/"+username)).then((snapshot) => {
