@@ -28,7 +28,7 @@ window.onload = async function(){
     document.getElementById("href_courses").href+="?"+get_str;
     document.getElementById("href_quiz").href+="?"+get_str;
     document.getElementById("url_file").href+="?"+get_str;
-    document.getElementById("url_courses").href+="?"+get_str;
+    document.getElementById("url_info").href+="?"+get_str;
     document.getElementById("url_quiz").href+="?"+get_str;
     
     getChats();
@@ -278,43 +278,48 @@ async function getStudentName(student) {
 }
 
 async function getChats() {
-    get(child(dbRef, "Courses/"+course_name+"/Professor/"+username+"/Chat")).then((snapshot) => {
+    await get(child(dbRef, "Courses/"+course_name+"/Professor/"+username+"/Chat")).then(async (snapshot) => {
+        let i = 0;
         for(let stud in snapshot.val()) {
-            get(child(dbRef, "UsersList/"+stud)).then(async (snapshot) => {
+            await get(child(dbRef, "UsersList/"+stud)).then(async (snapshot) => {
                 let img_path = snapshot.val().profile_pic;
-                getDownloadURL(sRef(storage, img_path)).then(async (url) => {
+                await getDownloadURL(sRef(storage, img_path)).then(async (url) => {
                     const q=await get(query(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+stud+"/Messages"), limitToLast(1)));
                     q.forEach((message)=>{
-                        if(message.val().type == "allegato") {
-                            document.getElementById("users-list").innerHTML+=`
-                            <a href="#" onclick="changeStudent('${stud}')">
-                                <div class="content">
-                                    <img src="${url}" alt="">
-                                    <div class="details">
-                                        <span>${snapshot.val().fullname}</span>
-                                        <p>${message.val().message.split("/").pop()}</p>
+                        if(document.getElementById("chat"+i)===null)
+                        {
+                            if(message.val().type == "allegato") {
+                                document.getElementById("users-list").innerHTML+=`
+                                <a id="chat${i}" href="#" onclick="changeStudent('${stud}')">
+                                    <div class="content">
+                                        <img src="${url}" alt="">
+                                        <div class="details">
+                                            <span>${snapshot.val().fullname}</span>
+                                            <p>${message.val().message.split("/").pop()}</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="new-messages">
-                                    <p>1</p>
-                                </div>
-                            </a>
-                            `;
-                        } else {
-                            document.getElementById("users-list").innerHTML+=`
-                            <a href="#" onclick="changeStudent('${stud}')">
-                                <div class="content">
-                                    <img src="${url}" alt="">
-                                    <div class="details">
-                                        <span>${snapshot.val().fullname}</span>
-                                        <p>${message.val().message}</p>
+                                    <div class="new-messages">
+                                        <p>1</p>
                                     </div>
-                                </div>
-                                <div class="new-messages">
-                                    <p>1</p>
-                                </div>
-                            </a>
-                            `;
+                                </a>
+                                `;
+                            } else {
+                                document.getElementById("users-list").innerHTML+=`
+                                <a id="chat${i}" href="#" onclick="changeStudent('${stud}')">
+                                    <div class="content">
+                                        <img src="${url}" alt="">
+                                        <div class="details">
+                                            <span>${snapshot.val().fullname}</span>
+                                            <p>${message.val().message}</p>
+                                        </div>
+                                    </div>
+                                    <div class="new-messages">
+                                        <p>1</p>
+                                    </div>
+                                </a>
+                                `;
+                            }
+                            i++;
                         }
                     });
                 }); 
