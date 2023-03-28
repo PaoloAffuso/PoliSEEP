@@ -27,6 +27,9 @@ window.onload = async function(){
     document.getElementById("href_file").href+="?"+get_str;
     document.getElementById("href_courses").href+="?"+get_str;
     document.getElementById("href_quiz").href+="?"+get_str;
+    document.getElementById("url_file").href+="?"+get_str;
+    document.getElementById("url_courses").href+="?"+get_str;
+    document.getElementById("url_quiz").href+="?"+get_str;
     
     getChats();
 

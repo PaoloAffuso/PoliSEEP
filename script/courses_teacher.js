@@ -21,6 +21,9 @@ window.onload = function(){
     document.getElementById("href_file").href+="?"+get_str;
     document.getElementById("href_chat").href+="?"+get_str;
     document.getElementById("href_quiz").href+="?"+get_str;
+    document.getElementById("url_file").href+="?"+get_str;
+    document.getElementById("url_chat").href+="?"+get_str;
+    document.getElementById("url_quiz").href+="?"+get_str;
     printData(username, getCourseName(get_str));
     updatePic();
     getEnrolledStudents(username, getCourseName(get_str));

@@ -28,6 +28,10 @@ window.onload = async function(){
         document.getElementById("href_quiz").href+="?"+get_str;
         document.getElementById("href_info").href+="?"+get_str;
 
+        document.getElementById("url_file").href+="?"+get_str;
+        document.getElementById("url_quiz").href+="?"+get_str;
+        document.getElementById("url_info").href+="?"+get_str;
+
         const snapshot=await get(query(ref(db, "Courses/"+course_name+"/Professor/"+teacher+"/Chat/"+username+"/Messages"), orderByChild("timestamp")));
 
         await getDownloadURL(sRef(storage, img_path)).then(async (url) => {

@@ -14,9 +14,12 @@ window.onload = function(){
     let type = getLoggedType(username);
     if(type==="DOC") window.location.href = "/poliseep/teacher/teacher.html";
     let get_str = window.location.search.substring(1);
-    document.getElementById("href_file").href+="?"+get_str;
+    document.getElementById("href_file").href+="?"+get_str; // mod. pc
     document.getElementById("href_chat").href+="?"+get_str;
     document.getElementById("href_quiz").href+="?"+get_str;
+    document.getElementById("url_file").href+="?"+get_str; // mod. mobile
+    document.getElementById("url_chat").href+="?"+get_str;
+    document.getElementById("url_quiz").href+="?"+get_str;
     showDocPic(getCourseName(get_str));
     printData(username, getCourseName(get_str));
 };
