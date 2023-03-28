@@ -19,7 +19,8 @@ window.onload = function(){
     showCourses(username);
     getCountCourses(username);
     getEnrolledStudents(username);
-    getLoadedQuiz(username)
+    getLoadedQuiz(username);
+    printGraph();
 };
 
 async function setFullname(id, username){
@@ -262,4 +263,117 @@ function validateCourse(course_name, cfu, f) {
     } else {
         return true;
     }
+}
+
+async function getCourses()
+{
+    var xValues = [];
+
+    await get(child(dbRef, 'UsersList/'+username+"/Courses/")).then((snaphot) => {
+        for(let course in snaphot.val())
+        {
+            xValues.push(course);
+        }
+    });
+
+    return xValues;
+}
+
+
+
+// gestione grafico
+async function printGraph()
+{
+    //var xValues = ["Databases", "OS", "IoT","ML"];
+
+    var xValues = await getCourses(); // recupero i corsi del DOC
+    var dataNew = [];
+    var dataNewNo = [];
+    var contaStu = 0;
+    var contaStuNo = 0;
+
+    for(let course of xValues)
+    {
+        contaStu = await getCompletedCourses(course);
+        dataNew.push(contaStu[0]);
+        dataNewNo.push(contaStu[1]);
+        console.log(course, contaStu);
+    }
+
+			new Chart("myChart", {
+				type: "bar",
+				data: {
+					labels: xValues,
+					datasets: [{
+									label: "NUMBER OF STUDENT THAT HAVE COMPLETED THE QUIZ",
+									backgroundColor: "#4BB377",
+									data: dataNew
+								}, {
+									label: "NUMBER OF STUDENT THAT HAVEN'T COMPLETED THE QUIZ",
+									backgroundColor: "#004A86",
+									data: dataNewNo
+								}]
+						},
+				options: {
+					legend: {display: false},
+					title: {
+					display: true,
+					text: "TOTAL COMPLETED QUIZ"
+					}
+				}
+				});
+}
+
+async function getCompletedCourses(course) {
+
+    // user = studente
+    // username = docente
+
+    var countAnsweredQuiz = 0;
+    var countTotQuiz = 0;
+    var countTotCoursesCompleted = 0;
+    var countTotCourses = 0;
+    var contaStudente = 0;
+    var contaStudenteNo = 0;
+
+    await get(child(dbRef, "UsersList/")).then(async (snapshot) => {
+        for(let user in snapshot.val())
+        {
+            await get(child(dbRef, "UsersList/"+user)).then(async (snapshot) => {
+                if(snapshot.val().tipo=="STU")
+                {
+                    await get(child(dbRef, "UsersList/"+user+"/Courses/"+course)).then(async (snapshot) => {
+                        if(snapshot.exists())
+                        {
+                            await get(child(dbRef, "UsersList/"+username+"/Courses/"+course+"/Quiz")).then(async (snapshot) => {
+                        
+                                for(let quiz in snapshot.val())
+                                {
+                                    countTotQuiz++;
+                                    await get(child(dbRef, "UsersList/"+username+"/Courses/"+course+"/Quiz/"+quiz+"/Question 1/"+user)).then((snapshot) => {
+                                        if(snapshot.exists())
+                                        {
+                                            countAnsweredQuiz++;
+                                        }
+                                    });
+                                }
+                                if(countAnsweredQuiz>=countTotQuiz)
+                                {
+                                    // countTotCoursesCompleted++;
+                                    contaStudente++;
+                                  //  data.push(contaStudente++);
+                                }
+                                else
+                                {
+                                    contaStudenteNo++;
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    });
+
+    return [contaStudente, contaStudenteNo];
 }
