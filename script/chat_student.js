@@ -1,5 +1,5 @@
 import {db, storage} from '../firebaseConfig.js';
-import {ref, child, get, onValue, push, query, orderByChild, equalTo, limitToLast, update} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
+import {ref, child, get, onValue, push, query, orderByChild, equalTo, limitToLast, update, set} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
 import {ref as sRef, getDownloadURL, uploadBytes} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js';
 
 window.sendAttachments = sendAttachments;
@@ -201,11 +201,18 @@ async function sendMessage() {
         }).then(async () => {
             let r=ref(db, 'Courses/'+course_name+"/Professor/"+data+"/Chat/"+username);
             let name = await getStudentName();
-            update(r, {
+            await update(r, {
                 email: email,
                 fullname: name
-            })
-            document.getElementById("message_box").value="";
+            }).then(async()=>{
+                let r1=ref(db, 'Courses/'+course_name+"/Professor/"+data+"/Seen/"+username);
+                await update(r1, {
+                    seen: false
+                }).then(() => {
+                    document.getElementById("message_box").value="";
+                });
+            });
+            //document.getElementById("message_box").value="";
         });
     });
 }

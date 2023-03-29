@@ -1,5 +1,5 @@
 import {db, storage} from '../firebaseConfig.js';
-import {ref, child, get, onValue, push, query, orderByChild, equalTo, limitToLast} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
+import {ref, child, get, onValue, push, query, orderByChild, equalTo, limitToLast, update} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js';
 import {ref as sRef, getDownloadURL, uploadBytes} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js';
 
 window.changeStudent=changeStudent;
@@ -31,7 +31,26 @@ window.onload = async function(){
     document.getElementById("url_info").href+="?"+get_str;
     document.getElementById("url_quiz").href+="?"+get_str;
     
-    getChats();
+    await getChats().then(()=>{
+        onValue(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Seen/"), async (data)=> {
+            data.forEach((utente)=>{
+                if(document.getElementById("student-"+utente.key)!==null) {
+                    if(utente.val().seen===false) {
+                        document.getElementById("student-"+utente.key).innerHTML+=`
+                            <div class="new-messages">
+                                <p>1</p>
+                            </div>`
+                        ;
+                    }
+                    else {
+                        if(document.querySelector("#student-"+utente.key+" .new-messages")!==null) {
+                            document.querySelector("#student-"+utente.key+" .new-messages").remove();
+                        }
+                    }
+                }
+            });
+        });
+    });
 
     if(student!==null) {
         let img_path = await getStudentPic(student);
@@ -160,7 +179,26 @@ onValue(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+student),
 onValue(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat"), async ()=> {
     if(!initChats) {
         document.getElementById("users-list").innerHTML = "";
-        getChats();
+        await getChats().then(()=>{
+            onValue(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Seen/"), async (data)=> {
+                data.forEach((utente)=>{
+                    if(document.getElementById("student-"+utente.key)!==null) {
+                        if(utente.val().seen===false) {
+                            document.getElementById("student-"+utente.key).innerHTML+=`
+                                <div class="new-messages">
+                                    <p>1</p>
+                                </div>`
+                            ;
+                        }
+                        else {
+                            if(document.querySelector("#student-"+utente.key+" .new-messages")!==null) {
+                                document.querySelector("#student-"+utente.key+" .new-messages").remove();
+                            }
+                        }
+                    }
+                });
+            });
+        });
     }
     else initChats=false;
 });
@@ -213,7 +251,6 @@ document.getElementById("send_btn").addEventListener("click", async function(){
     if(document.getElementById("message_box").value!=""){
         await sendMessage();
     }
-
 });
 
 
@@ -221,7 +258,7 @@ async function sendMessage() {
     let inputVal=document.getElementById("message_box").value;
     let r=ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+student+"/Messages");
 
-    push(r, {
+    await push(r, {
         message: inputVal,
         sender: username,
         timestamp: Date.now()
@@ -290,7 +327,7 @@ async function getChats() {
                         {
                             if(message.val().type == "allegato") {
                                 document.getElementById("users-list").innerHTML+=`
-                                <a id="chat${i}" href="#" onclick="changeStudent('${stud}')">
+                                <a id="student-${stud}" href="#" onclick="changeStudent('${stud}')">
                                     <div class="content">
                                         <img src="${url}" alt="">
                                         <div class="details">
@@ -298,23 +335,17 @@ async function getChats() {
                                             <p>${message.val().message.split("/").pop()}</p>
                                         </div>
                                     </div>
-                                    <div class="new-messages">
-                                        <p>1</p>
-                                    </div>
                                 </a>
                                 `;
                             } else {
                                 document.getElementById("users-list").innerHTML+=`
-                                <a id="chat${i}" href="#" onclick="changeStudent('${stud}')">
+                                <a id="student-${stud}" href="#" onclick="changeStudent('${stud}')">
                                     <div class="content">
                                         <img src="${url}" alt="">
                                         <div class="details">
                                             <span>${snapshot.val().fullname}</span>
                                             <p>${message.val().message}</p>
                                         </div>
-                                    </div>
-                                    <div class="new-messages">
-                                        <p>1</p>
                                     </div>
                                 </a>
                                 `;
@@ -370,7 +401,12 @@ async function getFilteredChat(stud){
     });
 }
 
-function changeStudent(student) {
-    localStorage.setItem('student', student);
-    location.reload();
+async function changeStudent(student) {
+    let r=ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Seen/"+student);
+    await update(r, {
+        seen: true
+    }).then(() => {
+        localStorage.setItem('student', student);
+        location.reload();
+    });
 }
