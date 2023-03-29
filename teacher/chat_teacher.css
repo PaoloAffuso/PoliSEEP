@@ -281,9 +281,8 @@ a, button {
 	width: 40px;
 }
 
-.users-list a .new-messages{
-	margin-left: 2%;
-}
+/*
+
 
 .users-list a .new-messages p{
 	background: #004a86;
@@ -295,6 +294,21 @@ a, button {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+*/
+
+.users-list a .new-messages{
+	margin-left: 2%;
+}
+
+.left-side .new-messages p{
+	margin-left: 30px; 
+    font-size: smaller;
+    background-color: #4bb377; 
+    color: white;
+    border-radius: 5px; 
+    padding: 3px;
 }
 
 .users-list a .content p{

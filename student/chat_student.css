@@ -282,6 +282,8 @@ a, button {
 	width: 40px;
 }
 
+/*
+
 .users-list a .new-messages{
 	margin-left: 2%;
 }
@@ -297,6 +299,8 @@ a, button {
 	justify-content: center;
 	align-items: center;
 }
+
+*/
 
 .users-list a .content p{
 	color:#67676a;
