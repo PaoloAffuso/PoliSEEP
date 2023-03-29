@@ -38,7 +38,7 @@ window.onload = async function(){
                     if(utente.val().seen===false) {
                         document.getElementById("student-"+utente.key).innerHTML+=`
                             <div class="new-messages">
-                                <p>1</p>
+                                <p></p>
                             </div>`
                         ;
                     }
@@ -186,7 +186,7 @@ onValue(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat"), async ()
                         if(utente.val().seen===false) {
                             document.getElementById("student-"+utente.key).innerHTML+=`
                                 <div class="new-messages">
-                                    <p>1</p>
+                                    <p></p>
                                 </div>`
                             ;
                         }
