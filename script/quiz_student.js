@@ -226,7 +226,7 @@ async function viewSingleQuiz(quiz, teacher){
                                 if(questionType==="radioquestion") {
                                     document.querySelector("#quiz3 .container #p"+number).innerHTML+=`
                                         <label>
-                                            <input type="radio" value="${answer.split(" ")[1]}" name="p1" id="a${answer.split(" ")[1]}">${snap1.val().answer}
+                                            <input type="radio" value="${answer.split(" ")[1]}" name="p${answer.split(" ")[1]}" id="a${answer.split(" ")[1]}">${snap1.val().answer}
                                         </label>
                                     `;
                                 } else if(questionType==="checkboxquestion") {
