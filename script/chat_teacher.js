@@ -10,7 +10,7 @@ if (localStorage.getItem("email") === null) {
 }
 
 const dbRef = ref(db);
-let email = localStorage.getItem("email"); 
+let email = localStorage.getItem("email");
 let username=email.split("@")[0].replace(".","");
 let get_str = window.location.search.substring(1);
 let course_name=getCourseName(get_str);
@@ -30,7 +30,7 @@ window.onload = async function(){
     document.getElementById("url_file").href+="?"+get_str;
     document.getElementById("url_info").href+="?"+get_str;
     document.getElementById("url_quiz").href+="?"+get_str;
-    
+
     await getChats().then(()=>{
         onValue(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Seen/"), async (data)=> {
             data.forEach((utente)=>{
@@ -117,13 +117,13 @@ window.onload = async function(){
                                 </div>
                             `;
                         }
-                        
+
                     }
                 });
             }//);
         });
 
-        
+
     }
 };
 
@@ -169,9 +169,9 @@ onValue(ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+student),
                     `;
                 });
             }
-            
+
         });
-        
+
     }
     else initialState=false;
 });
@@ -241,7 +241,7 @@ document.getElementById("searchInput").addEventListener("keyup", async function(
                 let username=element.val().email.split("@")[0].replace(".","");
                 getFilteredChat(username);
             }
-               
+
         });
     }
 });
@@ -280,7 +280,7 @@ document.getElementById("uploadFile").addEventListener("change", async function(
     let doc = e.target.files[0];
     doc = renameFile(doc, doc.name + Date.now());
     console.log(doc.name);
-    
+
     const storo = sRef(storage, 'Chat/'+username+"/"+doc.name);
     await uploadBytes(storo, doc).then(async () => {
         let r=ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Chat/"+student+"/Messages");
@@ -353,7 +353,7 @@ async function getChats() {
                             i++;
                         }
                     });
-                }); 
+                });
             });
         }
     });
@@ -397,11 +397,12 @@ async function getFilteredChat(stud){
                     `;
                 }
             });
-        }); 
+        });
     });
 }
 
 async function changeStudent(student) {
+    // Posizionare questo controllo: document.getElementById('right').style.display='block'; document.getElementById('noquiz').style.display='none';
     let r=ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Seen/"+student);
     await update(r, {
         seen: true

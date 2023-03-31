@@ -182,7 +182,7 @@ a, button {
 	width: 25%;
 	display: block;
 	justify-content: center;
-	box-shadow: inset 0 0 20px rgba(0,0,0,0.7),
+	box-shadow: inset 0 0 20px rgba(0,0,0,0.7),0 0 30px rgba(0,0,0,0.5);
 }
 .users{
 	padding: 25px 30px;
@@ -303,11 +303,11 @@ a, button {
 }
 
 .left-side .new-messages p{
-	margin-left: 30px; 
+	margin-left: 30px;
     font-size: smaller;
-    background-color: #4bb377; 
+    background-color: #4bb377;
     color: white;
-    border-radius: 5px; 
+    border-radius: 5px;
     padding: 3px;
 }
 
@@ -316,12 +316,60 @@ a, button {
 	font-size: small;
 }
 
+/* -------------------------- Pannello laterale destro (schermata iniziale) --------------------------------- */
+
+.inbt {
+	padding: 10px;
+	font-family: "Montserrat", sans-serif;
+	font-size: 20px;
+	color: #004A86;
+	margin: 100px;
+	margin-bottom: 50px;
+	scroll-margin-top: 80px;
+	display: block;
+}
+
+.inbt span{
+	font-weight: 700;
+	font-family: "Montserrat", sans-serif;
+	font-size: 40px;
+	color: #004A86;
+}
+
+.inbt .shortdesc2 {
+	padding: 10px;
+	font-family: "Montserrat", sans-serif;
+	font-size: 15px;
+	color: #47506B;
+	margin-bottom: 10px;
+}
+
+.container_img {
+	max-width: auto;
+	max-height: auto;
+	width: fit-content;
+	border-radius: 8px;
+	padding: 10px;
+	box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.342);
+	background: linear-gradient(to right, #4BB377, #004A86);
+	align-items:center;
+	margin-top: 20px;
+	margin-bottom: 50px;
+	position: inherit;
+}
+
+.container_img img{
+	border-radius: 8px;
+	width: 700px;
+	height: 350px;
+}
+
 /* -------------------------- Pannello laterale destro (chat singola) --------------------------------- */
 .right-side {
 	background: #fff;
 	height: 100%;
 	width: 75%;
-	display: block;
+	display: none;
 }
 
 .chat-area {
@@ -502,6 +550,30 @@ a, button {
 	}
 	.nav .check-box {
 		visibility: visible;
+	}
+}
+
+@media screen and (max-width: 1100px) {
+	.container_img img {
+		width: 500px;
+		height: 250px;
+		/* align-self: center; */
+	}
+}
+
+@media screen and (max-width: 840px) {
+	.container_img img {
+		width: 300px;
+		height: 150px;
+		/* align-self: center; */
+	}
+}
+
+@media screen and (max-width: 580px) {
+	.container_img img {
+		width: 220px;
+		height: 120px;
+		/* align-self: center; */
 	}
 }
 

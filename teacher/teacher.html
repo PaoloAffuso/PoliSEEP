@@ -17,7 +17,7 @@
 		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
-		
+
 		<script type="module" src="../firebaseConfig.js"></script>
 		<script type="text/javascript" src="../script.js"></script>
 		<script type="module" src="../script/teacher.js"></script>
@@ -161,10 +161,10 @@
 							<h3>Create a new course</h3>
 							<br>
 							<input type="text" placeholder="Course name" id="course_name">
-							<input type="number" placeholder="CFU" id="cfu">
+							<input type="number" min = "0" placeholder="CFU" id="cfu">
 							<input type="text" placeholder="Professor" id="professor">
 							<textarea placeholder="Course Goals" id="course_goals"></textarea>
-							<input type="number" placeholder="Number of chapters" id="num_ch">
+							<input type="number" min = "0" placeholder="Number of chapters" id="num_ch">
 							<textarea placeholder="Brief description of the course" id="brief_description"></textarea>
 							<input type="text" placeholder="Learning Verification" id="learning_verification">
 							<input type="file" id="upload_img_btn">
