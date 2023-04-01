@@ -23,6 +23,15 @@ window.onload = async function(){
     let type = getLoggedType(username);
     if(type==="STU") window.location.href = "/poliseep/student/student.html";
 
+    if(localStorage.getItem("showNoQuiz")===null)
+        document.getElementById('noquiz').style.display='block';
+    else if(localStorage.getItem("showNoQuiz")==="false" ) {
+        document.getElementById('noquiz').style.display='none';
+        document.getElementById('right').style.display='block';
+    }
+    else document.getElementById('noquiz').style.display='block';
+    //document.getElementById('right').style.display='block'; 
+
     let get_str = window.location.search.substring(1);
     document.getElementById("href_file").href+="?"+get_str;
     document.getElementById("href_courses").href+="?"+get_str;
@@ -403,11 +412,14 @@ async function getFilteredChat(stud){
 
 async function changeStudent(student) {
     // Posizionare questo controllo: document.getElementById('right').style.display='block'; document.getElementById('noquiz').style.display='none';
+    document.getElementById('right').style.display='block'; 
+    document.getElementById('noquiz').style.display='none';
     let r=ref(db, 'Courses/'+course_name+"/Professor/"+username+"/Seen/"+student);
     await update(r, {
         seen: true
     }).then(() => {
         localStorage.setItem('student', student);
+        localStorage.setItem('showNoQuiz', false);
         location.reload();
     });
 }

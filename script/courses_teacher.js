@@ -179,33 +179,28 @@ document.getElementById("btn1").addEventListener("click", async function(){
         $('input[id="cfu_form"]').attr('placeholder',snapshot.val().cfu);
 
         var course_goals = snapshot.val().course_goals;
-        if(course_goals==="") {
-            $('textarea[id="obiettivoCorso"]').attr('placeholder',"Course goals");
+        if(course_goals!=="") {
+            $('textarea[id="obiettivoCorso"]').text(course_goals);
         }
-        else if(course_goals.length<40) {
-            $('textarea[id="obiettivoCorso"]').attr('placeholder',course_goals);
-        } else {
-            $('textarea[id="obiettivoCorso"]').attr('placeholder',course_goals.substring(0,30)+"...");
+        else {
+            $('textarea[id="obiettivoCorso"]').attr("placeholder", "Insert course goals");
         }
 
         var brief_description = snapshot.val().brief_description;
-        if(brief_description === "") {
-            $('textarea[id="descrizioneCorso"]').attr('placeholder',"Brief description of the course");
+        if(brief_description !== "") {
+            $('textarea[id="descrizioneCorso"]').text(brief_description);
         }
-        else if(brief_description.length<40) {
-            $('textarea[id="descrizioneCorso"]').attr('placeholder',brief_description);
-        } else {
-            $('textarea[id="descrizioneCorso"]').attr('placeholder',brief_description.substring(0,30)+"...");
+        else {
+            $('textarea[id="descrizioneCorso"]').attr("placeholder", "Insert a brief description of the course");
         }
+        
 
         var learning_verification = snapshot.val().learning_verification;
-        if(learning_verification === "") {
-            $('input[id="verificaCorso"]').attr('placeholder',"Learning Verification");
+        if(learning_verification !== "") {
+            $('input[id="verificaCorso"]').text(learning_verification);
         }
-        else if(learning_verification.length<40) {
-            $('input[id="verificaCorso"]').attr('placeholder',learning_verification);
-        } else {
-            $('input[id="verificaCorso"]').attr('placeholder',learning_verification.substring(0,30)+"...");
+        else {
+            $('input[id="verificaCorso"]').attr('placeholder',"Insert learning verification");
         }
     });
 });
