@@ -192,7 +192,7 @@ async function openCourseModal(course_name) {
         let prof = element.val().professor;
         //console.log(element.val().professor);
         document.getElementById("listprof").innerHTML += `
-            <input class = "cb" courseName="${course_name}" listProf="checkbox" type="checkbox" id="prof${i}" name="prof${i}" value="${prof}" email="${element.val().email}" onchange="cbChange(this)">
+            <input class = "cb" courseName="${course_name}" listProf="checkbox" type="checkbox" id="prof${i}" name="prof${i}" value="${prof}" email="${element.val().email}">
             <label for="prof${i}"> ${prof}</label>
             `;
         i++;
