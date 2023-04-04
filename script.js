@@ -189,7 +189,7 @@ function display(n) {
 
 function logout() {
   localStorage.clear();
-  window.location.href = "/poliseep";
+  window.location.href = "../index.html";
 }
 
 function capitalize(str) {
