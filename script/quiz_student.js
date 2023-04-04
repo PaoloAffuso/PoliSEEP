@@ -65,8 +65,18 @@ async function getQuizList(){
             var count=1;
             for(let quiz in snapshot.val()) {
                 var quizEscaped = quiz.replace("'", "&prime;");
-                await get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz+"/Question 1/"+username)).then((snap1) => {
-                    if(snap1.exists()) {
+                var trovato = false;
+                await get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz)).then(async (snap1) => {
+                    for(let question in snap1.val()) {
+                        if(question.includes("Question")) {
+                            await get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz+"/"+question+"/"+username)).then((snap2) => {
+                                if(snap2.exists()) {
+                                    trovato=true;
+                                }
+                            });
+                        }
+                    }
+                    if(trovato) {
                         document.getElementById("ul_left").innerHTML+=`<li
                         onclick="viewCorrectedQuiz('${quizEscaped}', '${teacher}', 'quiz-${count}')" id="quiz-${count}">
                         ${quiz}</li>`;
@@ -79,6 +89,21 @@ async function getQuizList(){
                         </div></li>`;
                     }
                 });
+
+                /*await get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz+"/Question 1/"+username)).then((snap1) => {
+                    if(snap1.exists()) {
+                        document.getElementById("ul_left").innerHTML+=`<li
+                        onclick="viewCorrectedQuiz('${quizEscaped}', '${teacher}', 'quiz-${count}')" id="quiz-${count}">
+                        ${quiz}</li>`;
+                    } else {
+                        document.getElementById("ul_left").innerHTML+=`<li
+                        onclick="viewSingleQuiz('${quizEscaped}', '${teacher}')" id="quiz-${count}">
+                        ${quiz}
+                        <div class="new-quiz">
+                            <p>NEW</p>
+                        </div></li>`;
+                    }
+                });*/
                 count++;
             }
         });
@@ -255,7 +280,9 @@ async function submitQuiz(quiz, teacher) {
     quiz = quiz.replace("′", "'");
     var container_div = document.getElementById('container_div');
     var count = container_div.getElementsByTagName('section').length;
+    var vuoto = false;
     for(let i=1;i<=count;i++) {
+        var trovato_check = false;
         var label = document.querySelector("#quiz3 .container #p"+i).getElementsByTagName('label').length;
         for(let l=1;l<=label;l++) {
             var answer = document.querySelector("#quiz3 .container #p"+i+" #a"+l);
@@ -263,14 +290,36 @@ async function submitQuiz(quiz, teacher) {
                 await get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz+"/Question "+i+"/"+username+"/")).then(async (snapshot) => {
                     let r=await ref(db, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz+"/Question "+i+"/"+username+"/Answer "+l);
                     await set(r, {
-                        answer: answer.value,
+                        answer: answer.value
                     });
                 });
             }
+            if(answer.checked  || (answer.type === "textarea" && answer.value!=="")) trovato_check=true;
+        }
+        if(!trovato_check) vuoto=true;
+    }
+    if(vuoto) {
+        if (!confirm("There are some missing answers. Are you sure you want to submit the quiz?")) {
+            get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz)).then(async (snapshot) => {
+                for(let question in snapshot.val()) {
+                    if(question.includes("Question")) {
+                        let r = ref(db, "UsersList/"+teacher+"/Courses/"+course_name+"/Quiz/"+quiz+"/"+question+"/"+username);
+                        await remove(r);
+                    }
+                }
+            }).then(()=>{
+                return false;
+            });
+        }
+        else {
+            alert("Quiz submitted");
+            window.location.reload();
         }
     }
-    alert("Quiz submitted");
-    window.location.reload();
+    else {
+        alert("Quiz submitted");
+        window.location.reload();
+    }
 }
 
 function retakeQuiz(quiz, teacher, id) {

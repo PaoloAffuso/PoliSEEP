@@ -156,13 +156,33 @@ async function getCompletedCourses() {
                             await get(child(dbRef, "UsersList/"+user+"/Courses/"+course+"/Quiz")).then(async (snapshot) => {
                                 for(let quiz in snapshot.val())
                                 {
+                                    var trovato=false;
                                     countTotQuiz++;
-                                    await get(child(dbRef, "UsersList/"+user+"/Courses/"+course+"/Quiz/"+quiz+"/Question 1/"+username)).then((snapshot) => {
-                                        if(snapshot.exists())
+                                    await get(child(dbRef, "UsersList/"+user+"/Courses/"+course+"/Quiz/"+quiz)).then(async (snapshot) => {
+                                        for(let question in snapshot.val()) {
+                                            if(question.includes("Question")) {
+                                                await get(child(dbRef, "UsersList/"+user+"/Courses/"+course+"/Quiz/"+quiz+"/"+question+"/"+username)).then((snapshot) => {
+                                                    if(snapshot.exists())
+                                                    {
+                                                        trovato=true;
+                                                        //countAnsweredQuiz++;
+                                                    }
+                                                });
+                                            }
+                                            if(trovato) break;
+                                        }
+                                        if(trovato)
                                         {
                                             countAnsweredQuiz++;
                                         }
                                     });
+
+                                    /*await get(child(dbRef, "UsersList/"+user+"/Courses/"+course+"/Quiz/"+quiz+"/Question 1/"+username)).then((snapshot) => {
+                                        if(snapshot.exists())
+                                        {
+                                            countAnsweredQuiz++;
+                                        }
+                                    });*/
                                 }
                             });
                         }

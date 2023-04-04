@@ -128,6 +128,13 @@ async function submitQuiz(){
     var container_div = document.getElementById('questions');
     var count = container_div.getElementsByTagName('section').length;
 
+    var ret=false;
+
+    if(count===0) {
+        alert("You must insert at least one question");
+        return false;
+    }
+
     await get(child(dbRef, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo)).then(async (snaphot) => {
         let r=await ref(db, 'UsersList/'+username+"/Courses/"+course_name+"/Quiz/"+capitolo);
         await set(r, {
@@ -136,6 +143,7 @@ async function submitQuiz(){
             quiz_chapter: quizChap.slice(7, quizChap.length)
         });
     }).then(async() => {
+        ret=false;
         for(let i=1; i<=count; i++){ // n° quesiti
             var questionType = document.querySelector("#d"+i+" .first2 #wrapper2 #questiontype").value;
 
@@ -202,16 +210,22 @@ async function submitQuiz(){
 
                 default:
                     alert("Select the question type!");
+                    ret=true;
                 break;
             }
         }
     });
+    if(ret)
+        return false;
+    else return true;
 }
 
 document.getElementById("confirm").addEventListener("click", async function(e) {
-    await submitQuiz().then(()=> {
-        alert('Quiz created');
-        window.location.reload();
+    await submitQuiz().then((ret)=> {
+        if(ret!==false) {
+            alert('Quiz created');
+            window.location.reload();
+        }
     })
 });
 
