@@ -73,7 +73,8 @@ function signup(nome,email, pass1, pass2) {
                 fullname: nome.value,
                 email: email.value,
                 tipo: tipo,
-                password: encPass(pass1)
+                password: encPass(pass1),
+                profile_pic: "/Profile/iconabase.jpg"
             }).then(() =>{
                 location.reload();
                 //alert("User added successfully");
