@@ -126,7 +126,7 @@ p{   /* PARAGRAFO TESTO "Please,select your role*/
 }
 
 .form-container.active .forms{ /*QUANDO E' ATTIVO IL FORM DI REGISTRAZIONE AUMENTA L'ALTEZZA DEL CONTAINER FORMS*/
-    height: 750px;
+    height: 600px;
     overflow: auto;
 }
 
