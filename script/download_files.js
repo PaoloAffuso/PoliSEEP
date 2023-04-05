@@ -7,7 +7,7 @@ if (localStorage.getItem("email") === null) {
 }
 
 const dbRef = ref(db);
-let email = localStorage.getItem("email"); 
+let email = localStorage.getItem("email");
 let username=email.split("@")[0].replace(".","");
 let currentDate = new Date();
 let get_str = window.location.search.substring(1);
@@ -15,7 +15,7 @@ let get_str = window.location.search.substring(1);
 window.onload = function(){
     let type = getLoggedType(username);
     if(type==="DOC") window.location.href = "/poliseep/teacher/teacher.html";
-    
+
     document.getElementById("href_info").href+="?"+get_str;
     document.getElementById("href_chat").href+="?"+get_str;
     document.getElementById("href_quiz").href+="?"+get_str;
@@ -41,32 +41,37 @@ async function showFiles(username) {
             </tr>
             `;
         });
-    }); 
+    });
 }
 
-// SCARICA FILE
+/*- DOWNLOAD FILES -*/
 document.getElementById("btnDownload").addEventListener("click", function(){
-    let checkedBoxes = document.querySelectorAll('input[name=checkbox]:checked');
-    let course_name = getCourseName(get_str);
-    let teacher = localStorage.getItem("teacher");
+    let checkedBoxes = document.querySelectorAll('input[name=checkbox]:checked'); // Recupera le checkbox selezionate
+    let course_name = getCourseName(get_str); // Recupera il nome del corso
+    let teacher = localStorage.getItem("teacher"); // Recupera il nome del docente
+    // Itera per ciascuna delle checkbox selezionate
     checkedBoxes.forEach(function(elem){
+        // Get finalizzata a recuperare, per ogni file, i relativi dati
         get(child(dbRef, "UsersList/"+teacher+"/Courses/"+course_name+"/Documents/"+elem.getAttribute("option_id"))).then((snapshot) => {
+            // Il metodo getBlob restituisce i dati associati ad ogni file reperiti dallo storage che viene richiamato mediante la reference “sRef”.
             getBlob(sRef(storage, snapshot.val().path))
             .then((blob) => {
-                const href = URL.createObjectURL(blob)
+                const href = URL.createObjectURL(blob) // Creazione dell'URL
+                // Creazione del link relativo a partire dal quale è possibile eseguire il download
                 const a = Object.assign(document.createElement('a'), {
                     href,
                     style: 'display:none',
-                    download: snapshot.val().doc_name // This is where you set the name of the file you're about to download
+                    download: snapshot.val().doc_name // Qui si imposta il nome del file che si sta per scaricare
                 })
                 a.click()
 
-                URL.revokeObjectURL(href)
-                a.remove()
+                URL.revokeObjectURL(href) // Revoca dell'URL precedente che comunica al browser di non conservare più il riferimento al file
+                a.remove() // Rimozione del link
+
             }).catch((error)=>{
                 console.error(error)
-            })  
-        });  
+            })
+        });
     });
 });
 
@@ -76,8 +81,8 @@ function download(dataurl, filename) {
     link.download = filename;
     link.click();
   }
-  
-  
+
+
 
 function getCourseName(str) {
     //Se il nome del corso contiene spazi, nell'url gli spazi saranno convertiti in %20 e gli ' con %27

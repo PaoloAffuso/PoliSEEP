@@ -9,7 +9,7 @@ if (localStorage.getItem("email") === null) {
 }
 
 const dbRef = ref(db);
-let email = localStorage.getItem("email"); 
+let email = localStorage.getItem("email");
 let username=email.split("@")[0].replace(".","");
 
 window.onload = function(){
@@ -95,7 +95,7 @@ async function showCourses() {
                 });
             }
         });
-    }); 
+    });
 }
 
 async function showYourCourses(username) {
@@ -112,7 +112,7 @@ async function showYourCourses(username) {
             </div>
             `;
         });
-    }); 
+    });
 }
 
 async function getCountCourses() {
@@ -130,7 +130,7 @@ async function getCountCourses() {
                 tot++;
             });
             //La classe di your_courses deve essere unica. Lo 0 sta perchè è univoca. Va fatto perché il css è stilizzato in base all'id
-            document.getElementById("available_courses").innerHTML = tot - count;   
+            document.getElementById("available_courses").innerHTML = tot - count;
         });
     });
 }
@@ -149,7 +149,7 @@ async function getCompletedCourses() {
                 if(snapshot.val().tipo=="DOC")
                 {
                     await get(child(dbRef, "UsersList/"+user+"/Courses")).then(async (snapshot) => {
-                        
+
                         for(let course in snapshot.val())
                         {
                             countTotCourses++;
@@ -216,25 +216,20 @@ async function openCourseModal(course_name) {
             <label for="prof${i}"> ${prof}</label>
             `;
         i++;
-    }); 
+    });
 }
 
-/*--*/
+/*- INVIO RICHIESTA DI ISCRIZIONE CORSO -*/
 document.getElementById('btnSendRequest').addEventListener("click", function(){
-    var checkedBoxes = document.querySelectorAll('input[listProf=checkbox]:checked');
-    let teacher=checkedBoxes[0].getAttribute("email").split("@")[0].replace(".","");
-    let r=ref(db, 'UsersList/'+teacher+"/Courses/"+checkedBoxes[0].getAttribute("courseName")+"/Pending/"+username);
+    var checkedBoxes = document.querySelectorAll('input[listProf=checkbox]:checked'); // Recupera le checkbox selezionate
+    let teacher=checkedBoxes[0].getAttribute("email").split("@")[0].replace(".",""); // Recupera il nome del docente
+    let r=ref(db, 'UsersList/'+teacher+"/Courses/"+checkedBoxes[0].getAttribute("courseName")+"/Pending/"+username); // Definisce il path del DB che si intende raggiungere
 
+    // Memorizzazione delle richieste inviate (set di nome e email dello studente relativo)
     set(r, {
         student: username,
         email: email
-    });/*.then(()=>{
-        r=ref(db, 'Courses/'+checkedBoxes[0].getAttribute("courseName")+'/Student/'+username);
-        set(r, {
-            student: username,
-            email: email
-        });
-    });*/
+    });
 
     alert("Request sent.");
 
@@ -244,7 +239,7 @@ document.getElementById('btnSendRequest').addEventListener("click", function(){
 /*------------------CAMBIO IMMAGINE PROFILO-----------*/
 document.getElementById('file').addEventListener("change", function(e) {
     let img = e.target.files[0];
-    const storo = sRef(storage, 'Profile/'+username+"/"+img.name); 
+    const storo = sRef(storage, 'Profile/'+username+"/"+img.name);
 
     uploadBytes(storo, img).then(() => {
         let r=ref(db, 'UsersList/'+username);

@@ -6,7 +6,7 @@ window.deleteTask= deleteTask;
 window.handleStatus = handleStatus;
 
 const dbRef = ref(db);
-let email = localStorage.getItem("email"); 
+let email = localStorage.getItem("email");
 let username=email.split("@")[0].replace(".","");
 
 // Import di tutti gli elementi richiesti
@@ -32,32 +32,36 @@ function allTasks() {
   clearButton.style.pointerEvents = "none";
 }
 
-// Aggiunge un task quando si inserisce il valore nell'area di testo e si preme invio
+/*- AGGIUNTA TASK TO-DO LIST -*/
 inputField.addEventListener("keyup", (e) => {
   let inputVal = inputField.value.trim(); // La funzione .trim rimuove lo spazio davanti e dietro al valore immesso
 
-  // Se si fa clic sul pulsante Invio e la lunghezza del valore assegnato è maggiore di 0
+  // Se si fa clic sul pulsante invio e la lunghezza del valore assegnato è maggiore di 0
   if (e.key === "Enter" && inputVal.length > 0) {
-    
+    // Get che richiama il DB mediante la costante “dbRef” (dichiarata inizialmente per definire il percorso del db che si intende raggiungere)
+    // finalizzata a recuperare il percorso relativo al task immesso dall'utente (se già esistente)
     get(child(dbRef, 'UsersList/'+username+"/Tasks/"+inputVal)).then((snaphot) => {
-      //Se il corso esiste già, non lo aggiungo nell'elenco corsi
+      //Se il valore immesso dall'utente non esiste (il percorso non è presente), allora lo si aggiunge alla To-Do List
       if(!snaphot.exists()) {
-          let r=ref(db, 'UsersList/'+username+"/Tasks/"+inputVal);
+          let r=ref(db, 'UsersList/'+username+"/Tasks/"+inputVal); // Definisce il path del DB che si intende raggiungere
+          // Memorizzazione del task (set del valore e rimozione del chek relativo)
           set(r, {
             task_name: inputVal,
             checked: "false"
           }).then(() => {
+            // Creazione HTML del list item
             let liTag = ` <li class="list pending" id="li-${inputVal}" val="${inputVal}">
                 <input id="${inputVal}" val="${inputVal}" type="checkbox"/>
                 <span class="task" onclick="handleStatus(getElementById('${inputVal}'))">${inputVal}</span>
                 <i class="uil uil-trash" onclick="deleteTask(this)" val="${inputVal}"></i>
               </li>`;
-      
+
               todoLists.insertAdjacentHTML("beforeend", liTag); // Inserimento del tag li all'interno del div todolist
-              inputField.value = ""; // Rimuove il valore dal campo di input
+              inputField.value = ""; // Rimozione del valore dal campo di input
               allTasks();
           });
       }
+      // Altrimenti, se il task che si intendeva aggiungere era già presente nel DB, viene semplicemente ripulito il campo di input senza aggiungere nulla.
       else document.getElementById("task_area").value = "";
     });
   }
