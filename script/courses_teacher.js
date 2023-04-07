@@ -44,15 +44,14 @@ async function printData(username, course_name) {
         else
             document.getElementById("course_desc").innerHTML = snapshot.val().brief_description;
 
-        getDownloadURL(sRef(storage, snapshot.val().img_url)).then((url) => {
-            document.getElementById("img_url").src = url;
-        });    
-
         if(snapshot.val().learning_verification==="")
             document.getElementById("learning_verification").innerHTML = "Learning verification for this course is still not available.";
         else
             document.getElementById("learning_verification").innerHTML = snapshot.val().learning_verification;
-        
+
+        getDownloadURL(sRef(storage, snapshot.val().img_url)).then((url) => {
+            document.getElementById("img_url").src = url;
+        });    
     });
 }
 
@@ -197,10 +196,10 @@ document.getElementById("btn1").addEventListener("click", async function(){
 
         var learning_verification = snapshot.val().learning_verification;
         if(learning_verification !== "") {
-            $('input[id="verificaCorso"]').text(learning_verification);
+            $('textarea[id="verificaCorso"]').text(learning_verification);
         }
         else {
-            $('input[id="verificaCorso"]').attr('placeholder',"Insert learning verification");
+            $('textarea[id="verificaCorso"]').attr("placeholder","Insert learning verification");
         }
     });
 });
