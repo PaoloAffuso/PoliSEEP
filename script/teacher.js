@@ -305,11 +305,11 @@ async function printGraph()
 				data: {
 					labels: xValues,
 					datasets: [{
-									label: "NUMBER OF STUDENT THAT HAVE COMPLETED THE QUIZ",
+									label: "STUDENTS THAT HAVE COMPLETED THE COURSE",
 									backgroundColor: "#4BB377",
 									data: dataNew
 								}, {
-									label: "NUMBER OF STUDENT THAT HAVEN'T COMPLETED THE QUIZ",
+									label: "STUDENTS THAT HAVEN'T COMPLETED THE COURSE",
 									backgroundColor: "#004A86",
 									data: dataNewNo
 								}]
@@ -318,7 +318,7 @@ async function printGraph()
 					legend: {display: false},
 					title: {
 					display: true,
-					text: "TOTAL COMPLETED QUIZ"
+					text: "TOTAL COMPLETED QUIZZES"
 					}
 				}
 				});
