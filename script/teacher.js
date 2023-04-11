@@ -335,6 +335,8 @@ async function getCompletedCourses(course) {
     var countTotCourses = 0;
     var contaStudente = 0;
     var contaStudenteNo = 0;
+    var quizCompleted = [];
+    var quizzes = [];
 
     await get(child(dbRef, "UsersList/")).then(async (snapshot) => {
         for(let user in snapshot.val())
@@ -349,19 +351,23 @@ async function getCompletedCourses(course) {
                         
                                 for(let quiz in snapshot.val())
                                 {
-                                    countTotQuiz++;
-                                    await get(child(dbRef, "UsersList/"+username+"/Courses/"+course+"/Quiz/"+quiz+"/Question 1/"+user)).then((snapshot) => {
-                                        if(snapshot.exists())
-                                        {
-                                            countAnsweredQuiz++;
+                                    if(quiz!==undefined && (!quizCompleted.includes(quiz))) {
+                                        if(!quizzes.includes(quiz)) {
+                                            countTotQuiz++;
+                                            quizzes.push(quiz);
                                         }
-                                    });
+                                        await get(child(dbRef, "UsersList/"+username+"/Courses/"+course+"/Quiz/"+quiz+"/Question 1/"+user)).then((snapshot) => {
+                                            if(snapshot.exists())
+                                            {
+                                                quizCompleted.push(quiz);
+                                                countAnsweredQuiz++;
+                                            }
+                                        });
+                                    }
                                 }
                                 if(countAnsweredQuiz>=countTotQuiz)
                                 {
-                                    // countTotCoursesCompleted++;
                                     contaStudente++;
-                                  //  data.push(contaStudente++);
                                 }
                                 else
                                 {
@@ -372,6 +378,8 @@ async function getCompletedCourses(course) {
                     });
                 }
             });
+            quizCompleted=[];
+            countTotQuiz=0;
         }
     });
 
