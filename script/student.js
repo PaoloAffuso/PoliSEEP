@@ -139,8 +139,16 @@ async function getCompletedCourses() {
 
     var countAnsweredQuiz = 0;
     var countTotQuiz = 0;
+    var countTotQuizSingleCourse = 0;
     var countTotCoursesCompleted = 0;
     var countTotCourses = 0;
+    var completedQuiz = 0;
+
+    get(child(dbRef, "UsersList/"+username+"/Courses")).then((snapshot) => {
+        snapshot.forEach(function() {
+            countTotCourses++;
+        });
+    });
 
     await get(child(dbRef, "UsersList/")).then(async (snapshot) => {
         for(let user in snapshot.val())
@@ -152,52 +160,61 @@ async function getCompletedCourses() {
 
                         for(let course in snapshot.val())
                         {
-                            countTotCourses++;
-                            await get(child(dbRef, "UsersList/"+user+"/Courses/"+course+"/Quiz")).then(async (snapshot) => {
-                                for(let quiz in snapshot.val())
-                                {
-                                    var trovato=false;
-                                    countTotQuiz++;
-                                    await get(child(dbRef, "UsersList/"+user+"/Courses/"+course+"/Quiz/"+quiz)).then(async (snapshot) => {
-                                        for(let question in snapshot.val()) {
-                                            if(question.includes("Question")) {
-                                                await get(child(dbRef, "UsersList/"+user+"/Courses/"+course+"/Quiz/"+quiz+"/"+question+"/"+username)).then((snapshot) => {
-                                                    if(snapshot.exists())
+                            await get(child(dbRef, "Courses/"+course+"/Student/"+username)).then(async (snapshot) => {
+
+                                if(snapshot.exists()){
+
+                                    await get(child(dbRef, "UsersList/"+user+"/Courses/"+course+"/Quiz")).then(async (snapshot) => {
+                                        if(snapshot.exists()){
+                                            for(let quiz in snapshot.val())
+                                            {
+                                                var trovato=false;
+                                                countTotQuizSingleCourse++;
+                                                countTotQuiz++;
+                                                await get(child(dbRef, "UsersList/"+user+"/Courses/"+course+"/Quiz/"+quiz)).then(async (snapshot) => {
+                                                    for(let question in snapshot.val()) {
+                                                        if(question.includes("Question")) {
+                                                            await get(child(dbRef, "UsersList/"+user+"/Courses/"+course+"/Quiz/"+quiz+"/"+question+"/"+username)).then((snapshot) => {
+                                                                if(snapshot.exists())
+                                                                {
+                                                                    trovato=true;
+                                                                }
+                                                            });
+                                                        }
+                                                        if(trovato) break;
+                                                    }
+                                                    if(trovato)
                                                     {
-                                                        trovato=true;
-                                                        //countAnsweredQuiz++;
+                                                        completedQuiz++;
+                                                        countAnsweredQuiz++;
                                                     }
                                                 });
                                             }
-                                            if(trovato) break;
                                         }
-                                        if(trovato)
-                                        {
-                                            countAnsweredQuiz++;
+                                        else {
+                                            countTotCoursesCompleted++;
                                         }
                                     });
-
-                                    /*await get(child(dbRef, "UsersList/"+user+"/Courses/"+course+"/Quiz/"+quiz+"/Question 1/"+username)).then((snapshot) => {
-                                        if(snapshot.exists())
-                                        {
-                                            countAnsweredQuiz++;
-                                        }
-                                    });*/
                                 }
                             });
                         }
-                        if(countAnsweredQuiz>=countTotQuiz) // se è vero allora un singolo corso è stato completato
-                        {
-                            countTotCoursesCompleted++;
+                        console.log(countTotQuiz, countAnsweredQuiz, countTotQuizSingleCourse, countTotCoursesCompleted)
+                        if (countAnsweredQuiz!=0 && countTotQuizSingleCourse!=0) {
+                            if(countAnsweredQuiz >= countTotQuizSingleCourse) // se è vero allora un singolo corso è stato completato
+                            {
+                                countTotCoursesCompleted++;
+                            }
                         }
+                        countTotQuizSingleCourse = 0;
+                        countAnsweredQuiz = 0;
                     });
                 }
             });
         }
         document.getElementById("completed_courses").innerHTML=countTotCoursesCompleted;
         document.getElementById("not_completed_courses").innerHTML=countTotCourses-countTotCoursesCompleted;
-        document.getElementById("completed_quiz").innerHTML=countAnsweredQuiz;
-        document.getElementById("not_completed_quiz").innerHTML=countTotQuiz-countAnsweredQuiz;
+        document.getElementById("completed_quiz").innerHTML=completedQuiz;
+        document.getElementById("not_completed_quiz").innerHTML=countTotQuiz-completedQuiz;
     });
 }
 
