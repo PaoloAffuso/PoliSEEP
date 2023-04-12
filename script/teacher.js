@@ -91,7 +91,11 @@ function getLoadedQuiz(username) {
                     snap.forEach(function() {
                         count++;
                         document.getElementsByClassName('loaded_quiz')[0].innerHTML = count;
+                        console.log(count);
                     });
+                }
+                else {
+                    document.getElementsByClassName('loaded_quiz')[0].innerHTML = count;
                 }
             });
         }
