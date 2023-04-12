@@ -65,7 +65,10 @@ async function getEnrolledStudents(username, course_name){
                         if(course.exists() && course.val().teacher===username) {
                             count++;
                             document.getElementById("stuNum").innerHTML=count;
-                        }   
+                        }
+                        else{
+                            document.getElementById("stuNum").innerHTML=count;
+                        }
                     });
                 }
             });
@@ -264,6 +267,7 @@ document.getElementById("acceptBTN").addEventListener("click", ()=>{
                     }).then(()=>{
                         alert("Student(s) request accepted. ");
                         toggleModal();
+                        window.location.reload();
                     });
                 });
             });
